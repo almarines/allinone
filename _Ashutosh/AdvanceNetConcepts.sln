@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetConcepts.MultiThread", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetConcepts.DynamicProgramming", "NetConcepts.DynamicProgramming\NetConcepts.DynamicProgramming.csproj", "{89D9A796-4A7B-4755-8EC7-82D57DF25839}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F2F97263-6881-4CD2-BEC2-5D14D0238580}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

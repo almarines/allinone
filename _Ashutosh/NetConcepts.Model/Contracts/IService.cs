@@ -11,3 +11,6 @@ namespace NetConcepts.Model.Contracts
         string Name { get; }
     }
 }
+
+
+

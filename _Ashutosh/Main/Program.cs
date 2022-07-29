@@ -5,7 +5,6 @@ namespace Main
 {
     class Program
     {
-        private readonly Math mathObj;
        
 
         static void Main(string[] args)

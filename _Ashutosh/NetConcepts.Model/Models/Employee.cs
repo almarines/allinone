@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetConcepts.Model.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace NetConcepts.Model.Models
 {
+    [MyEmployeeMetaDataAttibute(Order = 1, Tag ="Test")]
     internal class Employee
     {
         public string Name { get; }

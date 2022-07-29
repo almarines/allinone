@@ -20,6 +20,7 @@ namespace NetConcepts.DynamicProgramming
             //var companyType = typeof(CompanyService);
 
             var assembly = Assembly.LoadFile(@"C:\Training\Benjamin\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll");
+
             //foreach (var companyType in assembly.GetTypes())
             //{
             //    Console.WriteLine($"Type of Employee {companyType.FullName}");
@@ -48,8 +49,6 @@ namespace NetConcepts.DynamicProgramming
             //    // Managed Extensible Framework
             //    // Plugin/ Plugout Architecure
             //}
-
-
             // get all members, methods, properties, cons of training class
 
 
@@ -59,9 +58,13 @@ namespace NetConcepts.DynamicProgramming
             Print(members, "Members");
             var methods = trainingType.GetMethods(bindingFlags);
             Print(methods, "Methods");
-
             var properties = trainingType.GetProperties(bindingFlags);
             Print(properties, "Properties");
+            var constructor = trainingType.GetConstructors(bindingFlags);
+            Print(constructor, "Constructor");
+            var events = trainingType.GetEvents(bindingFlags);
+            Print(events, "Events");
+
             Console.ReadLine();
         }
 
@@ -73,7 +76,7 @@ namespace NetConcepts.DynamicProgramming
                 Console.WriteLine(item.Name);
             }
 
-            Console.WriteLine("********");
+         
         }
 
     }

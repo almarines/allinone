@@ -13,8 +13,4 @@
     <PackageReference Include="Microsoft.Composition" Version="1.0.31" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj" />
-  </ItemGroup>
-
 </Project>

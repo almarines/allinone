@@ -8,8 +8,4 @@
     <OutputPath></OutputPath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
 </Project>

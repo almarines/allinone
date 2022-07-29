@@ -1,6 +1,4 @@
-﻿
-using Core.Contracts;
-using NetConcepts.Model.Models;
+﻿using NetConcepts.Model.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +6,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace NetConcepts.Model.Contracts
 {
-    internal interface ICompanyService : IService
+    internal interface ICompanyService
     {
         void AddEmployee(Employee employee);
         void AddEmployee(string name, string code);
@@ -24,11 +23,7 @@ namespace NetConcepts.Model.Contracts
     {
         private readonly Company company;
 
-        public string Name => nameof(CompanyService);
-
-        public CompanyService()
-        {
-        }
+        private static int count;
 
         public CompanyService(Company c)
         {

@@ -12,9 +12,6 @@ namespace NetConcepts.DynamicProgramming
 
             // get all members, methods, properties, cons of training class
 
-            var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-            var assembly = Assembly.LoadFile(@"C:\Users\Sophie Anne Busog\source\repos\Training\AdvanceNetConcepts\_Ashutosh\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll");
-
             var assembly = Assembly.LoadFile(@"C:\_Ashutosh\Trainings\AdvanceNetConcepts\_Ashutosh\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll");
             //foreach (var companyType in assembly.GetTypes())
             //{

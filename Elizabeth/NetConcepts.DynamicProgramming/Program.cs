@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -18,7 +19,7 @@ namespace NetConcepts.DynamicProgramming
 
             //var companyType = typeof(CompanyService);
 
-            var assembly = Assembly.LoadFile(@"C:\Users\elizabeths\source\repos\AdvanceNetConcepts\Elizabeth\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll");
+            var assembly = Assembly.LoadFile(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll")));
             //foreach (var companyType in assembly.GetTypes())
             //{
             //    Console.WriteLine($"Type of Employee {companyType.FullName}");
@@ -57,8 +58,7 @@ namespace NetConcepts.DynamicProgramming
 
         private static void PrintTrainingType()
         {
-            var assembly = Assembly.LoadFile(@"C:\Users\elizabeths\source\repos\AdvanceNetConcepts\Elizabeth\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll");
-
+            var assembly = Assembly.LoadFile(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll")));
 
             var trainingType = assembly.GetType("NetConcepts.Model.Models.Training");
             Console.WriteLine($"Type of Employee {trainingType.FullName}");

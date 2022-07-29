@@ -54,7 +54,7 @@ namespace NetConcepts.DynamicProgramming
 
 
             var trainingType = assembly.GetType("NetConcepts.Model.Models.Training");
-            var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+            var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
             var members = trainingType.GetMembers(bindingFlags);
             Print(members, "Members");
             var methods = trainingType.GetMethods(bindingFlags);

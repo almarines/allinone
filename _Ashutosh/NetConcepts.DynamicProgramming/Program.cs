@@ -48,6 +48,9 @@ namespace NetConcepts.DynamicProgramming
                 // Plugin/ Plugout Architecure
             }
 
+
+            // get all members, methods, properties, cons of training class
+
             Console.ReadLine();
         }
 

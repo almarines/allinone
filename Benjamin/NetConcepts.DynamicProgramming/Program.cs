@@ -62,8 +62,6 @@ namespace NetConcepts.DynamicProgramming
             Print(properties, "Properties");
             var constructor = trainingType.GetConstructors(bindingFlags);
             Print(constructor, "Constructor");
-            var events = trainingType.GetEvents(bindingFlags);
-            Print(events, "Events");
 
             Console.ReadLine();
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetConcepts.Model.Models;
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -8,48 +9,39 @@ namespace NetConcepts.DynamicProgramming
     {
         static void Main(string[] args)
         {
-            //var company = new Company();
-            //var empService = new EmployeeService(company);
-
-            //foreach (var emp in empService.GetEmployees())
-            //{
-            //    Console.WriteLine(emp.ToString());
-            //}
-
-            //var companyType = typeof(CompanyService);
-
-            var assembly = Assembly.LoadFile(@"C:\_Ashutosh\Trainings\AdvanceNetConcepts\_Ashutosh\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll");
-            foreach (var companyType in assembly.GetTypes())
-            {
-                Console.WriteLine($"Type of Employee {companyType.FullName}");
-
-                // Instance Members
-                var companyFields = companyType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-                //var company = Activator.CreateInstance(typeof(Company));
-                //var c = Activator.CreateInstance(companyType, company);
-                Print(companyFields, "Fields");
-
-
-                var companyMethods = companyType.GetMethods(BindingFlags.Instance | BindingFlags.Public);
-                Print(companyMethods, "Methods");
-
-                var companyConst = companyType.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
-                Print(companyConst, "Constructors");
-
-
-                // Static Members
-                var staicFields = companyType.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
-                Print(staicFields, "Static Fields");
-
-
-                // MEF
-                // Managed Extensible Framework
-                // Plugin/ Plugout Architecure
-            }
-
 
             // get all members, methods, properties, cons of training class
+
+            var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+            var assembly = Assembly.LoadFile(@"C:\Users\Sophie Anne Busog\source\repos\Training\AdvanceNetConcepts\_Ashutosh\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll");
+
+            var type = assembly.GetType("NetConcepts.Model.Models.Training");
+
+            var members = type.GetMembers(bindingFlags);
+            foreach(var member in members)
+            {
+                Console.WriteLine(member.Name );
+            }
+
+            //Console.WriteLine($"Type { type.Name }");
+
+            //var methods = type.GetMethods(bindingFlags);
+            //foreach (var method in methods)
+            //{
+            //    Console.WriteLine(method.Name);
+            //}
+
+            //var properties = type.GetProperties(bindingFlags);
+            //foreach (var propertie in properties)
+            //{
+            //    Console.WriteLine(propertie.Name);
+            //}
+
+            //var contructors = type.GetConstructors(bindingFlags);
+            //foreach (var contructor in contructors)
+            //{
+            //    Console.WriteLine(contructor.Name);
+            //}
 
             Console.ReadLine();
         }

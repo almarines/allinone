@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetConcepts.Model.Contracts
+namespace FrameworkProj
 {
-    public interface IService
+    class Program
     {
-        string Name { get; }
+        static void Main(string[] args)
+        {
+        }
     }
 }

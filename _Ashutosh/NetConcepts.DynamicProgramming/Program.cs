@@ -51,6 +51,11 @@ namespace NetConcepts.DynamicProgramming
 
             // get all members, methods, properties, cons of training class
 
+           
+
+
+
+
             Console.ReadLine();
         }
 

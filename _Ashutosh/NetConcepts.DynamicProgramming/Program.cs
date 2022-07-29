@@ -1,4 +1,5 @@
-﻿using NetConcepts.Model.Models;
+﻿using Core;
+using Core.Contracts;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -42,25 +43,42 @@ namespace NetConcepts.DynamicProgramming
             //    var staicFields = companyType.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
             //    Print(staicFields, "Static Fields");
 
-
-            //     //   MEF
-            //     //   Managed Extensible Framework
-            //     //   Plugin / Plugout Architecure
             //}
 
 
-            // get the training type and display , then display all members, methods, properties, cons of training class.
-            var companyServiceType = assembly.GetType("NetConcepts.Model.Contracts.CompanyService");
-            var companyType = assembly.GetType("NetConcepts.Model.Models.Company");
-            var companyMethods = companyServiceType.GetMethods(BindingFlags.Instance | BindingFlags.Public);
+            //// get the training type and display , then display all members, methods, properties, cons of training class.
+            //var companyServiceType = assembly.GetType("NetConcepts.Model.Contracts.CompanyService");
+            //var companyType = assembly.GetType("NetConcepts.Model.Models.Company");
+            //var companyMethods = companyServiceType.GetMethods(BindingFlags.Instance | BindingFlags.Public);
 
-            var companyInstance = Activator.CreateInstance(companyType);
-            var companyServiceInstance = Activator.CreateInstance(companyServiceType, companyInstance);
+            //var companyInstance = Activator.CreateInstance(companyType);
+            //var companyServiceInstance = Activator.CreateInstance(companyServiceType, companyInstance);
 
 
-            var getEmployees = companyMethods.FirstOrDefault(s => s.Name == "GetEmployees").Invoke(companyServiceInstance, null);
+            //var getEmployees = companyMethods.FirstOrDefault(s => s.Name == "GetEmployees").Invoke(companyServiceInstance, null);
 
             // 1st Assignment to Add new Employee using Reflection.
+
+
+            //   MEF
+            //   Managed Extensible Framework
+            //   Plugin / Plugout Architecure
+
+            // Export/ Import
+            // Export / ImportMany
+
+            var resolver = new Resolver();
+            resolver.Resolve();
+
+
+            // How to access SMTPMail / AWS Service
+            // IMailServce: Register Email Service [SMTP/AWS/ Azure]
+
+            var mailService = Container.Resolve<IMailServce>("SESMailService");
+            var result = mailService.SendMail("X", "Y", "", "");
+
+            var loggingService = Container.Resolve<ILoggingService>("SESMailService");
+            loggingService.Log(result);
 
             Console.ReadLine();
         }

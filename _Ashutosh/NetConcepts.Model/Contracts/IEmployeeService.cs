@@ -1,4 +1,5 @@
 ﻿
+using Core.Contracts;
 using NetConcepts.Model.Models;
 using System;
 using System.Collections.Generic;

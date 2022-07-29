@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetConcepts.Model.Contracts
 {
-    public class IService
+    public interface IService
     {
         string Name { get; }
     }

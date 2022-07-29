@@ -43,6 +43,11 @@ namespace NetConcepts.DynamicProgramming
             //    Console.WriteLine(contructor.Name);
             //}
 
+           
+
+
+
+
             Console.ReadLine();
         }
 

@@ -9,4 +9,10 @@
     <OutputPath></OutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="NetConcepts.Model">
+      <HintPath>..\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

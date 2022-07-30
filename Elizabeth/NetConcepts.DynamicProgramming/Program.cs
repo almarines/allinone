@@ -61,10 +61,10 @@ namespace NetConcepts.DynamicProgramming
             // How to access SMTPMail / AWS Service
             // IMailServce: Register Email Service [SMTP/AWS/ Azure]
 
-            var mailService = Container.Resolve<IMailServce>("SESMailService");
+            var mailService = Container.Resolve<IMailServce>("MyMailService");
             var result = mailService.SendMail("X", "Y", "", "");
 
-            var loggingService = Container.Resolve<ILoggingService>("TextLogger");
+            var loggingService = Container.Resolve<ILoggingService>("MyTextLogger");
             loggingService.Log(result);
 
             Console.ReadLine();

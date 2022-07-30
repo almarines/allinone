@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Unity;
 
 namespace Core
 {
@@ -17,12 +16,6 @@ namespace Core
     }
     public static class Container
     {
-        //private static IUnityContainer container = new UnityContainer();
-
-        //public static void AddSingelten<T>(object instance)
-        //{
-        //    container.RegisterInstance(typeof(T), instance);
-        //}
 
         //private static readonly IDictionary<Type, object> Services = new Dictionary<Type, object>();
         private static readonly IList<TypeResolver> Services = new List<TypeResolver>();

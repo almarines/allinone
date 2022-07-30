@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetConcepts.Model.Contracts
+namespace Core.Contracts
 {
-    public interface IService
+    public interface ILoggingService : IService
     {
-        string Name { get; }
+        void Log(string message);
     }
 }

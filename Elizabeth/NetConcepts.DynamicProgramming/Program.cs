@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Core;
+using Core.Contracts;
+using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 
 namespace NetConcepts.DynamicProgramming
@@ -19,7 +20,7 @@ namespace NetConcepts.DynamicProgramming
 
             //var companyType = typeof(CompanyService);
 
-            var assembly = Assembly.LoadFile(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll")));
+            //var assembly = Assembly.LoadFile(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll")));
             //foreach (var companyType in assembly.GetTypes())
             //{
             //    Console.WriteLine($"Type of Employee {companyType.FullName}");
@@ -51,7 +52,22 @@ namespace NetConcepts.DynamicProgramming
 
 
             // get all members, methods, properties, cons of training class
-            PrintTrainingType();
+            //PrintTrainingType();
+
+            var resolver = new Resolver();
+            resolver.Resolve();
+
+
+            // How to access SMTPMail / AWS Service
+            // IMailServce: Register Email Service [SMTP/AWS/ Azure]
+
+            var mailService = Container.Resolve<IMailServce>("MyMailService");
+            var result = mailService.SendMail("X", "Y", "", "");
+
+            var loggingService = Container.Resolve<ILoggingService>("MyTextLogger");
+            loggingService.Log(result);
+
+            Console.ReadLine();
 
             Console.ReadLine();
         }

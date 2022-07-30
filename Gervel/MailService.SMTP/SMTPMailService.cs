@@ -6,8 +6,8 @@ using System.Composition;
 [assembly: AutoGenerate]
 namespace MailService.SMTP
 {
-    [Service(Contract = typeof(IMailServce))]
-    public class SMTPMailService : IMailServce
+    [Service(Contract = typeof(IMailService))]
+    public class SMTPMailService : IMailService
     {
         public string Name => "SMTPMailService";
 

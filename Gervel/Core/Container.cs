@@ -17,7 +17,6 @@ namespace Core
     public static class Container
     {
 
-        //private static readonly IDictionary<Type, object> Services = new Dictionary<Type, object>();
         private static readonly IList<TypeResolver> Services = new List<TypeResolver>();
 
         /// <summary>
@@ -25,9 +24,9 @@ namespace Core
         /// </summary>
         /// <typeparam name="T">The service contract.</typeparam>
         /// <param name="instance">The service instance value.</param>
-        public static void AddSingelten<T>(object instance)
+        public static void AddSingleton<T>(object instance)
         {
-            AddSingelten(typeof(T), instance, null);
+            AddSingleton(typeof(T), instance, null);
         }
 
         /// <summary>
@@ -35,9 +34,9 @@ namespace Core
         /// </summary>
         /// <typeparam name="T">The service contract.</typeparam>
         /// <param name="instance">The service instance value.</param>
-        public static void AddSingelten<T>(object instance, string uniqueIdentifier)
+        public static void AddSingleton<T>(object instance, string uniqueIdentifier)
         {
-            AddSingelten(typeof(T), instance, uniqueIdentifier);
+            AddSingleton(typeof(T), instance, uniqueIdentifier);
         }
 
         /// <summary>
@@ -45,26 +44,13 @@ namespace Core
         /// </summary>
         /// <param name="type">The service contract.</param>
         /// <param name="instance">The service instance.</param>
-        public static void AddSingelten(Type type, object instance, string uniqueIdentifier)
+        public static void AddSingleton(Type type, object instance, string uniqueIdentifier)
         {
             lock (Services)
             {
                 Services.Add(new TypeResolver() { Type = type, Instance = instance, UniqueIdentifier = uniqueIdentifier });
             }
         }
-
-        ///// <summary>
-        ///// Registers the specified service with the given contract key.
-        ///// </summary>
-        ///// <param name="type">The service contract.</param>
-        ///// <param name="instance">The service instance.</param>
-        //public static void AddSingelten(Type type, object instance, string uniqueIdentifier)
-        //{
-        //    lock (Services)
-        //    {
-        //        Services[type] = instance;
-        //    }
-        //}
 
         /// <summary>
         /// Returns a service that match the given contract.

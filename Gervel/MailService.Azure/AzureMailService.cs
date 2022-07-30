@@ -4,8 +4,8 @@ using Core.Contracts;
 [assembly: AutoGenerate]
 namespace MailService.Azure {
 
-	[Service(Contract = typeof(IMailServce))]
-	public class AzureMailService : IMailServce {
+	[Service(Contract = typeof(IMailService))]
+	public class AzureMailService : IMailService {
 		public string Name => "AzureMailService";
 
 		public string SendMail(string sender, string receiver, string subject, string body) {

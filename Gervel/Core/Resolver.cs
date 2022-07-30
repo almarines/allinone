@@ -50,7 +50,7 @@ namespace Core
                 var contract = item.Metadata.Contract;
                 var instance = item.Value;
 
-                Container.AddSingelten(contract, instance, instance.GetType().Name);
+                Container.AddSingleton(contract, instance, instance.GetType().Name);
             }
 
             //services.AddScope(contract, instance);

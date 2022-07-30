@@ -6,8 +6,8 @@ using System.Composition;
 [assembly : AutoGenerate]
 namespace MailService.AWS.SES
 {
-    [Service(Contract = typeof(IMailServce))]
-    public class SESMailService : IMailServce
+    [Service(Contract = typeof(IMailService))]
+    public class SESMailService : IMailService
     {
         public string Name =>  "SESMailService";
 

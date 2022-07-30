@@ -45,7 +45,7 @@ namespace NetConcepts.DynamicProgramming
             var resolver = new Resolver();
             resolver.Resolve();
 
-			var mailService = Container.Resolve<IMailServce>("AzureMailService");
+			var mailService = Container.Resolve<IMailService>("AzureMailService");
 			var result = mailService.SendMail("Sender", "Receiver", "Subject", "Body");
 
 			var loggingService = Container.Resolve<ILoggingService>("ConsoleLogger");

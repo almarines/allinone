@@ -1,6 +1,6 @@
 ﻿namespace Core.Contracts
 {
-    public interface IMailServce : IService
+    public interface IMailService : IService
     {
         string SendMail(string sender, string target, string subject, string body);
     }

@@ -13,6 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetConcepts.DynamicProgramm
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F2F97263-6881-4CD2-BEC2-5D14D0238580}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameworkProj", "FrameworkProj\FrameworkProj.csproj", "{CE9149CF-E42B-4852-98E4-2AC2EFF05F4A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailService.SMTP", "MailService.SMTP\MailService.SMTP.csproj", "{5EB2CDF7-7A9F-4643-AD86-5D2E092DB28D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailService.AWS.SES", "MailService.AWS.SES\MailService.AWS.SES.csproj", "{500661E4-4B70-4832-A2E7-E7E6D68AACCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +41,18 @@ Global
 		{89D9A796-4A7B-4755-8EC7-82D57DF25839}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89D9A796-4A7B-4755-8EC7-82D57DF25839}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89D9A796-4A7B-4755-8EC7-82D57DF25839}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE9149CF-E42B-4852-98E4-2AC2EFF05F4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE9149CF-E42B-4852-98E4-2AC2EFF05F4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE9149CF-E42B-4852-98E4-2AC2EFF05F4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE9149CF-E42B-4852-98E4-2AC2EFF05F4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EB2CDF7-7A9F-4643-AD86-5D2E092DB28D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EB2CDF7-7A9F-4643-AD86-5D2E092DB28D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EB2CDF7-7A9F-4643-AD86-5D2E092DB28D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EB2CDF7-7A9F-4643-AD86-5D2E092DB28D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{500661E4-4B70-4832-A2E7-E7E6D68AACCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{500661E4-4B70-4832-A2E7-E7E6D68AACCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{500661E4-4B70-4832-A2E7-E7E6D68AACCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{500661E4-4B70-4832-A2E7-E7E6D68AACCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

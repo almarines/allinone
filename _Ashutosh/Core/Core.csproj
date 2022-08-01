@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -6,10 +6,11 @@
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <PackageReference Include="Microsoft.Composition" Version="1.0.31" />
-    <PackageReference Include="Unity" Version="5.11.10" />
+    <PackageReference Include="Microsoft.Composition" />
+    <PackageReference Include="System.Runtime.Loader" />
+    <PackageReference Include="Unity" />
   </ItemGroup>
 
 </Project>

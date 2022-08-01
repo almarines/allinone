@@ -19,6 +19,10 @@ namespace NetConcepts.Model.Models
             Cost = cost;
         }
 
+        public Training()
+        {
+        }
+
         public string Name { get; set; }
 
         public string CouseType { get; set; }

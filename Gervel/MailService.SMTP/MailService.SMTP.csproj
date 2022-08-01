@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -9,5 +9,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="echo Copying $(TargetName) ...&#xD;&#xA;echo Source &quot;$(ProjectDir)\$(OutputPath)\$(TargetName).dll&quot;&#xD;&#xA;echo Target &quot;$(SolutionDir)\NetConcepts.DynamicProgramming\$(OutputPath)\$(TargetName).dll&quot;&#xD;&#xA;copy /Y &quot;$(ProjectDir)\$(OutputPath)\$(TargetName).dll&quot; &quot;$(SolutionDir)\NetConcepts.DynamicProgramming\$(OutputPath)\$(TargetName).dll&quot;&#xD;&#xA;echo Copied $(TargetName) assebmly file" />
+  </Target>
 
 </Project>

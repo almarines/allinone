@@ -1,8 +1,6 @@
 ﻿using Core;
 using Core.Contracts;
 using Core.Extensions;
-using NetConcepts.Model.Contracts;
-using NetConcepts.Model.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,44 +13,44 @@ namespace NetConcepts.DynamicProgramming
     {
         static void Main(string[] args)
         {
-            var empService = new CompanyService(new Model.Models.Company());
-            var list = empService.GetEmployees();
+            //var empService = new CompanyService(new Model.Models.Company("test"));
+            //var list = empService.GetEmployees();
 
-            list.AddRange(new List<Employee>());
+            //list.AddRange(new List<Employee>());
 
             // get all members, methods, properties, cons of training class
 
             var assembly = Assembly.LoadFile(@"C:\_Ashutosh\Trainings\AdvanceNetConcepts\_Ashutosh\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll");
-            //foreach (var companyType in assembly.GetTypes())
-            //{
-            //    Console.WriteLine($"Type of Employee {companyType.FullName}");
+            foreach (var companyType in assembly.GetTypes())
+            {
+                Console.WriteLine($"Type of Employee {companyType.FullName}");
 
-            //    // Instance Members
-            //    var companyFields = companyType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                // Instance Members
+                var companyFields = companyType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
-            //    //var company = Activator.CreateInstance(typeof(Company));
-            //    //var c = Activator.CreateInstance(companyType, company);
-            //    Print(companyFields, "Fields");
+                //var company = Activator.CreateInstance(typeof(Company));
+                //var c = Activator.CreateInstance(companyType, company);
+                Print(companyFields, "Fields");
 
-            //    var companyMethods = companyType.GetMethods(BindingFlags.Instance | BindingFlags.Public);
-            //    Print(companyMethods, "Methods");
+                var companyMethods = companyType.GetMethods(BindingFlags.Instance | BindingFlags.Public);
+                Print(companyMethods, "Methods");
 
-            //    var companyConst = companyType.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
-            //    Print(companyConst, "Constructors");
+                var companyConst = companyType.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
+                Print(companyConst, "Constructors");
 
-            //    // Attributes Members
-            //    Console.WriteLine("****GetCustomAttributes*****");
-            //    var attributes = companyType.GetCustomAttributes();
-            //    foreach (var item in attributes)
-            //    {
-            //        Console.WriteLine(item.GetType().FullName);
-            //    }
+                // Attributes Members
+                Console.WriteLine("****GetCustomAttributes*****");
+                var attributes = companyType.GetCustomAttributes();
+                foreach (var item in attributes)
+                {
+                    Console.WriteLine(item.GetType().FullName);
+                }
 
-            //    // Static Members
-            //    var staicFields = companyType.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
-            //    Print(staicFields, "Static Fields");
+                // Static Members
+                var staicFields = companyType.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
+                Print(staicFields, "Static Fields");
 
-            //}
+            }
 
 
             //// get the training type and display , then display all members, methods, properties, cons of training class.

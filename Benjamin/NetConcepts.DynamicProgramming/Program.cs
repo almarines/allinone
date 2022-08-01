@@ -1,4 +1,5 @@
-﻿using NetConcepts.Model.Contracts;
+﻿using Core;
+using Core.Contracts;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -9,18 +10,10 @@ namespace NetConcepts.DynamicProgramming
     {
         static void Main(string[] args)
         {
-            //var company = new Company();
-            //var empService = new EmployeeService(company);
 
-            //foreach (var emp in empService.GetEmployees())
-            //{
-            //    Console.WriteLine(emp.ToString());
-            //}
-
-            //var companyType = typeof(CompanyService);
+            // get all members, methods, properties, cons of training class
 
             var assembly = Assembly.LoadFile(@"C:\Training\Benjamin\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll");
-
             //foreach (var companyType in assembly.GetTypes())
             //{
             //    Console.WriteLine($"Type of Employee {companyType.FullName}");
@@ -32,36 +25,60 @@ namespace NetConcepts.DynamicProgramming
             //    //var c = Activator.CreateInstance(companyType, company);
             //    Print(companyFields, "Fields");
 
-
             //    var companyMethods = companyType.GetMethods(BindingFlags.Instance | BindingFlags.Public);
             //    Print(companyMethods, "Methods");
 
             //    var companyConst = companyType.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
             //    Print(companyConst, "Constructors");
 
+            //    // Attributes Members
+            //    Console.WriteLine("****GetCustomAttributes*****");
+            //    var attributes = companyType.GetCustomAttributes();
+            //    foreach (var item in attributes)
+            //    {
+            //        Console.WriteLine(item.GetType().FullName);
+            //    }
 
             //    // Static Members
             //    var staicFields = companyType.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
             //    Print(staicFields, "Static Fields");
 
-
-            //    // MEF
-            //    // Managed Extensible Framework
-            //    // Plugin/ Plugout Architecure
             //}
-            // get all members, methods, properties, cons of training class
 
 
-            var trainingType = assembly.GetType("NetConcepts.Model.Models.Training");
-            var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
-            var members = trainingType.GetMembers(bindingFlags);
-            Print(members, "Members");
-            var methods = trainingType.GetMethods(bindingFlags);
-            Print(methods, "Methods");
-            var properties = trainingType.GetProperties(bindingFlags);
-            Print(properties, "Properties");
-            var constructor = trainingType.GetConstructors(bindingFlags);
-            Print(constructor, "Constructor");
+            //// get the training type and display , then display all members, methods, properties, cons of training class.
+            //var companyServiceType = assembly.GetType("NetConcepts.Model.Contracts.CompanyService");
+            //var companyType = assembly.GetType("NetConcepts.Model.Models.Company");
+            //var companyMethods = companyServiceType.GetMethods(BindingFlags.Instance | BindingFlags.Public);
+
+            //var companyInstance = Activator.CreateInstance(companyType);
+            //var companyServiceInstance = Activator.CreateInstance(companyServiceType, companyInstance);
+
+
+            //var getEmployees = companyMethods.FirstOrDefault(s => s.Name == "GetEmployees").Invoke(companyServiceInstance, null);
+
+            // 1st Assignment to Add new Employee using Reflection.
+
+
+            //   MEF
+            //   Managed Extensible Framework
+            //   Plugin / Plugout Architecure
+
+            // Export/ Import
+            // Export / ImportMany
+
+            var resolver = new Resolver();
+            resolver.Resolve();
+
+
+            // How to access SMTPMail / AWS Service
+            // IMailServce: Register Email Service [SMTP/AWS/ Azure]
+
+            var mailService = Container.Resolve<IMailServce>("AzureEmailService");
+            var result = mailService.SendMail("X", "Y", "", "");
+
+            var loggingService = Container.Resolve<ILoggingService>("AzureLogger");
+            loggingService.Log(result);
 
             Console.ReadLine();
         }
@@ -74,8 +91,7 @@ namespace NetConcepts.DynamicProgramming
                 Console.WriteLine(item.Name);
             }
 
-         
+            Console.WriteLine("********");
         }
-
     }
 }

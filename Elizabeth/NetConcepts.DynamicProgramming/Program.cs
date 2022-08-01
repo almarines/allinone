@@ -1,8 +1,13 @@
 ﻿using Core;
 using Core.Contracts;
+using Core.Extensions;
+using NetConcepts.Model.Contracts;
+using NetConcepts.Model.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 
 namespace NetConcepts.DynamicProgramming
 {
@@ -10,6 +15,11 @@ namespace NetConcepts.DynamicProgramming
     {
         static void Main(string[] args)
         {
+            var empService = new CompanyService(new Model.Models.Company());
+            var list = empService.GetEmployees();
+
+            list.AddRange(new List<Employee>());
+
             //var company = new Company();
             //var empService = new EmployeeService(company);
 
@@ -61,13 +71,15 @@ namespace NetConcepts.DynamicProgramming
             // How to access SMTPMail / AWS Service
             // IMailServce: Register Email Service [SMTP/AWS/ Azure]
 
-            var mailService = Container.Resolve<IMailServce>("SESMailService");
+            var mailService = Container.Resolve<IMailServce>("MyMailService");
             var result = mailService.SendMail("X", "Y", "", "");
 
-            var loggingService = Container.Resolve<ILoggingService>("TextLogger");
+            var loggingService = Container.Resolve<ILoggingService>("MyTextLogger");
             loggingService.Log(result);
 
-            Console.ReadLine();
+            Container.Resolve<IMailServce>().SendMail();
+            Thread.Sleep(60 * 1000);
+            Console.WriteLine("Hi");
 
             Console.ReadLine();
         }

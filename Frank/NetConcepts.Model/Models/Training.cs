@@ -15,19 +15,19 @@ namespace NetConcepts.Model.Models
         public Training(string n, string c, int cost)
         {
             Name = n;
-            CouseType = c;
+            CourseType = c;
             Cost = cost;
         }
 
         public string Name { get; set; }
 
-        public string CouseType { get; set; }
+        public string CourseType { get; set; }
 
         public int Cost { get; set; }
 
         public string GetFullDetails()
         {
-            return Name + CouseType + Cost;
+            return Name + CourseType + Cost;
         }
     }
 }

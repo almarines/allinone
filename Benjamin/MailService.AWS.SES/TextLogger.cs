@@ -13,7 +13,7 @@ namespace MailService.AWS.SES
     [Service(Contract = typeof(ILoggingService))]
     public class TextLogger : ILoggingService
     {
-        public string Name => "AzureLogger";
+        public string Name => "TextLogger";
 
         public void Log(string message)
         {

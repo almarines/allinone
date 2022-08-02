@@ -10,16 +10,33 @@ namespace NetConcepts.MultiThread
 {
     class Program {
         public static async Task Main() {
+            // SamplePrallel();
+            // await AsyncAwaitExercise();
 
-            var company = await CompanyHelper.CreateCompany("KII", 15);
+            var list = GetNumbers();
+            foreach(var number in list) {
+                Console.WriteLine(number);
+            }
 
-            await Display1();
 
-            Console.WriteLine("Press any key to exit.");
-            Console.ReadLine();
+			Console.WriteLine("Press any key to exit.");
+			Console.ReadLine();
+		}
+
+        private static IEnumerable<int> GetNumbers() {
+            var list = new List<int>();
+            foreach (var item in Enumerable.Range(0, 10)) {
+                yield return item;
+            }
         }
 
-        private static void SamplePrallel() {
+        private static async Task AsyncAwaitExercise() {
+			var company = await CompanyHelper.CreateCompany("KII", 15);
+
+			await Display1();
+		}
+
+		private static void SamplePrallel() {
             // 2 million
             var limit = 2_000_000;
             var numbers = Enumerable.Range(0, limit).ToList();

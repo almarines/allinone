@@ -24,14 +24,34 @@ namespace NetConcepts.MultiThread
             //{
             //    await Display1();
             //}
-            await CompanyHelper.CreateCompany("MyCompany", 5);
+            //await CompanyHelper.CreateCompany("MyCompany", 5);
 
-            await Display1();
+            //await Display1();
+
+            var list2 = GetNumbers();
+            foreach (var num in list2)
+            {
+                Console.WriteLine(num);
+            }
 
             stopwatch.Stop();
             Console.WriteLine($"total time taken in Ms{stopwatch.ElapsedMilliseconds}");
             Console.ReadKey();
         }
+
+        private static IEnumerable<int> GetNumbers()
+        {
+            foreach (var item in Enumerable.Range(0, 10))
+                yield return item;
+        }
+
+        //private static IEnumerable<int> GetNumbers()
+        //{
+        //    var list = new List<int>();
+        //    foreach (var item in Enumerable.Range(0, 10))
+        //        list.Add(item);
+        //    return list;
+        //}
 
         private static async Task Display1()
         {

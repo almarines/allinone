@@ -15,7 +15,7 @@ namespace NetConcepts.DynamicProgramming
     {
         static void Main(string[] args)
         {
-            var empService = new CompanyService(new Model.Models.Company());
+            var empService = new CompanyService(new Model.Models.Company("test"));
             var list = empService.GetEmployees();
 
             list.AddRange(new List<Employee>());

@@ -9,4 +9,9 @@
     <OutputPath></OutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\NetConcepts.Model\NetConcepts.Model.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -107,7 +107,7 @@
 //            t1.Start();
 //            t2.Start();
 
-//            // Total time taken running as Sequentail manner  ms
+//            // Total time taken running as Sequentail manner 17 ms
 //            Console.ReadKey();
 
 //            stopwatch.Stop();

@@ -17,7 +17,7 @@ namespace Core
     }
     public static class Container
     {
-        //private static IUnityContainer container = new UnityContainer();
+        //private static IUnityContainer container = new UnityContainer(); // AutoFac
 
         //public static void AddSingelten<T>(object instance)
         //{

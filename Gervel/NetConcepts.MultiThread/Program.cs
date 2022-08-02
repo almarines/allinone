@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using NetConcepts.Model.Utilities;
 
 namespace NetConcepts.MultiThread
 {
     class Program {
-        static void Main() {
-            
+        public static async Task Main() {
 
+            var company = await CompanyHelper.CreateCompany("KII", 15);
+
+            await Display1();
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
@@ -31,6 +34,20 @@ namespace NetConcepts.MultiThread
 
             Console.WriteLine($"Classical foreach loop | Total prime numbers : {primeNumbersFromForeach.Count} | Time Taken : {watch.ElapsedMilliseconds} ms.");
             Console.WriteLine($"Parallel.ForEach loop  | Total prime numbers : {primeNumbersFromParallelForeach.Count} | Time Taken : {watchForParallel.ElapsedMilliseconds} ms.");
+        }
+
+        private static async Task Display1() {
+            await Display2();
+            for (int i = 0; i < 100; i++) {
+                Console.WriteLine("First Method");
+            }
+        }
+
+        private static async Task Display2() {
+            for (int i = 0; i < 100; i++) {
+                await Task.Delay(1);
+                Console.WriteLine("Second Method");
+            }
         }
 
         /// <summary>

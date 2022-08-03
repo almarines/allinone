@@ -14,18 +14,35 @@ namespace NetConcepts.Model.Models
 
         public Guid Id { get; }
 
-        public string EmpCode { get; }
+        public int EmpCode { get; }
 
-        public Employee(string name, string code)
+        public Employee(string name, int code)
         {
             Name = name;
             EmpCode = code;
             Id = Guid.NewGuid();
         }
 
-        public override string ToString()
+        //public override string ToString()
+        //{
+        //    return string.Concat(EmpCode, ":", Name);
+        //}
+    }
+
+    internal class FullTimeEmp : Employee 
+    {
+        public FullTimeEmp(string name, int code) : base (name, code)
         {
-            return string.Concat(EmpCode, ":", Name);
+
         }
     }
+
+    internal class PartTimeEmp : Employee
+    {
+        public PartTimeEmp(string name, int code) : base(name, code)
+        {
+
+        }
+    }
+
 }

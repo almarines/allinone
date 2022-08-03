@@ -7,13 +7,14 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+#nullable enable  
 
 namespace NetConcepts.Model.Contracts
 {
     internal interface ICompanyService : IService
     {
         void AddEmployee(Employee employee);
-        void AddEmployee(string name, string code);
+        void AddEmployee(string name, int code);
         Employee GetEmployee(Guid id);
 
         IEnumerable<Employee> GetEmployees();
@@ -26,10 +27,6 @@ namespace NetConcepts.Model.Contracts
 
         public string Name => nameof(CompanyService);
 
-        public CompanyService()
-        {
-        }
-
         public CompanyService(Company c)
         {
             this.company = c;
@@ -40,7 +37,7 @@ namespace NetConcepts.Model.Contracts
             return this.company.Employees.FirstOrDefault(s => s.Id == id);
         }
 
-        public void AddEmployee(string name, string code)
+        public void AddEmployee(string name, int code)
         {
             this.company.Employees.Add(new Employee(name, code));
         }

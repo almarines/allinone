@@ -8,9 +8,9 @@ namespace NetConcepts.Model.Models
 {
     internal class Training
     {
-        private static string MyPro;
+        //private static string MyPro;
 
-        public event EventHandler OnTrainingCreated;
+        //public event EventHandler OnTrainingCreated;
 
         public Training(string n, string c, int cost)
         {

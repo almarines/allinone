@@ -10,10 +10,13 @@ namespace NetConcepts.Model.Models
     {
         public IList<Employee> Employees;
 
-        public Company()
+        public string Name { get; set; }
+
+        public Company(string name)
         {
+            Name = name;
             Employees = new List<Employee>();
             Employees.Add(new Employee("First Emp", "1"));
-        }       
+        }
     }
 }

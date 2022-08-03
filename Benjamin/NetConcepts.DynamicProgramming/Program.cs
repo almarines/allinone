@@ -20,7 +20,7 @@ namespace NetConcepts.DynamicProgramming
 
             // get all members, methods, properties, cons of training class
 
-            var assembly = Assembly.LoadFile(@"C:\_Ashutosh\Trainings\AdvanceNetConcepts\_Ashutosh\NetConcepts.Model\bin\Debug\net5.0\NetConcepts.Model.dll");
+            var assembly = Assembly.LoadFile(@"C:\Training\Benjamin\NetConcepts.DynamicProgramming\bin\Debug\net5.0\NetConcepts.DynamicProgramming.dll");
             foreach (var companyType in assembly.GetTypes())
             {
                 Console.WriteLine($"Type of Employee {companyType.FullName}");

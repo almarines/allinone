@@ -9,6 +9,7 @@ _Ashutosh/snippet.txt
 *.user
 *.userosscache
 *.sln.docstates
+*.db
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

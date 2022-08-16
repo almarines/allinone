@@ -72,14 +72,18 @@ namespace Trainings.Api.Controllers
         //    return Ok();
         //}
 
-        //[HttpDelete("{Id}")]
-        //public IActionResult DeleteTraining(int Id)
-        //{
-        //    _logger.LogInformation("Deleting training by id...");
+        [HttpDelete("{Id}")]
+        public IActionResult DeleteTraining(int Id)
+        {
+            _logger.LogInformation("Deleting training by id...");
 
-        //    var hasUpdated = _dbServices.DeleteTrainingById(Id);
+            var delete = new DeleteTrainingCommand() { Id = Id };
 
-        //    return Ok();
-        //}
+            var training = _mediator.Send(delete);
+
+            var isDeleted = training.Result;
+
+            return Ok(isDeleted);
+        }
     }
 }

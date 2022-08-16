@@ -43,6 +43,7 @@ namespace Trainings.Api.Controllers
             _logger.LogInformation("Getting training by id...");
 
             var getTrainingQuery = new GetTrainingByIdQuery();
+            getTrainingQuery.TrainingId = trainingId;
             var training = _mediator.Send(getTrainingQuery);
 
             return Ok(training);

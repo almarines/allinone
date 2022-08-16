@@ -18,8 +18,6 @@ namespace Customers.Api.Controllers
     {
         private readonly ILogger<CustomerController> _logger;
         private readonly IMediator _mediator;
-        private ICustomerRepository _dbServices;
-        private readonly ISupportRepository _supportRepository;
 
         public CustomerController(ILogger<CustomerController> logger, IMediator mediator)
         {
@@ -31,6 +29,7 @@ namespace Customers.Api.Controllers
         public IActionResult GetAllCustomers()
         {
             _logger.LogInformation("Getting all customers...");
+            Customers.Infra.Helpers.Logger.Instance.Log("Inserting customer...");
 
             var getCustomersQuery = new GetCustomersQuery();
             var customers = _mediator.Send(getCustomersQuery);
@@ -43,7 +42,7 @@ namespace Customers.Api.Controllers
         {
             _logger.LogInformation("Getting customer by id...");
 
-            var customer = _dbServices.GetCustomerById(customerId);
+            var customer = _mediator.Send(new GetCustomerByIdQuery() { CustomerId = customerId });
 
             return Ok(customer);
         }
@@ -51,7 +50,8 @@ namespace Customers.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertCustomer(Customer customer)
         {
-            _logger.LogInformation("Inserting customer...");
+            //_logger.LogInformation("Inserting customer...");
+            Customers.Infra.Helpers.Logger.Instance.Log("Inserting customer...");
 
             var createCustomerCommand = new CreateCustomerCommand() { City = customer.City, Id = customer.Id, CompanyName = customer.CompanyName, Name = customer.Name, PhoneNumber = customer.PhoneNumber };
             var customers = await _mediator.Send(createCustomerCommand);
@@ -59,24 +59,24 @@ namespace Customers.Api.Controllers
             return Ok(customers.Id);
         }
 
-        [HttpPut]
-        public IActionResult UpdateCustomer(Customer customer)
-        {
-            _logger.LogInformation("Updating customer...");
+        //[HttpPut]
+        //public IActionResult UpdateCustomer(Customer customer)
+        //{
+        //    _logger.LogInformation("Updating customer...");
 
-            var hasUpdated = _dbServices.UpdateCustomer(customer);
+        //    var hasUpdated = _dbServices.UpdateCustomer(customer);
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
-        [HttpDelete("{customerId}")]
-        public IActionResult DeleteCustomer(int customerId)
-        {
-            _logger.LogInformation("Deleting customer by id...");
+        //[HttpDelete("{customerId}")]
+        //public IActionResult DeleteCustomer(int customerId)
+        //{
+        //    _logger.LogInformation("Deleting customer by id...");
 
-            var hasUpdated = _dbServices.DeleteCustomerById(customerId);
+        //    var hasUpdated = _dbServices.DeleteCustomerById(customerId);
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
     }
 }

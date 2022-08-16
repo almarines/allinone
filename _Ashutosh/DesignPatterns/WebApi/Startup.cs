@@ -1,4 +1,5 @@
 using Customers.Domain.Repositories;
+using Customers.Infra.Helpers;
 using Customers.Infra.Options;
 using Customers.Infra.Repositories;
 using MediatR;
@@ -27,6 +28,11 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new ConsoleLogger());
+            Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new TextLogger());
+            Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new CloudLogger());
+            Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new XmlLogger());
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

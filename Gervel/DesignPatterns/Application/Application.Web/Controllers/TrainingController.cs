@@ -1,6 +1,7 @@
 ﻿using Application.Web.Commands;
 using Application.Web.Queries;
 using Domain.Training.Models;
+using Infrastructure.Customer.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,7 +21,8 @@ namespace Application.Web.Controllers {
 
 		[HttpGet]
 		public IActionResult Get() {
-			_logger.LogInformation("Getting all trainings...");
+			// _logger.LogInformation("Getting all trainings...");
+			Logger.Instance.Log("[Custom Logger] Get trainings...");
 
 			var getTrainingQuery = new GetTrainingQuery();
 			var trainings = _mediator.Send(getTrainingQuery);

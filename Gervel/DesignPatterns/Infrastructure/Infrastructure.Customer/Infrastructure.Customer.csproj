@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Infrastructure.Common\Infrastructure.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>

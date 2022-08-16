@@ -1,25 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Customers.Api.Application.Commands;
+using Customers.Api.Application.Queries;
+using Customers.Domain.Models;
+using Customers.Domain.Repositories;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApi.Models;
-using WebApi.Services;
 
-namespace WebApi.Controllers
+namespace Customers.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class CustomerController : ControllerBase
     {
         private readonly ILogger<CustomerController> _logger;
-        private ILiteDBServices _dbServices;
+        private readonly IMediator _mediator;
+        private ICustomerRepository _dbServices;
+        private readonly ISupportRepository _supportRepository;
 
-        public CustomerController(ILogger<CustomerController> logger, ILiteDBServices dbservices)
+        public CustomerController(ILogger<CustomerController> logger, IMediator mediator)
         {
             _logger = logger;
-            _dbServices = dbservices;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -27,7 +32,8 @@ namespace WebApi.Controllers
         {
             _logger.LogInformation("Getting all customers...");
 
-            var customers = _dbServices.GetAllCustomers();
+            var getCustomersQuery = new GetCustomersQuery();
+            var customers = _mediator.Send(getCustomersQuery);
 
             return Ok(customers);
         }
@@ -43,13 +49,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult InsertCustomer(Customer customer)
+        public async Task<IActionResult> InsertCustomer(Customer customer)
         {
             _logger.LogInformation("Inserting customer...");
 
-            var bsonValue = _dbServices.InsertCustomer(customer);
+            var createCustomerCommand = new CreateCustomerCommand() { City = customer.City, Id = customer.Id, CompanyName = customer.CompanyName, Name = customer.Name, PhoneNumber = customer.PhoneNumber };
+            var customers = await _mediator.Send(createCustomerCommand);
 
-            return Ok(bsonValue.RawValue);
+            return Ok(customers.Id);
         }
 
         [HttpPut]

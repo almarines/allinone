@@ -1,7 +1,10 @@
-﻿using Application.Web.Queries;
+﻿using Application.Web.Commands;
+using Application.Web.Queries;
+using Domain.Training.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace Application.Web.Controllers {
 	[Route("api/[controller]")]
@@ -15,7 +18,6 @@ namespace Application.Web.Controllers {
 			_mediator = mediator;
 		}
 
-		// GET: api/<TrainingController>
 		[HttpGet]
 		public IActionResult Get() {
 			_logger.LogInformation("Getting all trainings...");
@@ -24,6 +26,16 @@ namespace Application.Web.Controllers {
 			var trainings = _mediator.Send(getTrainingQuery);
 
 			return Ok(trainings);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> InsertCustomer(Training training) {
+			_logger.LogInformation("Inserting training...");
+
+			var createTrainingCommand = new CreateTrainingCommand() { Training = training };
+			var insertResponse = await _mediator.Send(createTrainingCommand);
+
+			return Ok(insertResponse.TrainingId);
 		}
 	}
 }

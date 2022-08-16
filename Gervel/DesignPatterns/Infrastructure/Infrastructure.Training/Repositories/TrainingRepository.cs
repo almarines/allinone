@@ -14,5 +14,9 @@ namespace Infrastructure.Training.Repositories {
 		public IEnumerable<Models.Training> GetAllTrainings() {
 			return _context.DB_GetAllTrainings();
 		}
+
+		public int InsertTraining(Models.Training training) {
+			return _context.DB_InsertTraining(training);
+		}
 	}
 }

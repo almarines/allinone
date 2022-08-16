@@ -19,6 +19,7 @@ namespace Infrastructure.Training.Repositories {
 			try {
 				if (_context == null) {
 					_context = new LiteDatabase($"Filename={configs.Value.PathToDB};Connection=Direct");
+
 					trainingCollection = _context.GetCollection<Models.Training>(TrainingCollection);
 				}
 			} catch (Exception ex) {
@@ -28,6 +29,14 @@ namespace Infrastructure.Training.Repositories {
 
 		public IEnumerable<Models.Training> DB_GetAllTrainings() {
 			return trainingCollection.FindAll();;
+		}
+
+		public int DB_InsertTraining(Models.Training training) {
+			trainingCollection = _context.GetCollection<Models.Training>(TrainingCollection);
+	
+			var bsonValue = trainingCollection.Insert(training);
+				
+			return bsonValue.AsInt32;
 		}
 	}
 }

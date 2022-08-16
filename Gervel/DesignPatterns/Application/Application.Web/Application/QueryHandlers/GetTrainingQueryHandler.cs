@@ -9,12 +9,13 @@ namespace Application.Web.QueryHandlers {
 	public class GetTrainingQueryHandler : IRequestHandler<GetTrainingQuery, GetTrainingResponse> {
 		private readonly ITrainingRepository _trainingRepository;
 
-		public GetTrainingQueryHandler(ITrainingRepository customerRepository) {
-			_trainingRepository = customerRepository;
+		public GetTrainingQueryHandler(ITrainingRepository trainingRepository) {
+			_trainingRepository = trainingRepository;
 		}
 
 		public async Task<GetTrainingResponse> Handle(GetTrainingQuery request, CancellationToken cancellationToken) {
-			var response = new GetTrainingResponse() { Trainings = _trainingRepository.GetAllTrainings()  };
+			var trainings = _trainingRepository.GetAllTrainings();
+			var response = new GetTrainingResponse() { Trainings = trainings };
 
 			return await Task.FromResult(response);
 		}

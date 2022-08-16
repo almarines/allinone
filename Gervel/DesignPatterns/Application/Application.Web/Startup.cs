@@ -34,7 +34,7 @@ namespace Application.Web {
 
 			services.AddSingleton<ILiteDBContext, LiteDBContext>();
 			services.AddTransient<ICustomerRepository, CustomerRepository>();
-			services.AddTransient<ISupportRepository, SupportRepository>();
+			//services.AddTransient<ISupportRepository, SupportRepository>();
 
 
 			// Exercise 1 - Training Domain

@@ -59,24 +59,24 @@ namespace Trainings.Api.Controllers
             return Ok(trainings.Id);
         }
 
-        [HttpPut]
-        public IActionResult UpdateTraining(Training training)
-        {
-            _logger.LogInformation("Updating training...");
+        //[HttpPut]
+        //public IActionResult UpdateTraining(Training training)
+        //{
+        //    _logger.LogInformation("Updating training...");
 
-            var hasUpdated = _dbServices.UpdateTraining(training);
+        //    var hasUpdated = _dbServices.UpdateTraining(training);
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
-        [HttpDelete("{trainingId}")]
-        public IActionResult DeleteTraining(int trainingId)
-        {
-            _logger.LogInformation("Deleting training by id...");
+        //[HttpDelete("{trainingId}")]
+        //public IActionResult DeleteTraining(int trainingId)
+        //{
+        //    _logger.LogInformation("Deleting training by id...");
 
-            var hasUpdated = _dbServices.DeleteTrainingById(trainingId);
+        //    var hasUpdated = _dbServices.DeleteTrainingById(trainingId);
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
     }
 }

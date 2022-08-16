@@ -1,6 +1,9 @@
 using Domain.Customer.Repositories;
+using Domain.Training.Repositories;
+using Infrastructure.Common.Options;
 using Infrastructure.Customer.Options;
 using Infrastructure.Customer.Repositories;
+using Infrastructure.Training.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +35,12 @@ namespace Application.Web {
 			services.AddSingleton<ILiteDBContext, LiteDBContext>();
 			services.AddTransient<ICustomerRepository, CustomerRepository>();
 			services.AddTransient<ISupportRepository, SupportRepository>();
+
+
+			// Exercise 1 - Training Domain
+			services.Configure<CommonDbConfig>(Configuration);
+			services.AddSingleton<ITrainingDBContext, TrainingDBContext>();
+			services.AddTransient<ITrainingRepository, TrainingRepository>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using Trainings.Domain.Repositories;
-using Customers.Infra.Repositories;
+
 
 namespace Trainings.Api
 {

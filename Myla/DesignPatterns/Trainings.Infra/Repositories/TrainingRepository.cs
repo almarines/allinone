@@ -4,7 +4,7 @@ using LiteDB;
 using System;
 using System.Collections.Generic;
 
-namespace Customers.Infra.Repositories
+namespace Trainings.Infra.Repositories
 {
     public class TrainingRepository : ITrainingRepository
     {

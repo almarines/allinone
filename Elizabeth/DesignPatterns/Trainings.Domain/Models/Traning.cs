@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Trainings.Domain
+namespace Trainings.Domain.Models
 {
-    public class Traning
+    public class Training
     {
         public int Id { get; set; }
 

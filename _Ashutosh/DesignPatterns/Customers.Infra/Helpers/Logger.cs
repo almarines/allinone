@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Customers.Infra.Repositories;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,6 +46,21 @@ namespace Customers.Infra.Helpers
         public void LogInfo(string message)
         {
             // log into Ftp
+        }
+    }
+
+    public class LiteDatabaseLogger : ILogger
+    {
+        private readonly LoggerDBContext _loggerDBContext;
+
+        public LiteDatabaseLogger(LoggerDBContext loggerDBContext)
+        {
+            _loggerDBContext = loggerDBContext;
+        }
+
+        public void LogInfo(string message)
+        {
+            _loggerDBContext.InsertLog(new LogEntity() { Message = message, Type = LogType.Info });
         }
     }
 

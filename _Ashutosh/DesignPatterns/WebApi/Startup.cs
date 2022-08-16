@@ -28,10 +28,15 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DbConfig>(Configuration);
+            var connectionString = Configuration.GetValue<string>("LoggerDBConnectionString");
+            var loggerContext = new LoggerDBContext(connectionString);
+
             Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new ConsoleLogger());
             Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new TextLogger());
             Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new CloudLogger());
             Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new XmlLogger());
+            Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new LiteDatabaseLogger(loggerContext));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -39,7 +44,7 @@ namespace WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DP_Example", Version = "v1" });
             });
 
-            services.Configure<DbConfig>(Configuration);
+            
 
             ////var section = Configuration.GetSection("Logging.LogLevel");
             //services.Configure<Logging>(Configuration);
@@ -47,6 +52,7 @@ namespace WebApi
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddSingleton<ILiteDBContext, LiteDBContext>();
+            services.AddSingleton<ILoggerDBContext>(loggerContext);
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<ISupportRepository, SupportRepository>();
         }

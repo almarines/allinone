@@ -29,7 +29,7 @@ namespace Customers.Api.Controllers
         public IActionResult GetAllCustomers()
         {
             _logger.LogInformation("Getting all customers...");
-            Customers.Infra.Helpers.Logger.Instance.Log("Inserting customer...");
+            Customers.Infra.Helpers.Logger.Instance.Log("Get customers...");
 
             var getCustomersQuery = new GetCustomersQuery();
             var customers = _mediator.Send(getCustomersQuery);

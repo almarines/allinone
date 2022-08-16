@@ -1,8 +1,8 @@
-﻿using LiteDB;
+﻿using Customers.Domain.Models;
+using LiteDB;
 using System.Collections.Generic;
-using WebApi.Models;
 
-namespace WebApi.Services
+namespace Customers.Domain.Repositories
 {
     public interface ILiteDBContext
     {
@@ -11,5 +11,9 @@ namespace WebApi.Services
         BsonValue InsertCustomer(Customer customer);
         bool UpdateCustomer(Customer customer);
         bool DeleteCustomerById(int customerId);
+
+        BsonValue InsertSupport(Support support);
+
+        Support GetSupportByCustomerId(int customerId);
     }
 }

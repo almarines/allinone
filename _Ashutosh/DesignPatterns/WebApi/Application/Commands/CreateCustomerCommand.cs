@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Customers.Api.Application.Responses;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApi.Models
+namespace Customers.Api.Application.Commands
 {
-    public class Customer
+    public class CreateCustomerCommand : IRequest<CreateCustomerResponse>
     {
         public int Id { get; set; }
         public string Name { get; set; }

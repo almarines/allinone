@@ -1,17 +1,20 @@
-﻿using LiteDB;
+﻿using Customers.Domain.Models;
+using Customers.Domain.Repositories;
+using Customers.Infra.Options;
+using LiteDB;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using WebApi.Models;
-using WebApi.Options;
 
-namespace WebApi.Services
+namespace Customers.Infra.Repositories
 {
     public class LiteDBContext : ILiteDBContext
     {
         private readonly LiteDatabase _context;
         private static ILiteCollection<Customer> collection;
+        private static ILiteCollection<Support> supportCollection;
         private string nameOfCollection = "Customers";
+        private string SupportCollection = "Supports";
 
         public LiteDBContext(IOptions<DbConfig> configs)
         {
@@ -21,6 +24,7 @@ namespace WebApi.Services
                 {
                     _context = new LiteDatabase($"Filename={configs.Value.PathToDB};Connection=Direct");
                     collection = _context.GetCollection<Customer>(nameOfCollection);
+                    supportCollection = _context.GetCollection<Support>(SupportCollection);
                 }
 
 
@@ -70,6 +74,25 @@ namespace WebApi.Services
             var hasDeleted = collection.Delete(bs);
 
             return hasDeleted;
+        }
+
+
+        public Support GetSupportByCustomerId(int customerId)
+        {
+            var bs = new BsonValue(customerId);
+
+            var support = supportCollection.FindById(bs);
+
+            return support;
+        }
+
+        public BsonValue InsertSupport(Support support)
+        {
+            supportCollection = _context.GetCollection<Support>(nameOfCollection);
+
+            var bsonValue = supportCollection.Insert(support);
+
+            return bsonValue;
         }
     }
 }

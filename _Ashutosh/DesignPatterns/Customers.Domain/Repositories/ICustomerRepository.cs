@@ -1,13 +1,11 @@
-﻿using LiteDB;
+﻿using Customers.Domain.Models;
+using LiteDB;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebApi.Models;
 
-namespace WebApi.Services
+namespace Customers.Domain.Repositories
 {
-    public interface ILiteDBServices
+    public interface ICustomerRepository
     {
         IEnumerable<Customer> GetAllCustomers();
         Customer GetCustomerById(int customerId);

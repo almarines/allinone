@@ -1,17 +1,16 @@
-﻿using LiteDB;
+﻿using Customers.Domain.Models;
+using Customers.Domain.Repositories;
+using LiteDB;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebApi.Models;
 
-namespace WebApi.Services
+namespace Customers.Infra.Repositories
 {
-    public class LiteDBServices : ILiteDBServices
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly ILiteDBContext _context;
 
-        public LiteDBServices(ILiteDBContext context)
+        public CustomerRepository(ILiteDBContext context)
         {
             _context = context;
         }

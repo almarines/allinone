@@ -23,12 +23,38 @@ namespace Customers.Infra.Helpers
 
     }
 
-    public class TextLogger : ILogger
+    public class TextLogger : Disposable, ILogger
     {
+        private readonly FileStream fileStream;
+
+        public TextLogger()
+        {
+            var path = "C:\\_Ashutosh\\Trainings\\log.txt";
+            if (!File.Exists(path))
+            {
+                this.fileStream = File.Create(path);
+            }
+            else
+            {
+                this.fileStream = File.Open(path, FileMode.Open);
+            }
+        }
+
+        protected override void CleanUnManagedResources(bool disposing)
+        {
+            if (this.fileStream != null)
+            {
+                this.fileStream.Dispose();
+            }
+        }
+
         public void LogInfo(string message)
         {
-            File.WriteAllLines("C:\\_Ashutosh\\Trainings\\log.txt", new List<string> { message });
+            var streamWriter = new StreamWriter(this.fileStream);
+            streamWriter.Write(message);
+            streamWriter.Flush();
         }
+
 
     }
 
@@ -49,7 +75,7 @@ namespace Customers.Infra.Helpers
         }
     }
 
-    public class LiteDatabaseLogger : ILogger
+    public class LiteDatabaseLogger : Disposable, ILogger
     {
         private readonly LoggerDBContext _loggerDBContext;
 
@@ -58,19 +84,24 @@ namespace Customers.Infra.Helpers
             _loggerDBContext = loggerDBContext;
         }
 
+        protected override void CleanUnManagedResources(bool disposing)
+        {
+            // Dispose DB Context.
+        }
+
         public void LogInfo(string message)
         {
             _loggerDBContext.InsertLog(new LogEntity() { Message = message, Type = LogType.Info, Time = DateTime.UtcNow.ToString() });
         }
     }
 
-    public interface ILoggerService
+    public interface ILoggerService : IDisposable
     {
         void RegisterObserver(ILogger instance);
         void Log(string message);
     }
 
-    public class LoggerService : ILoggerService
+    public class LoggerService : Disposable, ILoggerService
     {
         //private static Logger instance;
         //private static object lockObj = new object();
@@ -100,6 +131,17 @@ namespace Customers.Infra.Helpers
             foreach (var item in observers.Values)
             {
                 item.LogInfo(message);
+            }
+        }
+
+        protected override void CleanUnManagedResources(bool disposing)
+        {
+            foreach (var item in observers.Values)
+            {
+                if(item is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
             }
         }
     }

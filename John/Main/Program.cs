@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
-using NetConcepts.Model.Utilities;
 
 namespace Main
 {
@@ -10,7 +8,7 @@ namespace Main
         //private readonly Math mathObj;
 
 
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             //Print(10);
             //var mathObj = new Math();
@@ -26,7 +24,8 @@ namespace Main
             //var result1 = stringContObj.Join("FirstName", "LastName");
             //Console.WriteLine(result1);
 
-            var result = await CompanyHelper.CreateCompany("Test", 10);
+            //var myName = "Ashutosh";
+
             Console.ReadKey();
         }
 

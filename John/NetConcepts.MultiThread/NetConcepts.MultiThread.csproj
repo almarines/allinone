@@ -9,8 +9,4 @@
     <OutputPath></OutputPath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\_Ashutosh\Core\Core.csproj" />
-  </ItemGroup>
-
 </Project>

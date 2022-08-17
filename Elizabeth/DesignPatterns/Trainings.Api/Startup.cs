@@ -12,6 +12,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using Trainings.Api.Middlewares;
+using FluentValidation;
+using Trainings.Api.Application.Behaviors;
 
 namespace WebApi
 {
@@ -36,6 +39,8 @@ namespace WebApi
             services.Configure<DbConfig>(Configuration);
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
 
             services.AddSingleton<ILiteDBContext, LiteDBContext>();
             services.AddTransient<ITrainingRepository, TrainingRepository>();
@@ -51,6 +56,8 @@ namespace WebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1"));
             }
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMiddleware<StopwatcherMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();

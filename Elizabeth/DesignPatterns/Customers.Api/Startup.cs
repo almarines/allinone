@@ -1,4 +1,5 @@
 using Customers.Domain.Repositories;
+using Customers.Infra.Helpers;
 using Customers.Infra.Options;
 using Customers.Infra.Repositories;
 using MediatR;
@@ -27,6 +28,18 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DbConfig>(Configuration);
+            var connectionString = Configuration.GetValue<string>("PathToLoggerDB");
+            var loggerContext = new LoggerDBContext(connectionString);
+            var loggerService = new LoggerService();
+            services.AddSingleton<ILoggerService>(loggerService);
+
+            loggerService.RegisterObserver(new ConsoleLogger());
+            loggerService.RegisterObserver(new TextLogger());
+            loggerService.RegisterObserver(new CloudLogger());
+            loggerService.RegisterObserver(new XmlLogger());
+            loggerService.RegisterObserver(new LiteDatabaseLogger(loggerContext));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

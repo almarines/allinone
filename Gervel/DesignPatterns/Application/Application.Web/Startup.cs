@@ -1,3 +1,4 @@
+using Application.Web.Middlewares;
 using Domain.Customer.Repositories;
 using Domain.Training.Repositories;
 using Infrastructure.Common.Options;
@@ -57,6 +58,8 @@ namespace Application.Web {
 			}
 
 			app.UseHttpsRedirection();
+
+			app.UseMiddleware<ErrorHandlingMiddleware>();
 
 			app.UseRouting();
 

@@ -1,6 +1,7 @@
 ﻿using System;
 
-namespace Trainings.Domain
+namespace Trainings.Domain.Models
+
 {
     public class Training
     {

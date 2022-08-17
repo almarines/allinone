@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trainings.Domain.Infrastructure
+namespace Trainings.Infa.Options
 {
     public class TrainingDbConfig
     {

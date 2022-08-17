@@ -1,6 +1,7 @@
 using Domain.Customer.Repositories;
 using Domain.Training.Repositories;
 using Infrastructure.Common.Options;
+using Infrastructure.Customer.Helpers;
 using Infrastructure.Customer.Options;
 using Infrastructure.Customer.Repositories;
 using Infrastructure.Training.Repositories;
@@ -41,6 +42,10 @@ namespace Application.Web {
 			services.Configure<CommonDbConfig>(Configuration);
 			services.AddSingleton<ITrainingDBContext, TrainingDBContext>();
 			services.AddTransient<ITrainingRepository, TrainingRepository>();
+
+			// Behavior Pattern
+			Logger.Instance.RegisterObserver(new ConsoleLogger());
+			Logger.Instance.RegisterObserver(new TextLogger());
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

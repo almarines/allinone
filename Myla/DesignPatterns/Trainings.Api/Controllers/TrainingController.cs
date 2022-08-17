@@ -42,9 +42,13 @@ namespace Trainings.Api.Controllers
         {
             _logger.LogInformation("Getting training by id...");
 
-            var training = _dbServices.GetTrainingById(Id);
+            var training = new  GetTrainingByIdQuery();
 
-            return Ok(training);
+            training.Id = Id;
+
+            var train = _mediator.Send(training);
+
+            return Ok(train);
         }
 
         [HttpPost]
@@ -58,24 +62,24 @@ namespace Trainings.Api.Controllers
             return Ok(trainings.Id);
         }
 
-        [HttpPut]
-        public IActionResult UpdateTraining(Training training)
-        {
-            _logger.LogInformation("Updating training...");
+        //[HttpPut]
+        //public IActionResult UpdateTraining(Training training)
+        //{
+        //    _logger.LogInformation("Updating training...");
 
-            var hasUpdated = _dbServices.UpdateTraining(training);
+        //    var hasUpdated = _dbServices.UpdateTraining(training);
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
-        [HttpDelete("{Id}")]
-        public IActionResult DeleteTraining(int Id)
-        {
-            _logger.LogInformation("Deleting training by id...");
+        //[HttpDelete("{Id}")]
+        //public IActionResult DeleteTraining(int Id)
+        //{
+        //    _logger.LogInformation("Deleting training by id...");
 
-            var hasUpdated = _dbServices.DeleteTrainingById(Id);
+        //    var hasUpdated = _dbServices.DeleteTrainingById(Id);
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
     }
 }

@@ -60,30 +60,36 @@ namespace Customers.Infra.Helpers
 
         public void LogInfo(string message)
         {
-            _loggerDBContext.InsertLog(new LogEntity() { Message = message, Type = LogType.Info });
+            _loggerDBContext.InsertLog(new LogEntity() { Message = message, Type = LogType.Info, Time = DateTime.UtcNow.ToString() });
         }
     }
 
-    public class Logger
+    public interface ILoggerService
     {
-        private static Logger instance;
-        private static object lockObj = new object();
+        void RegisterObserver(ILogger instance);
+        void Log(string message);
+    }
 
-        public static Logger Instance
-        {
-            get
-            {
-                lock (lockObj)
-                {
-                    if (instance == null)
-                    {
-                        instance = new Logger();
-                    }
+    public class LoggerService : ILoggerService
+    {
+        //private static Logger instance;
+        //private static object lockObj = new object();
 
-                    return instance;
-                }
-            }
-        }
+        //public static Logger Instance
+        //{
+        //    get
+        //    {
+        //        lock (lockObj)
+        //        {
+        //            if (instance == null)
+        //            {
+        //                instance = new Logger();
+        //            }
+
+        //            return instance;
+        //        }
+        //    }
+        //}
 
         private static readonly IDictionary<Type, ILogger> observers = new Dictionary<Type, ILogger>();
 

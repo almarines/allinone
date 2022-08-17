@@ -1,3 +1,4 @@
+using Customers.Api.Middlewares;
 using Customers.Domain.Repositories;
 using Customers.Infra.Helpers;
 using Customers.Infra.Options;
@@ -13,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using FluentValidation;
+using Customers.Api.Application.Behaviors;
 
 namespace WebApi
 {
@@ -31,12 +34,14 @@ namespace WebApi
             services.Configure<DbConfig>(Configuration);
             var connectionString = Configuration.GetValue<string>("LoggerDBConnectionString");
             var loggerContext = new LoggerDBContext(connectionString);
+            var loggerService = new LoggerService();
+            services.AddSingleton<ILoggerService>(loggerService);
 
-            Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new ConsoleLogger());
-            Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new TextLogger());
-            Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new CloudLogger());
-            Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new XmlLogger());
-            Customers.Infra.Helpers.Logger.Instance.RegisterObserver(new LiteDatabaseLogger(loggerContext));
+            loggerService.RegisterObserver(new ConsoleLogger());
+            loggerService.RegisterObserver(new TextLogger());
+            loggerService.RegisterObserver(new CloudLogger());
+            loggerService.RegisterObserver(new XmlLogger());
+            loggerService.RegisterObserver(new LiteDatabaseLogger(loggerContext));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -50,6 +55,8 @@ namespace WebApi
             //services.Configure<Logging>(Configuration);
             //var section = Configuration.GetSection("Logging").Get<Logging>();
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
 
             services.AddSingleton<ILiteDBContext, LiteDBContext>();
             services.AddSingleton<ILoggerDBContext>(loggerContext);
@@ -67,6 +74,8 @@ namespace WebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1"));
             }
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMiddleware<StopwatcherMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();

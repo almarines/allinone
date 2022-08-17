@@ -19,6 +19,8 @@ namespace Customers.Infra.Repositories
         public string Message { get; set; }
 
         public LogType Type { get; set; }
+
+        public string Time { get; set; }
     }
 
     public interface ILoggerDBContext

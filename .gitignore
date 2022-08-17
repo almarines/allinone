@@ -365,3 +365,4 @@ __pycache__/
 *.xps
 *.zip
 *.[A-Z][A-Z][A-Z]  ## all upper case extensions.
+/Elizabeth/DesignPatterns/Customers.Infra/log.txt

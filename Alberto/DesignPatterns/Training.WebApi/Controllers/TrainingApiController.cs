@@ -5,8 +5,7 @@ using Microsoft.Extensions.Options;
 using Trainings.Infa.Options;
 using Trainings.WebApi.Applications.Command;
 using Trainings.WebApi.Applications.Queries;
-
-using MyTraining = Trainings.Domain.Models;
+using Trainings.Domain.Models;
 
 namespace Trainings.WebApi.Controllers;
 [Route("api/[controller]")]
@@ -27,21 +26,21 @@ public class TrainingApiController : ControllerBase
     {
         _logger.LogInformation("Getting all customers...");
 
-        var getTrainingQuery = new GetTrainingQuery();
+        var getTrainingQuery = new GetTrainingsQuery();
         var training = _mediator.Send(getTrainingQuery);
 
         return Ok(training);
     }
 
     [HttpPost]
-    public async Task<IActionResult> InsertTraining(MyTraining.Training training )
+    public async Task<IActionResult> InsertTraining(Training training )
     {
         _logger.LogInformation("Inserting customer...");
 
-        var createCustomerCommand = new CreateTrainingCommand() {Id = training.Id, Name = training.Name};
-        var customers = await _mediator.Send(createCustomerCommand);
+        var createCommand = new CreateTrainingCommand() {Id = training.Id, Name = training.Name};
+        var trainings = await _mediator.Send(createCommand);
 
-        return Ok(customers.Id);
+        return Ok(trainings.Id);
     }
 
 }

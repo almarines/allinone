@@ -1,4 +1,6 @@
+using Customers.Api.Middlewares;
 using Customers.Domain.Repositories;
+using Customers.Infra.Helpers;
 using Customers.Infra.Options;
 using Customers.Infra.Repositories;
 using MediatR;
@@ -12,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using FluentValidation;
+using Customers.Api.Application.Behaviors;
 
 namespace WebApi
 {
@@ -27,20 +31,35 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DbConfig>(Configuration);
+            var connectionString = Configuration.GetValue<string>("LoggerDBConnectionString");
+            var loggerContext = new LoggerDBContext(connectionString);
+            var loggerService = new LoggerService();
+            services.AddSingleton<ILoggerService>(loggerService);
+
+            loggerService.RegisterObserver(new ConsoleLogger());
+            loggerService.RegisterObserver(new TextLogger());
+            loggerService.RegisterObserver(new CloudLogger());
+            loggerService.RegisterObserver(new XmlLogger());
+            loggerService.RegisterObserver(new LiteDatabaseLogger(loggerContext));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DP_Example", Version = "v1" });
             });
 
-            services.Configure<DbConfig>(Configuration);
+            
 
             ////var section = Configuration.GetSection("Logging.LogLevel");
             //services.Configure<Logging>(Configuration);
             //var section = Configuration.GetSection("Logging").Get<Logging>();
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
 
             services.AddSingleton<ILiteDBContext, LiteDBContext>();
+            services.AddSingleton<ILoggerDBContext>(loggerContext);
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<ISupportRepository, SupportRepository>();
         }
@@ -55,6 +74,8 @@ namespace WebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1"));
             }
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMiddleware<StopwatcherMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();

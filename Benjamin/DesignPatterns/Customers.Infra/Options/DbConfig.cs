@@ -9,6 +9,7 @@ namespace Customers.Infra.Options
     {
         public string PathToDB { get; set; }
 
+        public string LoggerDBConnectionString { get; set; }
         //public LoggLevel Loglevel { get; set; }
     }
 

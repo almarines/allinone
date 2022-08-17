@@ -8,6 +8,7 @@ namespace Customers.Infra.Options
     public class DbConfig
     {
         public string PathToDB { get; set; }
+        public string PathToLoggerDB { get; set; }
 
         //public LoggLevel Loglevel { get; set; }
     }

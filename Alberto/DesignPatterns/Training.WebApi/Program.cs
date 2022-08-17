@@ -26,7 +26,7 @@ IServiceCollection serviceCollection = builder.Services.Configure<TrainingDbConf
 
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
-builder.Services.AddSingleton<ITraining, TrainingContext>();
+builder.Services.AddSingleton<ITrainingDbContext, TrainingDbContext>();
 //services.AddTransient<ITrainingRepository, TrainingRepository>();
 
 

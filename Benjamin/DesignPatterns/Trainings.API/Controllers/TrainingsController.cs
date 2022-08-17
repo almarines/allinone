@@ -27,8 +27,8 @@ namespace Trainings.API.Controllers
             _logger.LogInformation("Getting all customers...");
 
             var getCustomersQuery = new GetAllTrainings();
-            var customers = _mediator.Send(getCustomersQuery);
 
+            var customers = _mediator.Send(getCustomersQuery);
             return Ok(customers);
         }
 

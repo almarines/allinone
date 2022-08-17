@@ -3,6 +3,41 @@ using System.Collections.Generic;
 
 namespace Creator_Struct_DP1
 {
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var python = new Training(new PythonTrainingStrategy());
+            var go = new Training(new GoLangTrainingStrategy());
+
+            Console.WriteLine(python.TrainingCost());
+            Console.WriteLine(python.Courses());
+            Console.WriteLine(go.TrainingCost());
+            Console.WriteLine(go.Courses());
+
+            Console.ReadKey();
+        }
+    }
+
+    public class Training
+    {
+        private readonly ITrainingStrategy _trainingStrategy;
+
+        public Training(ITrainingStrategy trainingStrategy)
+        {
+            _trainingStrategy = trainingStrategy;
+        }
+
+        public string Name { get; set; }
+
+        public int Id { get; set; }
+
+        public int TrainingCost() => _trainingStrategy.GetTrainignCost();
+        public IEnumerable<string> Courses() => _trainingStrategy.GetCourses();
+
+
+        // many more
+    }
 
     public interface ITrainingStrategy
     {
@@ -39,93 +74,6 @@ namespace Creator_Struct_DP1
 
     }
 
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            var FullTimeEmp = new Employee(new FullTimeEmployeeStrategy());
-            var partTimeEmp = new Employee(new PartTimeEmployeeStrategy());
+   
 
-            Console.WriteLine(FullTimeEmp.NumbersOfLeave());
-            Console.WriteLine(partTimeEmp.NumbersOfLeave());
-
-            Console.ReadKey();
-        }
-    }
-
-    public interface IEmployeeStrategy
-    {
-        int NumbersOfLeave();
-        string GetInsurance();
-        string Contract();
-    }
-
-    public class FullTimeEmployeeStrategy : IEmployeeStrategy
-    {
-        public string Contract()
-        {
-            return "Full Time contract";
-        }
-
-        public string GetInsurance()
-        {
-            return "XX";
-        }
-
-        public int NumbersOfLeave()
-        {
-            return 10;
-        }
-    }
-
-    public class PartTimeEmployeeStrategy : IEmployeeStrategy
-    {
-        public string Contract()
-        {
-            return "Part Time contract";
-        }
-
-        public string GetInsurance()
-        {
-            return "X";
-        }
-
-        public int NumbersOfLeave()
-        {
-            return 5;
-        }
-    }
-
-    public class Employee
-    {
-        private readonly IEmployeeStrategy employeeStrategy;
-
-        public Employee(IEmployeeStrategy employeeStrategy)
-        {
-            this.employeeStrategy = employeeStrategy;
-        }
-
-        public string Name { get; set; }
-
-        public int Id { get; set; }
-
-        public int NumbersOfLeave() => this.employeeStrategy.NumbersOfLeave();
-        public string GetInsurance() => this.employeeStrategy.GetInsurance();
-        public string Contract() => this.employeeStrategy.Contract();
-
-        // many more
-    }
-
-    //public class FullTimeEmployee : Emplpoyee
-    //{
-    //    public FullTimeEmployee()
-    //    {
-
-    //    }
-    //}
-
-    //public class PartTimeEmployee : Emplpoyee
-    //{
-
-    //}
 }

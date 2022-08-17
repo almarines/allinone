@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Exercise.StrategyPattern {
 	public class Program {
@@ -11,9 +10,9 @@ namespace Exercise.StrategyPattern {
             var goLangTraining = new Training(new GoLangTrainingStrategy());
 
             Console.WriteLine($"Python Trainig Cost: { pythonTraining.GetTrainignCost() }");
-            Console.WriteLine($"Python Courses: { string.Join(", ", pythonTraining.GetCourses()) }");
+            Console.WriteLine($"Python Courses: [{ string.Join(", ", pythonTraining.GetCourses()) }]");
             Console.WriteLine($"\nGo Lang Trainig Cost: { goLangTraining.GetTrainignCost() }");
-            Console.WriteLine($"Go Lang Courses: { string.Join(", ", goLangTraining.GetCourses()) }");
+            Console.WriteLine($"Go Lang Courses: [{ string.Join(", ", goLangTraining.GetCourses()) }]");
 
             _ = Console.ReadKey();
         }
@@ -37,11 +36,11 @@ namespace Exercise.StrategyPattern {
 
     public class PythonTrainingStrategy : ITrainingStrategy {
         public int GetTrainignCost() => 100;
-        public IEnumerable<string> GetCourses() => new List<string> { "basic python", "py sql", "Dyngo" };
+        public IEnumerable<string> GetCourses() => new List<string> { "Basic Python", "Python SQL", "Dyngo" };
     }
 
     public class GoLangTrainingStrategy : ITrainingStrategy {
         public int GetTrainignCost() => 150;
-        public IEnumerable<string> GetCourses() => new List<string> { "basic Go" };
+        public IEnumerable<string> GetCourses() => new List<string> { "Basic Go" };
     }
 }

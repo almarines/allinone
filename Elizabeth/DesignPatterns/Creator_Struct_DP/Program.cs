@@ -3,36 +3,49 @@ using System.Collections.Generic;
 
 namespace Creator_Struct_DP
 {
-    public abstract class Training
+    public interface ITrainingStrategy
     {
-        public abstract int GetTrainignCost();
+        int GetTrainingCost();
+        IEnumerable<string> GetCourses();
+    }
 
-        public abstract IEnumerable<string> GetCourses();
+    public class Training
+    {
+        private readonly ITrainingStrategy _trainingStrategy;
+
+        public Training(ITrainingStrategy trainingStrategy)
+        {
+            _trainingStrategy = trainingStrategy;
+        }
+
+        public int GetTrainingCost() => _trainingStrategy.GetTrainingCost();
+
+        public IEnumerable<string> GetCourses() => _trainingStrategy.GetCourses();
 
     }
 
-    public class PythonTraining : Training
+    public class PythonTrainingStrategy : ITrainingStrategy
     {
-        public override int GetTrainignCost()
+        public int GetTrainingCost()
         {
             return 100;
         }
 
-        public override IEnumerable<string> GetCourses()
+        public IEnumerable<string> GetCourses()
         {
             return new List<string> { "basic python", "py sql", "Dyngo" };
         }
 
     }
 
-    public class GoLangTraining : Training
+    public class GoLangTrainingStrategy : ITrainingStrategy
     {
-        public override int GetTrainignCost()
+        public int GetTrainingCost()
         {
             return 150;
         }
 
-        public override IEnumerable<string> GetCourses()
+        public IEnumerable<string> GetCourses()
         {
             return new List<string> { "basic Go" };
         }
@@ -43,11 +56,22 @@ namespace Creator_Struct_DP
     {
         static void Main(string[] args)
         {
-            var FullTimeEmp = new Employee(new FullTimeEmployeeStrategy());
-            var partTimeEmp = new Employee(new PartTimeEmployeeStrategy());
+            //var FullTimeEmp = new Employee(new FullTimeEmployeeStrategy());
+            //var partTimeEmp = new Employee(new PartTimeEmployeeStrategy());
 
-            Console.WriteLine(FullTimeEmp.NumbersOfLeave());
-            Console.WriteLine(partTimeEmp.NumbersOfLeave());
+            //Console.WriteLine(FullTimeEmp.NumbersOfLeave());
+            //Console.WriteLine(partTimeEmp.NumbersOfLeave());
+
+
+            var pythonTraining = new Training(new PythonTrainingStrategy());
+            var goLangTraining = new Training(new GoLangTrainingStrategy());
+
+            Console.WriteLine($"Python training cost: {pythonTraining.GetTrainingCost()}");
+            Console.WriteLine("Courses:");
+            Console.WriteLine(string.Join(Environment.NewLine, pythonTraining.GetCourses()));
+            Console.WriteLine($"\nGoLang training cost: {goLangTraining.GetTrainingCost()}");
+            Console.WriteLine("Courses:");
+            Console.WriteLine(string.Join(Environment.NewLine, goLangTraining.GetCourses()));
 
             Console.ReadKey();
         }

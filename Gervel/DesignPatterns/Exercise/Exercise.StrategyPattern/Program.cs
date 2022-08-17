@@ -11,9 +11,9 @@ namespace Exercise.StrategyPattern {
             var goLangTraining = new Training(new GoLangTrainingStrategy());
 
             Console.WriteLine($"Python Trainig Cost: { pythonTraining.GetTrainignCost() }");
-            Console.WriteLine($"Python Courses: { String.Join(", ", pythonTraining.GetCourses()) }");
+            Console.WriteLine($"Python Courses: { string.Join(", ", pythonTraining.GetCourses()) }");
             Console.WriteLine($"\nGo Lang Trainig Cost: { goLangTraining.GetTrainignCost() }");
-            Console.WriteLine($"Go Lang Courses: { String.Join(", ", goLangTraining.GetCourses()) }");
+            Console.WriteLine($"Go Lang Courses: { string.Join(", ", goLangTraining.GetCourses()) }");
 
             _ = Console.ReadKey();
         }

@@ -21,16 +21,29 @@ namespace Creator_Struct_DP
 
             // Absract factory
 
-            var africa = new AfricaFactory();
-            var AfricaAgency = new AnimalAgency(africa);
-            AfricaAgency.Create();
-            AfricaAgency.Run();
+            //var africa = new AfricaFactory();
+            //var AfricaAgency = new AnimalAgency(africa);
+            //AfricaAgency.Create();
+            //AfricaAgency.Run();
 
 
-            var americafactory = new AmericaFactory();
-            var AmericanAgency = new AnimalAgency(americafactory);
-            AmericanAgency.Create();
-            AmericanAgency.Run();
+            //var americafactory = new AmericaFactory();
+            //var AmericanAgency = new AnimalAgency(americafactory);
+            //AmericanAgency.Create();
+            //AmericanAgency.Run();
+
+
+            // Bridge Pattern
+            //var abstractor = new Abstraction();
+            //abstractor.Implementor = new Implementor1();
+            //abstractor.Operation();
+
+            // Decorator Pattern
+
+            ConcreateComponent c = new ConcreateComponent();
+            ConcreateDecorator d = new ConcreateDecorator();
+            d.SetComponent(c);
+            d.Operation();
 
             Console.ReadKey();
         }
@@ -239,6 +252,90 @@ namespace Creator_Struct_DP
             return new Bison();
         }
     }
+
+    #endregion
+
+    #region Bridge Pattern
+
+    //public class Abstraction
+    //{
+    //    protected IImplementor implementor;
+    //    public IImplementor Implementor
+    //    {
+    //        set { implementor = value; }
+    //    }
+    //    public virtual void Operation()
+    //    {
+    //        implementor.Operation();
+    //    }
+    //}
+
+    //public interface IImplementor
+    //{
+    //     void Operation();
+    //}
+
+    //public class Implementor1 : IImplementor
+    //{
+    //    public void Operation()
+    //    {
+    //        Console.WriteLine("Implementor 1");
+    //    }
+    //}
+
+    //public class Implementor2 : IImplementor
+    //{
+    //    public void Operation()
+    //    {
+    //        Console.WriteLine("Implementor 2");
+    //    }
+    //}
+
+
+    #endregion
+
+    #region Decorator
+
+    public abstract class Component
+    {
+        public abstract void Operation();
+    }
+
+    public class ConcreateComponent : Component
+    {
+        public override void Operation()
+        {
+            Console.WriteLine("Inside ConcreateComponent Operation");
+        }
+    }
+
+    public abstract class Decorator : Component
+    {
+        private Component Component;
+
+        public void SetComponent(Component c)
+        {
+            this.Component = c;
+        }
+
+        public override void Operation()
+        {
+           if(this.Component != null)
+            {
+                this.Component.Operation();
+            }
+        }
+    }
+
+    public class ConcreateDecorator : Decorator
+    {
+        public override void Operation()
+        {
+            Console.WriteLine("Inside ConcreateDecorator Operation");
+            base.Operation();
+        }
+    }
+
 
     #endregion
 }

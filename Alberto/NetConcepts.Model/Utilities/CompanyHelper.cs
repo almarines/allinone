@@ -9,7 +9,7 @@ namespace NetConcepts.Model.Utilities
 {
     internal static class CompanyHelper
     {
-        public static Company CreateCompany(string companyName, int noOfEmp)
+        public static async Task<Company> CreateCompany(string companyName, int noOfEmp)
         {
             var c = new Company(companyName);
             for (int i = 1; i < noOfEmp; i++)
@@ -17,7 +17,7 @@ namespace NetConcepts.Model.Utilities
                 c.Employees.Add(new Employee($"Emp {i}", i.ToString()));
             }
 
-            return c;
+            return await Task.FromResult(c);
         }       
     }
 }

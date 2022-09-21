@@ -19,6 +19,16 @@ namespace BasicModule
             return a + b;
         }
 
+        public void AddPositiveNumbers(int a, int b, out int result)
+        {
+            if (a <= 0 || b <= 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            result = a + b;
+        }
+
         public int Max(int a, int b)
         {
             var maxvalue = Math.Max(a, b);

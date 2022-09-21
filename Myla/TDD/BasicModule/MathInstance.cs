@@ -9,14 +9,14 @@ namespace BasicModule
             return a + b;
         }
 
-        public int AddPositiveNumbers(int a, int b)
+        public void AddPositiveNumbers(int a, int b, out int result)
         {
             if (a <= 0 || b <= 0)
             {
                 throw new InvalidOperationException();
             }
 
-            return a + b;
+            result = a + b;
         }
 
         public int Max(int a, int b)

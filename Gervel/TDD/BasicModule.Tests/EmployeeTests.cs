@@ -12,7 +12,10 @@ namespace BasicModule.Tests {
 
 			Assert.NotEmpty(e.Name);
 			Assert.NotNull(e.Name);
-			Assert.NotNull(e.Id); // ?
+			Assert.Equal("Employee 1", e.Name);
+
+			Assert.IsType<Guid>(e.Id);
+			Assert.NotNull(e.Id.ToString());
 		}
 
 		[Fact]
@@ -21,7 +24,11 @@ namespace BasicModule.Tests {
 
 			Assert.NotEmpty(e.Name);
 			Assert.NotNull(e.Name);
-			Assert.NotNull(e.Id); //?
+			Assert.Equal("Fulltime Employee 1", e.Name);
+
+			Assert.IsType<Guid>(e.Id);
+			Assert.NotNull(e.Id.ToString());
+
 			Assert.IsAssignableFrom<Employee>(e);
 		}
 
@@ -31,7 +38,11 @@ namespace BasicModule.Tests {
 
 			Assert.NotEmpty(e.Name);
 			Assert.NotNull(e.Name);
-			Assert.NotNull(e.Id); // ?
+			Assert.Equal("Part-time Employee 1", e.Name);
+
+			Assert.IsType<Guid>(e.Id);
+			Assert.NotNull(e.Id.ToString());
+
 			Assert.IsAssignableFrom<Employee>(e);
 		}
 	}

@@ -19,10 +19,10 @@ namespace BasicModule
             result = a + b;
         }
 
-        public int Max(int a, int b)
+        public void Max(int a, int b, out int result)
         {
             var maxvalue = Math.Max(a, b);
-            return maxvalue;
+            result = maxvalue;
         }
     }
 }

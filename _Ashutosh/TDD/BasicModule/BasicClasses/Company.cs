@@ -16,22 +16,14 @@ namespace BasicModule.BasicClasses
         {
             Name = name;
             Employees = new List<Employee>();
-            Employees.Add(new Employee("First Emp", 1));
+            Employees.Add(new Employee("First Emp"));
         }
 
-        public Employee this[string name, int code]
+        public Employee this[string name]
         {
             get
             {
-                return Employees.FirstOrDefault(s => s.Name == name && s.EmpCode == code);
-            }
-        }
-
-        public Employee this[int code]
-        {
-            get
-            {
-                return Employees.FirstOrDefault(s => s.EmpCode == code);
+                return Employees.FirstOrDefault(s => s.Name == name);
             }
         }
 

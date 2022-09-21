@@ -35,5 +35,26 @@ namespace BasicModule.BasicClasses
             }
         }
 
+        public void Add(Employee e)
+        {
+            if(string.IsNullOrEmpty(e.Name))
+            {
+                throw new InvalidOperationException();
+            }
+
+            Employees.Add(e);
+        }
+
+        public void Remove(string name)
+        {
+            var e = Employees.FirstOrDefault(s => s.Name == name);
+            if (e == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            Employees.Remove(e);
+        }
+
     }
 }

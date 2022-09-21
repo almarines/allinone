@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{2BAFDABC-7A37-4B42-8FC6-92EB923F7FEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnit_Basis", "XUnit_Basis\XUnit_Basis.csproj", "{C5D68916-1AD4-4BE6-94DF-64D684A0A69A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnit_Basis", "XUnit_Basis\XUnit_Basis.csproj", "{1BB17697-258E-4A3A-B21D-50A7E25C80B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +39,10 @@ Global
 		{B2297C3A-BF0A-4046-A49E-20D47C8CC5FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2297C3A-BF0A-4046-A49E-20D47C8CC5FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2297C3A-BF0A-4046-A49E-20D47C8CC5FC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C5D68916-1AD4-4BE6-94DF-64D684A0A69A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5D68916-1AD4-4BE6-94DF-64D684A0A69A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5D68916-1AD4-4BE6-94DF-64D684A0A69A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5D68916-1AD4-4BE6-94DF-64D684A0A69A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BB17697-258E-4A3A-B21D-50A7E25C80B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BB17697-258E-4A3A-B21D-50A7E25C80B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BB17697-258E-4A3A-B21D-50A7E25C80B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BB17697-258E-4A3A-B21D-50A7E25C80B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

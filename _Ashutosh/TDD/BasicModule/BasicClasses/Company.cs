@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+[assembly: InternalsVisibleTo("XUnit_BasicModules_Tests")]
 namespace BasicModule.BasicClasses
 {
     internal class Company
@@ -16,22 +18,14 @@ namespace BasicModule.BasicClasses
         {
             Name = name;
             Employees = new List<Employee>();
-            Employees.Add(new Employee("First Emp", 1));
+            Employees.Add(new Employee("First Emp"));
         }
 
-        public Employee this[string name, int code]
+        public Employee this[string name]
         {
             get
             {
-                return Employees.FirstOrDefault(s => s.Name == name && s.EmpCode == code);
-            }
-        }
-
-        public Employee this[int code]
-        {
-            get
-            {
-                return Employees.FirstOrDefault(s => s.EmpCode == code);
+                return Employees.FirstOrDefault(s => s.Name == name);
             }
         }
 

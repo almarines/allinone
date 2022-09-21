@@ -11,7 +11,7 @@ namespace BasicModule
 
         public int AddPositiveNumbers(int a, int b)
         {
-            if (a <= 0 || b <= 0)
+            if (a < 0 || b < 0)
             {
                 throw new InvalidOperationException();
             }
@@ -21,7 +21,7 @@ namespace BasicModule
 
         public void AddPositiveNumbers(int a, int b, out int result)
         {
-            if (a <= 0 || b <= 0)
+            if (a < 0 || b < 0)
             {
                 throw new InvalidOperationException();
             }

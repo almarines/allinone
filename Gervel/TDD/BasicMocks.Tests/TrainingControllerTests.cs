@@ -238,7 +238,7 @@ namespace BasicMocks.Tests {
 
 		#region Tests for TrainingController.DeleteWithConsole()
 		[Fact]
-		public async void DeleteWithConsole_Tests() {
+		public async void TrainingController_DeleteWithConsole_Tests() {
 			Container.Cleanup(); // Temporary solution to clear singleton for each tests
 
 			var mockTrainingData = Substitute.For<ITrainingData>();
@@ -258,8 +258,27 @@ namespace BasicMocks.Tests {
 		}
 		#endregion
 
-		#region Tests for TrainingController.Update()
-		// T.B.D
+		#region Tests for TrainingController.GetTrainings()
+
+		[Fact]
+		public void TrainingController_GetTraining_Tests() {
+			Container.Cleanup(); // Temporary solution to clear singleton for each tests
+
+			var mockTrainingData = Substitute.For<ITrainingData>();
+			mockTrainingData
+				.When(t => t.GetTraining(Arg.Any<int>(), out Arg.Any<Training>()))
+				.Do(t => {
+					t[1] = new Training { Id = 42 };
+				});
+
+			var controller = new TrainingController(mockTrainingData);
+
+			controller.GetTraining(1, out Training actualTrainingOut);
+
+			Assert.NotNull(actualTrainingOut);
+			Assert.Equal(42, actualTrainingOut.Id);
+		}
+
 		#endregion
 	}
 }

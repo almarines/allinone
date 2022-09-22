@@ -84,6 +84,10 @@ namespace BasicMocks {
 
 			return result;
 		}
+
+        public void GetTraining(int id, out Training t) {
+            _trainingData.GetTraining(id, out t);
+		}
     }
 
 }

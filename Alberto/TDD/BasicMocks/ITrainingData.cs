@@ -23,6 +23,8 @@ namespace BasicMocks
 
         Task<bool> Add(string name, string cost);
 
+        Task<bool> Update(int id, string name);
+
         Task<bool> Delete(int id);
         Task<IEnumerable<Training>> GetAllTrainings();
     }
@@ -50,6 +52,11 @@ namespace BasicMocks
         public async Task<IEnumerable<Training>> GetAllTrainings()
         {
             return await Task.FromResult(list);
+        }
+
+        public async Task<bool> Update(int id, string name)
+        {
+            return await Task.FromResult(true);
         }
     }
 

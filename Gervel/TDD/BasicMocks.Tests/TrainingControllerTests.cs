@@ -2,6 +2,7 @@ using Core;
 using Core.Contracts;
 using NSubstitute;
 using System.Diagnostics.CodeAnalysis;
+using static BasicMocks.TrainingController;
 
 namespace BasicMocks.Tests {
 	[ExcludeFromCodeCoverage]
@@ -142,7 +143,7 @@ namespace BasicMocks.Tests {
 			Assert.ThrowsAsync<InvalidOperationException>(result);
 		}
 
-		#region Test for TrainingController.Delete()
+		#region Tests for TrainingController.Delete()
 
 		[Theory]
 		[InlineData(-1)]
@@ -232,6 +233,33 @@ namespace BasicMocks.Tests {
 		// update BasicMocks.Tests.csproj by adding the config from the article below:
 		// https://stackoverflow.com/questions/38460253/how-to-use-system-windows-forms-in-net-core-class-library
 
+		#endregion
+
+
+		#region Tests for TrainingController.DeleteWithConsole()
+		[Fact]
+		public async void DeleteWithConsole_Tests() {
+			Container.Cleanup(); // Temporary solution to clear singleton for each tests
+
+			var mockTrainingData = Substitute.For<ITrainingData>();
+			mockTrainingData.Delete(Arg.Any<int>()).Returns(Task.FromResult(true));
+
+			var mockMessageBox = Substitute.For<IConsoleService>();
+			Container.AddSingelten<IConsoleService>(mockMessageBox);
+
+			var controller = new TrainingController(mockTrainingData);
+
+			var deleteResult = await controller.DeleteWithConsole(1);
+
+			Assert.True(deleteResult);
+			mockMessageBox.Received().WriteLine("before deleting Employee");
+			await mockTrainingData.Received().Delete(Arg.Any<int>());
+			mockMessageBox.Received().WriteLine("after deleting Employee");
+		}
+		#endregion
+
+		#region Tests for TrainingController.Update()
+		// T.B.D
 		#endregion
 	}
 }

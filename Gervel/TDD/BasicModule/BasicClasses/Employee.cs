@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("BasicModule.Tests")]
 namespace BasicModule.BasicClasses
 {
     internal class Employee
@@ -8,24 +10,16 @@ namespace BasicModule.BasicClasses
 
         public Guid Id { get; }
 
-        public int EmpCode { get; }
-
-        public Employee(string name, int code)
+        public Employee(string name)
         {
             Name = name;
-            EmpCode = code;
             Id = Guid.NewGuid();
         }
-
-        //public override string ToString()
-        //{
-        //    return string.Concat(EmpCode, ":", Name);
-        //}
     }
 
     internal class FullTimeEmp : Employee
     {
-        public FullTimeEmp(string name, int code) : base(name, code)
+        public FullTimeEmp(string name) : base(name)
         {
 
         }
@@ -33,7 +27,7 @@ namespace BasicModule.BasicClasses
 
     internal class PartTimeEmp : Employee
     {
-        public PartTimeEmp(string name, int code) : base(name, code)
+        public PartTimeEmp(string name) : base(name)
         {
 
         }

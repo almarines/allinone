@@ -31,8 +31,11 @@ namespace TestProject1
         public void MaxTest()
         {
             var mathInstance = new MathInstance();
- 
-            Assert.Equal(2, mathInstance.Max(1, 2));
+
+            mathInstance.Max(1, 2, out int result);
+
+
+            Assert.Equal(2, result);
             
         }
     }

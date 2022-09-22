@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
-namespace BasicModule.BasicClasses
-{
+[assembly: InternalsVisibleTo("BasicModule.Tests")]
+namespace BasicModule.BasicClasses {
     internal class Company
     {
         public IList<Employee> Employees;
@@ -16,23 +15,36 @@ namespace BasicModule.BasicClasses
         {
             Name = name;
             Employees = new List<Employee>();
-            Employees.Add(new Employee("First Emp", 1));
+            Employees.Add(new Employee("First Emp"));
         }
 
-        public Employee this[string name, int code]
+        public Employee this[string name]
         {
             get
             {
-                return Employees.FirstOrDefault(s => s.Name == name && s.EmpCode == code);
+                return Employees.FirstOrDefault(s => s.Name == name);
             }
         }
 
-        public Employee this[int code]
+        public void Add(Employee e)
         {
-            get
+            if(string.IsNullOrEmpty(e.Name))
             {
-                return Employees.FirstOrDefault(s => s.EmpCode == code);
+                throw new InvalidOperationException();
             }
+
+            Employees.Add(e);
+        }
+
+        public void Remove(string name)
+        {
+            var e = Employees.FirstOrDefault(s => s.Name == name);
+            if (e == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            Employees.Remove(e);
         }
 
     }

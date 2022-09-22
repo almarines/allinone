@@ -173,7 +173,12 @@ namespace BasicMock_Tests
             // Arrange      
             // training DB context
             var mockTrainingData = Substitute.For<ITrainingData>();
-            mockTrainingData.Delete(Arg.Any<int>()).Returns(Task.FromResult(expectedResult));
+            mockTrainingData.Delete(Arg.Any<int>()).Returns(Task.FromResult(expectedResult)); // NSub
+
+            //mockTrainingData.Setup(s => s.Delete(It.IsAny<int>())).Returns(Task.FromResult(true)); // MoqQ
+
+            //A.CallTo(() => mockTrainingData.Delete(A<int>._)).Returns(Task.FromResult(true)); //FakeItEasy
+
 
             var controller = Substitute.For<TrainingController>(mockTrainingData);
             //controller.ShowDelete(Arg.Any<string>());

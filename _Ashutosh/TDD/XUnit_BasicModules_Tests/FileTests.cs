@@ -73,8 +73,44 @@ namespace XUnit_BasicModules_Tests
 
     }
 
-    [Collection("File CleanUp Collection")]
-    public class FileTests
+    //[Collection("File CleanUp Collection")]
+    //public class FileTests
+    //{
+    //    private readonly FileCleanUpFixture fileCleanUp;
+
+    //    public FileTests(FileCleanUpFixture fileCleanUp)
+    //    {
+    //        this.fileCleanUp = fileCleanUp;
+    //    }
+
+    //    [Fact]
+    //    public void CreateFile()
+    //    {
+    //        // Arrange
+
+
+    //        // Act
+    //        fileCleanUp.FileObj.CreateFile(@"C:\_Ashutosh\Trainings\AdvanceNetConcepts\_Ashutosh\TDD\XUnit_BasicModules_Tests\bin\Debug\net5.0\text1.txt");
+
+    //        // Assert
+    //        Assert.True(File.Exists(@"C:\_Ashutosh\Trainings\AdvanceNetConcepts\_Ashutosh\TDD\XUnit_BasicModules_Tests\bin\Debug\net5.0\text1.txt"));
+    //    }
+
+    //    [Fact]
+    //    public void WriteFile()
+    //    {
+    //        // Arrange
+
+
+    //        // Act
+    //        fileCleanUp.FileObj.WriteFile(@"C:\_Ashutosh\Trainings\AdvanceNetConcepts\_Ashutosh\TDD\XUnit_BasicModules_Tests\bin\Debug\net5.0\text1.txt");
+
+    //        // Assert
+    //        Assert.True(File.Exists(@"C:\_Ashutosh\Trainings\AdvanceNetConcepts\_Ashutosh\TDD\XUnit_BasicModules_Tests\bin\Debug\net5.0\text1.txt"));
+    //    }
+    //}
+
+    public class FileTests : IClassFixture<FileCleanUpFixture>
     {
         private readonly FileCleanUpFixture fileCleanUp;
 
@@ -109,40 +145,4 @@ namespace XUnit_BasicModules_Tests
             Assert.True(File.Exists(@"C:\_Ashutosh\Trainings\AdvanceNetConcepts\_Ashutosh\TDD\XUnit_BasicModules_Tests\bin\Debug\net5.0\text1.txt"));
         }
     }
-
-    //public class FileTests : IClassFixture<FileCleanUp>
-    //{
-    //    private readonly FileCleanUp fileCleanUp;
-
-    //    public FileTests(FileCleanUp fileCleanUp)
-    //    {
-    //        this.fileCleanUp = fileCleanUp;
-    //    }
-
-    //    [Fact]
-    //    public void CreateFile()
-    //    {
-    //        // Arrange
-
-
-    //        // Act
-    //        fileCleanUp.FileObj.CreateFile(@"C:\_Ashutosh\Trainings\AdvanceNetConcepts\_Ashutosh\TDD\XUnit_BasicModules_Tests\bin\Debug\net5.0\text1.txt");
-
-    //        // Assert
-    //        Assert.True(File.Exists(@"C:\_Ashutosh\Trainings\AdvanceNetConcepts\_Ashutosh\TDD\XUnit_BasicModules_Tests\bin\Debug\net5.0\text1.txt"));
-    //    }
-
-    //    [Fact]
-    //    public void WriteFile()
-    //    {
-    //        // Arrange
-
-
-    //        // Act
-    //        fileCleanUp.FileObj.WriteFile(@"C:\_Ashutosh\Trainings\AdvanceNetConcepts\_Ashutosh\TDD\XUnit_BasicModules_Tests\bin\Debug\net5.0\text1.txt");
-
-    //        // Assert
-    //        Assert.True(File.Exists(@"C:\_Ashutosh\Trainings\AdvanceNetConcepts\_Ashutosh\TDD\XUnit_BasicModules_Tests\bin\Debug\net5.0\text1.txt"));
-    //    }
-    //}
 }

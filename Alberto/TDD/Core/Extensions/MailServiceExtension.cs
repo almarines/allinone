@@ -10,7 +10,7 @@ namespace Core.Extensions
 {
     public static class MailServiceExtension
     {
-        public static void SendMailWithLogging(this IMailServce mailService)
+        public static void SendMailWithLogging(this IMailService mailService)
         {
             var result = mailService.SendMail("X", "Y", "", "");
 

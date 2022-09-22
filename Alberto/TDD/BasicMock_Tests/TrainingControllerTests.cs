@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
+
 namespace BasicMock_Tests
 {
     [ExcludeFromCodeCoverage]
@@ -143,6 +144,25 @@ namespace BasicMock_Tests
 
             // Assert
             Assert.ThrowsAsync<InvalidOperationException>(result);
+        }
+
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public async void TrainingController_Delete_Tests(bool expectedResult)
+        {
+            // Arrange      
+            // training DB context
+            var mockTrainingData = Substitute.For<ITrainingData>();
+            mockTrainingData.Delete(Arg.Any<int>()).Returns(Task.FromResult(expectedResult));
+
+            var controller = new TrainingController(mockTrainingData);
+
+            // Act
+            var result = await controller.Delete(1);
+
+            // Assert
+            Assert.Equal(expectedResult, result);
         }
     }
 }

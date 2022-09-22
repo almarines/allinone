@@ -6,7 +6,7 @@ using Core;
 using Core.Contracts;
 
 namespace BasicMocks {
-    public class TrainingController
+    public partial class TrainingController
     {
         private readonly ITrainingData _trainingData;
 
@@ -45,8 +45,8 @@ namespace BasicMocks {
             {
                 throw new InvalidOperationException();
             }
-			
-		    var messageBoxWrapper = Container.Resolve<IMessageBox>();
+
+			var messageBoxWrapper = Container.Resolve<IMessageBox>();
 			var dialogResult = messageBoxWrapper.Show("Confirm", "Do you want to delete");
 
             if (dialogResult == DialogResult.Yes)
@@ -57,5 +57,33 @@ namespace BasicMocks {
 
             return false;
         }
+
+		public async Task<bool> Update(int id, string name) {
+			// verification of inputs
+			var namingService = Container.Resolve<INamingService>();
+			if (!namingService.Validate(name)) {
+				throw new InvalidOperationException();
+			}
+
+			// updating into DB
+			var success = await _trainingData.Update(id, name);
+			return success;
+		}
+
+		public async Task<bool> DeleteWithConsole(int id) {
+			if (id <= 0) {
+				throw new InvalidOperationException();
+			}
+
+			var consoleWrapperService = Container.Resolve<IConsoleService>();
+			consoleWrapperService.WriteLine("before deleting Employee");
+
+			var result = await _trainingData.Delete(id);
+
+			consoleWrapperService.WriteLine("after deleting Employee");
+
+			return result;
+		}
     }
+
 }

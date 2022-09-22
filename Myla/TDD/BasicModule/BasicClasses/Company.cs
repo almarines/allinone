@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace BasicModule.BasicClasses
 {
-    internal class Company
+    public class Company
     {
         public IList<Employee> Employees;
+        public IList<Company> Companies;
 
         public string Name { get; set; }
 
@@ -17,6 +18,16 @@ namespace BasicModule.BasicClasses
             Name = name;
             Employees = new List<Employee>();
             Employees.Add(new Employee("First Emp", 1));
+        }
+
+        public void Add(Company c)
+        {
+            if (string.IsNullOrEmpty(c.Name))
+            {
+                throw new InvalidOperationException();
+            }
+
+            Companies.Add(c);
         }
 
         public Employee this[string name, int code]

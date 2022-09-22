@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Core;
 using Core.Contracts;
 
-namespace BasicMocks
-{
+namespace BasicMocks {
     public class TrainingController
     {
         private readonly ITrainingData _trainingData;
@@ -38,7 +33,6 @@ namespace BasicMocks
             if (success)
             {
                 var smtpMailService = Container.Resolve<IMailService>();
-                //var smtpMailService = new SMTPMailService();
                 success = await smtpMailService.SendMail("test@gmail.com", mail, "welcome", "Welcome to .Net training");
             }
 
@@ -51,8 +45,10 @@ namespace BasicMocks
             {
                 throw new InvalidOperationException();
             }
+			
+		    var messageBoxWrapper = Container.Resolve<IMessageBox>();
+			var dialogResult = messageBoxWrapper.Show("Confirm", "Do you want to delete");
 
-			var dialogResult = MessageBox.Show("Confirm", "Do you want to delete");
             if (dialogResult == DialogResult.Yes)
             {
                 var result = await _trainingData.Delete(id);

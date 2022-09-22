@@ -60,25 +60,31 @@ namespace Core
             }
         }
 
-        ///// <summary>
-        ///// Registers the specified service with the given contract key.
-        ///// </summary>
-        ///// <param name="type">The service contract.</param>
-        ///// <param name="instance">The service instance.</param>
-        //public static void AddSingelten(Type type, object instance, string uniqueIdentifier)
-        //{
-        //    lock (Services)
-        //    {
-        //        Services[type] = instance;
-        //    }
-        //}
+		public static void Cleanup() {
+			lock (Services) {
+				Services.Clear();
+			}
+		}
 
-        /// <summary>
-        /// Returns a service that match the given contract.
-        /// </summary>
-        /// <typeparam name="T">The service contract.</typeparam>
-        /// <returns>The service instance.</returns>
-        public static T Resolve<T>()
+		///// <summary>
+		///// Registers the specified service with the given contract key.
+		///// </summary>
+		///// <param name="type">The service contract.</param>
+		///// <param name="instance">The service instance.</param>
+		//public static void AddSingelten(Type type, object instance, string uniqueIdentifier)
+		//{
+		//    lock (Services)
+		//    {
+		//        Services[type] = instance;
+		//    }
+		//}
+
+		/// <summary>
+		/// Returns a service that match the given contract.
+		/// </summary>
+		/// <typeparam name="T">The service contract.</typeparam>
+		/// <returns>The service instance.</returns>
+		public static T Resolve<T>()
         {
             lock (Services)
             {

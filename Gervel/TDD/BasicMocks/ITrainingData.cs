@@ -21,6 +21,8 @@ namespace BasicMocks {
 
 		Task<bool> Delete(int id);
         Task<IEnumerable<Training>> GetAllTrainings();
+
+        void GetTraining(int id, out Training t);
     }
 
     public class TrainingDataContext : ITrainingData
@@ -48,7 +50,11 @@ namespace BasicMocks {
             return await Task.FromResult(list);
         }
 
-		public async Task<bool> Update(int id, string name) {
+        public void GetTraining(int id, out Training t) {
+            t = list.First(s => s.Id == id);
+		}
+
+        public async Task<bool> Update(int id, string name) {
 			return await Task.FromResult(true);
 		}
 	}

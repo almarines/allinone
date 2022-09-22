@@ -1,22 +1,41 @@
 ﻿using Core.Attributes;
 using Core.Contracts;
 using System;
-using System.Composition;
+using System.Net.Mail;
+using System.Net;
+using System.Threading.Tasks;
 
 [assembly: AutoGenerate]
-namespace MailService.SMTP
-{
-    [Service(Contract = typeof(IMailServce))]
-    public class SMTPMailService : IMailServce
-    {
-        public string Name => "SMTPMailService";
+namespace MailService.SMTP {
+	[Service(Contract = typeof(IMailService))]
+	public class SMTPMailService : IMailService {
+		public string Name => "SMTPMailService";
 
-        public string SendMail(string sender, string receiver, string subject, string body)
-        {
-            // SMTP Object/ TCP ip protocol
+		public async Task<bool> SendMail(string sender, string target, string subject, string body) {
+			try {
+				SmtpClient client = new SmtpClient();
+				client.Host = "<host>";
+				client.Port = int.MaxValue;
 
+				client.UseDefaultCredentials = false;
+				client.Credentials = new NetworkCredential("<username>", "<password>");
 
-            return "From SMTP Mail Service";
-        }
-    }
+				MailMessage message = CreateMailMessage(sender, subject, body);
+				client.Send(message);
+
+				return await Task.FromResult(true);
+			} catch (Exception) {
+				return false;
+			}
+		}
+
+		private MailMessage CreateMailMessage(string to, string subject, string body) {
+			MailMessage mailMessage = new MailMessage();
+			mailMessage.From = new MailAddress("<registered mail id>");
+			mailMessage.To.Add(to);
+			mailMessage.Body = body;
+			mailMessage.Subject = subject;
+			return mailMessage;
+		}
+	}
 }

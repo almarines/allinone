@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BasicModule.BasicClasses
 {
-    internal class Employee
+    public class Employee
     {
+               public IList<Employee> Employees;
+
         public string Name { get; }
 
         public Guid Id { get; }
@@ -21,7 +24,20 @@ namespace BasicModule.BasicClasses
         //{
         //    return string.Concat(EmpCode, ":", Name);
         //}
+
+        public void Add(Employee e)
+        {
+            if (string.IsNullOrEmpty(e.Name))
+            {
+                throw new InvalidOperationException();
+            }
+
+            Employees.Add(e);
+        }
+
     }
+
+   
 
     internal class FullTimeEmp : Employee
     {

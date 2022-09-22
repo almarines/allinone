@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BasicModule
 {
-    class FileTests
+    public class FileManagement : IDisposable
     {
         public void WriteFileStats(string filePath, string outFilePath)
         {
@@ -20,21 +20,26 @@ namespace BasicModule
             File.AppendAllText(outFilePath, fileStats);
         }
 
-        public FileStream CreateFileTests(string filePath)
+        public FileStream CreateFile(string filePath)
         {
            using var file = File.Create(filePath);
            return file;
         }
 
-        public long WriteFileTests(string filePath)
+        public long WriteFile(string filePath)
         {
-            using var fileContent = File.OpenRead(filePath);
+            using var fileContent = File.OpenWrite(filePath);
             using (StreamWriter writetext = new StreamWriter(fileContent))
             {
                 writetext.WriteLine("writing in text file");
             }
 
             return new FileInfo(filePath).Length;
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

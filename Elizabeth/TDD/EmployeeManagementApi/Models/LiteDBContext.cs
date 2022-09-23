@@ -11,7 +11,6 @@ namespace EmployeeManagementApi.Models
         private static LiteDatabase _context;
         private static ILiteCollection<Employee> collection;
         private string nameOfCollection = "Employees";
-        private static LiteDBContext instance;
 
         public LiteDBContext(IOptions<DbConfig> configs)
         {
@@ -26,35 +25,6 @@ namespace EmployeeManagementApi.Models
             catch (Exception ex)
             {
                 throw new Exception("Can find or create LiteDb database.", ex);
-            }
-        }
-
-        private LiteDBContext()
-        {
-            try
-            {
-                if (_context == null)
-                {
-                    _context = new LiteDatabase($"Filename=C:\\_Ashutosh\\Trainings\\AdvanceNetConcepts\\_Ashutosh\\TDD\\EmployeeManagementApi\\employee.db;Connection=Direct");
-                    collection = _context.GetCollection<Employee>(nameOfCollection);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Can find or create LiteDb database.", ex);
-            }
-        }
-
-        public static LiteDBContext Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new LiteDBContext();
-                }
-
-                return instance;
             }
         }
 

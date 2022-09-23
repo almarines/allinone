@@ -164,5 +164,74 @@ namespace BasicMock_Tests
             // Assert
             Assert.Equal(expectedResult, result);
         }
+
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public async void TrainingMockVirtualMethodController_Delete_Tests(bool expectedResult)
+        {
+            // Arrange      
+            // training DB context
+            var mockTrainingData = Substitute.For<ITrainingData>();
+            mockTrainingData.Delete(Arg.Any<int>()).Returns(Task.FromResult(expectedResult)); // NSub
+
+            //mockTrainingData.Setup(s => s.Delete(It.IsAny<int>())).Returns(Task.FromResult(true)); // MoqQ
+
+            //A.CallTo(() => mockTrainingData.Delete(A<int>._)).Returns(Task.FromResult(true)); //FakeItEasy
+
+
+            var controller = Substitute.For<TrainingController>(mockTrainingData);
+            //controller.ShowDelete(Arg.Any<string>());
+
+            // Act
+            var result = await controller.Delete(1);
+
+            // Assert
+            Assert.Equal(expectedResult, result);
+            controller.Received().ShowDelete(Arg.Any<string>());
+            controller.ReceivedWithAnyArgs().ShowDelete("");
+        }
+
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public async void Training_Update_Tests(bool expectedResult)
+        {
+            // Arrange      
+            var namingService = Substitute.For<INamingService>();
+            namingService.Validate(Arg.Any<string>()).Returns(true);
+            Container.AddSingelten<INamingService>(namingService);
+
+            var mockTrainingData = Substitute.For<ITrainingData>();
+            //mockTrainingData.Update(Arg.Any<int>(), Arg.Any<string>()).Returns(Task.FromResult(expectedResult));
+
+            var controller = new TrainingController(mockTrainingData);
+
+            // Act
+            var result = await controller.Update(1, "test");
+
+            // Assert
+            Assert.Equal(expectedResult, result);
+        }
+
+        [Fact]
+        public void TrainingById_Out_Params_Tests()
+        {
+            // Arrange
+            var mockTrainingData = Substitute.For<ITrainingData>();
+            //mockTrainingData.GetTranings(Arg.Any<int>(), out Arg.Any<Training>());
+            mockTrainingData.When(s => s.GetTranings(Arg.Any<int>(), out Training t)).Do(x =>
+            {
+                x[1] = new Training();
+            });
+
+            var controller = new TrainingController(mockTrainingData);
+
+            // Act
+            controller.GetTrainings(1, out Training t);
+
+            // Assert
+            Assert.NotNull(t);
+        }
     }
 }

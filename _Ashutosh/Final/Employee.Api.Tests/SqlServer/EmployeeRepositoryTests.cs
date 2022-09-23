@@ -12,34 +12,34 @@ namespace Employee.Api.Tests.SqlServer
 {
     public class EmployeeRepositoryTests
     {
-        private readonly  EmployeeDBContext dbConext;
+        //private readonly  EmployeeDBContext dbConext;
 
-        public EmployeeRepositoryTests()
-        {
-            var options = new DbContextOptionsBuilder<EmployeeDBContext>()
-               .UseInMemoryDatabase("test")
-               .Options;
-            this.dbConext = new EmployeeDBContext(options);
-        }
+        //public EmployeeRepositoryTests()
+        //{
+        //    var options = new DbContextOptionsBuilder<EmployeeDBContext>()
+        //       .UseInMemoryDatabase("test")
+        //       .Options;
+        //    this.dbConext = new EmployeeDBContext(options);
+        //}
 
-        [Fact]
-        public async void GetAll_Test()
-        {
-            // Arrange
-            Setup();
-            var repo = new EmployeeRepository(this.dbConext);
+        //[Fact]
+        //public async void GetAll_Test()
+        //{
+        //    // Arrange
+        //    Setup();
+        //    var repo = new EmployeeRepository(this.dbConext);
 
-            // Act
-            var result = await repo.GetAll();
+        //    // Act
+        //    var result = await repo.GetAll();
 
-            // Assert
-            Assert.Single(result);
-        }
+        //    // Assert
+        //    Assert.Single(result);
+        //}
 
-        private void Setup()
-        {
-            this.dbConext.Add(new Core.Models.Employee() { FirstName = "test" });
-            this.dbConext.SaveChanges();
-        }
+        //private void Setup()
+        //{
+        //    this.dbConext.Add(new Core.Models.Employee() { FirstName = "test" });
+        //    this.dbConext.SaveChanges();
+        //}
     }
 }

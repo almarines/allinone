@@ -14,6 +14,11 @@ namespace BasicMock_Tests
             return await Task.FromResult(true);
         }
 
+        public async Task<bool> Update(int id, string name)
+        {
+            return await Task.FromResult(true);
+        }
+
         public async Task<bool> Delete(int id)
         {
             return await Task.FromResult(true);
@@ -22,6 +27,16 @@ namespace BasicMock_Tests
         public async Task<IEnumerable<Training>> GetAllTrainings()
         {
             return await Task.FromResult(new List<Training>());
+        }
+
+        public void GetTranings(int id, out Training t)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ITrainingData.Update(int id, string name)
+        {
+            throw new NotImplementedException();
         }
     }
 }

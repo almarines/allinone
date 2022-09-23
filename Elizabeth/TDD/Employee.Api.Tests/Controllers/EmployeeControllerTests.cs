@@ -1,4 +1,5 @@
 ﻿using EmployeeManagementApi.Controllers;
+using EmployeeManagementApi.Dto;
 using EmployeeManagementApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
@@ -48,7 +49,7 @@ namespace Employee.Api.Tests.Controllers
             var controller = new EmployeeController(mockRepo);
 
             // Act
-            var result = await controller .GetEmployeeById(1);
+            var result = await controller.GetEmployeeById(1);
             var r = result as OkObjectResult;
 
             // Assert
@@ -56,7 +57,7 @@ namespace Employee.Api.Tests.Controllers
         }
 
         [Fact]
-        public async void InsertEmployee_Tests()
+        public async Task InsertEmployee_Tests()
         {
             // Arrange
             var mockRepo = Substitute.For<IEmployeeRepository>();
@@ -70,7 +71,7 @@ namespace Employee.Api.Tests.Controllers
             var controller = new EmployeeController(mockRepo);
 
             // Act
-            var result = await controller.InsertEmployee(new EmployeeManagementApi.Dto.EmployeeDto { FirstName = "test" });
+            var result = await controller.InsertEmployee(new EmployeeDto { FirstName = "test" });
 
             // Assert
             Assert.Single(list);

@@ -48,7 +48,6 @@ namespace WebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DP_Example", Version = "v1" });
             });
-
             
 
             ////var section = Configuration.GetSection("Logging.LogLevel");

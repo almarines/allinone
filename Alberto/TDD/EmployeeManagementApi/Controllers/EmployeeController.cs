@@ -1,8 +1,11 @@
 ﻿using EmployeeManagementApi.Dto;
 using EmployeeManagementApi.Models;
+using EmployeeManagementApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EmployeeManagementApi.Controllers
 {
@@ -10,23 +13,23 @@ namespace EmployeeManagementApi.Controllers
     [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
-        //private readonly LiteDBContext employeeDBContext;
+        private readonly IEmployeeRepository employeeRepository;
 
-        //public EmployeeController(LiteDBContext employeeDBContext)
-        //{
-        //    this.employeeDBContext = employeeDBContext;
-        //}
+        public EmployeeController(IEmployeeRepository employeeRepository)
+        {
+            this.employeeRepository = employeeRepository;
+        }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IEnumerable<Employee>> GetAll()
         {           
-            return Ok(LiteDBContext.Instance.GetAllEmployees());
+            return await employeeRepository.GetAll();
         }
 
         [HttpGet("{id}")]
         public IActionResult GetEmployeeById(int Id)
         {
-            return Ok(LiteDBContext.Instance.GetEmployeeById(Id));
+            return Ok(employeeRepository.Get(Id));
         }
 
         [HttpPost]
@@ -38,14 +41,14 @@ namespace EmployeeManagementApi.Controllers
             }
 
             var e = new Employee() { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName };
-            var result = LiteDBContext.Instance.InsertEmployee(e);
+            var result = employeeRepository.InsertEmployee(e);
             //await employeeDBContext.SaveChangesAsync();
 
             // send mail to finance / insurance team
             //MessageBoxButtons buttons = MessageBoxButtons.YesNo;
             //DialogResult result = MessageBox.Show(message, title, buttons);
 
-            return Ok(result.AsInt32);
+            return Ok(result);
         }
     }
 }

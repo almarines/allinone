@@ -20,8 +20,11 @@ namespace BasicMocks
 
     public interface ITrainingData
     {
+        void GetTranings(int id, out Training t);
 
         Task<bool> Add(string name, string cost);
+
+        Task Update(int id, string name);
 
         Task<bool> Delete(int id);
         Task<IEnumerable<Training>> GetAllTrainings();
@@ -50,6 +53,17 @@ namespace BasicMocks
         public async Task<IEnumerable<Training>> GetAllTrainings()
         {
             return await Task.FromResult(list);
+        }
+
+        public void GetTranings(int id, out Training t)
+        {
+            t = list.First(s => s.Id == id);
+        }
+
+        public async Task Update(int id, string name)
+        {
+            await Task.Delay(1);
+            return;
         }
     }
 
@@ -96,7 +110,7 @@ namespace BasicMocks
             if (string.IsNullOrEmpty(identifier))
             {
                 return false;
-            }          
+            }
 
             return true;
         }

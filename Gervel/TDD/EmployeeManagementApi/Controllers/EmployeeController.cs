@@ -21,29 +21,28 @@ namespace EmployeeManagementApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetAll()
-        {
-            var l = await employeeRepository.GetAll();
-            return Ok(l);
+        public async Task<IEnumerable<Employee>> GetAll()
+        {           
+            return await employeeRepository.GetAll();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEmployeeById(int Id)
         {
-            var e = await employeeRepository.Get(Id);
-            return Ok(e);
+            var employee = await employeeRepository.Get(Id);
+			return Ok(employee);
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertEmployee(EmployeeDto employeeDto)
+        public IActionResult InsertEmployee(EmployeeDto employeeDto)
         {
-            if (string.IsNullOrEmpty(employeeDto.FirstName))
+            if(string.IsNullOrEmpty(employeeDto.FirstName))
             {
                 throw new InvalidOperationException();
             }
 
             var e = new Employee() { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName };
-            var result = await employeeRepository.InsertEmployee(e);
+            var result = employeeRepository.InsertEmployee(e);
 
             return Ok(result);
         }

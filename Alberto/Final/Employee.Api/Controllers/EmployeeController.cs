@@ -56,5 +56,17 @@ namespace EmployeeWebApi.Controllers
 
             return Ok(result);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteEmployee(int id)
+        {
+            if (id <= 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            var result = await _employeeRepository.DeleteEmployee(id);
+            return Ok(result);
+        }
     }
 }

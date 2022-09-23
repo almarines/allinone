@@ -14,5 +14,7 @@ namespace Core.Contracts
         Task<IEnumerable<Employee>> GetAll();
 
         Task<Employee> Get(int id);
+
+        Task<int> DeleteEmployee(int id);
     }
 }

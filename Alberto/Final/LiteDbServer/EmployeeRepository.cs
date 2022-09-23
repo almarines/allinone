@@ -30,5 +30,10 @@ namespace DataBaseCore
         {
             return await Task.FromResult(employeeDBContext.InsertEmployee(e));
         }
+
+        public async Task<int> DeleteEmployee(int id)
+        {
+            return await Task.FromResult(employeeDBContext.DeleteEmployeeById(id) ? 1 : 0);
+        }
     }
 }

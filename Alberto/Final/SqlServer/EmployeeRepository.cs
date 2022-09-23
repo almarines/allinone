@@ -31,5 +31,12 @@ namespace DataBaseCore
             employeeDBContext.Employees.Add(e);
             return await employeeDBContext.SaveChangesAsync();
         }
+
+        public async Task<int> DeleteEmployee(int id)
+        {
+            var e = await Get(id);
+            employeeDBContext.Employees.Remove(e);
+            return await employeeDBContext.SaveChangesAsync();
+        }
     }
 }

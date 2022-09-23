@@ -1,7 +1,6 @@
 ﻿using EmployeeManagementApi.Controllers;
 using EmployeeManagementApi.Dto;
 using EmployeeManagementApi.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using System;
@@ -30,61 +29,53 @@ namespace Employee.Api.Tests.Controllers
 
             // Act
             var result = await controller.GetAll();
+            var r = result.Result as OkObjectResult;
 
             // Assert
-            Assert.Same(list, result);
+            Assert.Same(list, r.Value);
         }
 
         [Fact]
-        public void GetEmployeeById_Tests()
+        public async void GetEmployeeById_Tests()
         {
             // Arrange
             var mockRepo = Substitute.For<IEmployeeRepository>();
-            var employee = new EmployeeManagementApi.Models.Employee();
-            mockRepo.Get(1).Returns(s =>
+            var list = new List<EmployeeManagementApi.Models.Employee>() { new EmployeeManagementApi.Models.Employee() };
+            mockRepo.Get(Arg.Any<int>()).Returns(s =>
             {
-                return employee;
+                return list.First();
             });
 
             var controller = new EmployeeController(mockRepo);
 
             // Act
-            var result = controller.GetEmployeeById(1);
-            var okResult = result as ObjectResult;
+            var result = await controller.GetEmployeeById(1);
+            var r = result as OkObjectResult;
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
+            Assert.Same(list.First(), r.Value);
         }
 
         [Fact]
-        public void InsertEmployee_Tests()
+        public async Task InsertEmployee_Tests()
         {
             // Arrange
             var mockRepo = Substitute.For<IEmployeeRepository>();
+            var list = new List<EmployeeManagementApi.Models.Employee>();
+            mockRepo.InsertEmployee(Arg.Any<EmployeeManagementApi.Models.Employee>()).Returns(s =>
+            {
+                list.Add(s[0] as EmployeeManagementApi.Models.Employee);
+                return 1;
+            });
+
             var controller = new EmployeeController(mockRepo);
 
             // Act
-            var result = controller.InsertEmployee(new EmployeeDto() { FirstName = "Name" });
-            var okResult = result as ObjectResult;
+            var result = await controller.InsertEmployee(new EmployeeDto { FirstName = "test" });
 
             // Assert
+            Assert.Single(list);
             Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
-        }
-
-        [Fact]
-        public void InsertEmployee_Exception_Tests()
-        {
-            // Arrange
-            var mockRepo = Substitute.For<IEmployeeRepository>();
-            var controller = new EmployeeController(mockRepo);
-
-            // Act
-            Action action = () => controller.InsertEmployee(new EmployeeDto());
-
-            // Assert
-            Assert.Throws<InvalidOperationException>(action);
         }
     }
 }

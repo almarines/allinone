@@ -24,6 +24,11 @@ namespace BasicMocks
             return await _trainingData.GetAllTrainings();
         }
 
+        public void GetTrainings(int id, out Training t)
+        {
+             _trainingData.GetTranings(id, out t);
+        }
+
         public async Task<bool> Add(string name, string cost, string mail)
         {
             // verification of inputs
@@ -56,8 +61,8 @@ namespace BasicMocks
             }
 
             // updating into DB
-            var success = await _trainingData.Update(id, name);
-            return success;
+            await _trainingData.Update(id, name);
+            return true;
         }
 
         public async Task<bool> Delete(int id)
@@ -67,12 +72,23 @@ namespace BasicMocks
                 throw new InvalidOperationException();
             }
 
-            Console.WriteLine("before deleting Employee");
 
+            ShowDelete("before deleting Employee");
             var result = await _trainingData.Delete(id);
+      
+            ShowDelete("after deleting Employee");
 
-            Console.WriteLine("after deleting Employee");
             return result;
         }
+
+        public virtual void ShowDelete(string msg)
+        {
+            Console.WriteLine("before deleting Employee");
+        }
+
+        //public virtual bool AfterDelete(string msg)
+        //{
+        //    Console.WriteLine("after deleting Employee");
+        //}
     }
 }

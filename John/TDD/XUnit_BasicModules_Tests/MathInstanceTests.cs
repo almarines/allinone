@@ -1,9 +1,11 @@
 using BasicModule;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace XUnit_BasicModules_Tests
 {
+    [ExcludeFromCodeCoverage]
     public class MathInstanceTests
     {
         [Fact(DisplayName = "Add_Any_Number_Test")]

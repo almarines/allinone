@@ -37,6 +37,7 @@ namespace EmployeeWebApi
             services.RegisterDatabase(dbconfig.PathToDB);
 
             services.AddScoped<IMailService, AWSSESMailService>();
+            services.AddScoped<IEmployeeDapperWrapper, EmployeeDapperWrapper>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         }
 

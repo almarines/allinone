@@ -1,5 +1,6 @@
 using EmployeeManagementApi.Models;
 using EmployeeManagementApi.Options;
+using EmployeeManagementApi.Repositories;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +31,8 @@ namespace EmployeeManagementApi
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddSingleton<LiteDBContext>();
+
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
     //        services.AddDbContext<EmployeeDBContext>(options =>
     //options.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\_Ashutosh\Trainings\SOLID\EmployeeManagementApi\Employee.mdf;Integrated Security=True;Connect Timeout=30"));

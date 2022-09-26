@@ -24,7 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AWS.SES\AWS.SES.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\SqlServer\SqlServer.csproj" />
+    <ProjectReference Include="..\SqlServer.Dapper\SqlServer.Dapper.csproj" />
   </ItemGroup>
   
   <ItemGroup>

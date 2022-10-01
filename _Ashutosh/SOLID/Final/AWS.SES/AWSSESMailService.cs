@@ -60,5 +60,15 @@ namespace MailService
             message.Subject = subject;
             return message;
         }
+
+        public bool IsValid(string name)
+        {
+            if (string.IsNullOrEmpty(name) || !name.Contains("@"))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

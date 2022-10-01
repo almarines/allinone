@@ -24,7 +24,7 @@ namespace DataBaseCore.DBContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionstring = _dbOptions.Value.PathToDB; // @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Employee;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"; 
+                var connectionstring = _dbOptions.Value.PathToDB; // @"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\_Ashutosh\\Trainings\\SOLID\\Final\\employee.mdf;Integrated Security=True;Connect Timeout=30"; 
                 optionsBuilder.UseSqlServer(connectionstring);
             }
         }

@@ -32,9 +32,9 @@ namespace EmployeeWebApi
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
                     
-            //var dbconfig = Configuration.Get<DbConfig>();
             services.RegisterDatabase();
             services.RegisterMailService();
+            services.AddSingleton<INamingService, NamingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

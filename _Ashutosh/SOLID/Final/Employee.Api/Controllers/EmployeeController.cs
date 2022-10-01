@@ -15,14 +15,16 @@ namespace EmployeeWebApi.Controllers
         private readonly ILogger<EmployeeController> _logger;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMailService _mailService;
+        private readonly INamingService _namingService;
 
         public EmployeeController(ILogger<EmployeeController> logger,
             IEmployeeRepository employeeRepository,
-            IMailService mailService)
+            IMailService mailService, INamingService namingService)
         {
             _logger = logger;
             _employeeRepository = employeeRepository;
             _mailService = mailService;
+            _namingService = namingService;
         }
 
         [HttpGet]
@@ -52,7 +54,12 @@ namespace EmployeeWebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertEmployee(EmployeeDto employeeDto)
         {
-            if (string.IsNullOrEmpty(employeeDto.Email))
+            if (!_namingService.IsValid(employeeDto.FirstName) || !_namingService.IsValid(employeeDto.LastName))
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (!_mailService.IsValid(employeeDto.Email))
             {
                 throw new InvalidOperationException();
             }
@@ -70,7 +77,12 @@ namespace EmployeeWebApi.Controllers
         [Route("parttime")]
         public async Task<IActionResult> InsertPartTimeEmployee(EmployeeDto employeeDto)
         {
-            if (string.IsNullOrEmpty(employeeDto.Email))
+            if (!_namingService.IsValid(employeeDto.FirstName) || !_namingService.IsValid(employeeDto.LastName))
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (!_mailService.IsValid(employeeDto.Email))
             {
                 throw new InvalidOperationException();
             }

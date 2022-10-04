@@ -14,6 +14,7 @@ namespace DataBaseCore.DBContext
         {
             _connectionString = dbOptions.Value.PathToDB;
         }
+
         public IDbConnection CreateConnection()
             => new SqlConnection(_connectionString);
     }

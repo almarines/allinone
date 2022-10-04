@@ -73,21 +73,24 @@ namespace Employee.Api.Tests
             //Arrange
             var item = Setup();
             var mockRepo = item.Item2;
-            var list = new List<Core.Models.Employee>() { new Core.Models.Employee() };
+            var list = new List<Core.Models.Employee>() { new Core.Models.Employee() 
+            { FirstName = "test", LastName = "Last", Email = "test@email.com" } };
             mockRepo.InsertEmployee(Arg.Any<Core.Models.Employee>()).Returns(s =>
             {
                 list.Add(s[0] as Core.Models.Employee);
-                return 1;
+                return 0;
             });
             var controller = item.Item1;
 
             //Act
-            var result = await controller.InsertEmployee(new EmployeeDto 
+            var insert = await controller.InsertEmployee(new EmployeeDto 
                 { FirstName = "test", LastName = "Last", Email = "test@email.com" });
+            var result = insert as OkObjectResult;
 
             // Assert
-            //Assert.Single(list);
-            Assert.NotNull(result);
+            Assert.Equal(list.First().Id, result.Value);
+            Assert.NotNull(insert);
+            await mockRepo.Received().InsertEmployee(Arg.Any<Core.Models.Employee>());
         }
     }
 }

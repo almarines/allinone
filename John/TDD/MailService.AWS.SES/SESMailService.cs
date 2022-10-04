@@ -2,21 +2,22 @@
 using Core.Contracts;
 using System;
 using System.Composition;
+using System.Threading.Tasks;
 
 [assembly : AutoGenerate]
 namespace MailService.AWS.SES
 {
-    [Service(Contract = typeof(IMailServce))]
-    public class SESMailService : IMailServce
+    [Service(Contract = typeof(IMailService))]
+    public class SESMailService : IMailService
     {
         public string Name =>  "SESMailService";
 
-        public string SendMail(string sender, string receiver, string subject, string body)
+        public Task<bool> SendMail(string sender, string receiver, string subject, string body)
         {
             // AWS .net SDS
 
 
-            return "From AWS SES Service";
+            return Task.FromResult(true);
         }
     }
 }

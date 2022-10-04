@@ -19,10 +19,14 @@ namespace EmployeeManagementApi.Controllers
         private readonly EmployeeDBContext employeeDBContext;
         private readonly IOptions<DbConfig> dbOptions;
 
+        private readonly NamingService namingService;
+
         public EmployeeController(EmployeeDBContext employeeDBContext, IOptions<DbConfig> dbOptions)
         {
-            this.employeeDBContext = employeeDBContext;
-            this.dbOptions = dbOptions;
+            //this.employeeDBContext = employeeDBContext;
+            //this.dbOptions = dbOptions;
+
+            namingService = new NamingService();
         }
 
         [HttpGet]
@@ -53,15 +57,18 @@ namespace EmployeeManagementApi.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertEmployee(EmployeeDto employeeDto)
         {
-            if(string.IsNullOrEmpty(employeeDto.FirstName) || string.IsNullOrEmpty(employeeDto.LastName))
-            {
-                throw new InvalidOperationException();
-            }
+            var mailService = new SMTPMailService();
 
-            if (string.IsNullOrEmpty(employeeDto.Email) || !employeeDto.Email.Contains("@"))
+            if (!namingService.IsValid(employeeDto.FirstName) || !namingService.IsValid(employeeDto.LastName))
             {
                 throw new InvalidOperationException();
             }
+            
+            if (!mailService.IsValid(employeeDto.Email))
+            {
+                throw new InvalidOperationException();
+            }
+           
 
             var result = false;
             using (var connection = new SqlConnection(this.dbOptions.Value.PathToDB))
@@ -73,7 +80,7 @@ namespace EmployeeManagementApi.Controllers
             }
 
             // send mail to finance / insurance team
-            var mailService = new SMTPMailService();
+            //var mailService = new SMTPMailService();
             await mailService.SendMail("finance@danaher.com", "Welcome", "Welcome To Danaher");
 
             return Ok(result);

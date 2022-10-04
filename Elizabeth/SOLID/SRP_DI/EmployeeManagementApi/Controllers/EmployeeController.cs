@@ -18,11 +18,15 @@ namespace EmployeeManagementApi.Controllers
     {
         private readonly EmployeeDBContext employeeDBContext;
         private readonly IOptions<DbConfig> dbOptions;
+        private readonly string dbPath;
+        private readonly NamingService namingService;
 
-        public EmployeeController(EmployeeDBContext employeeDBContext, IOptions<DbConfig> dbOptions)
+        public EmployeeController(string dbPath, NamingService namingService/*EmployeeDBContext employeeDBContext, IOptions<DbConfig> dbOptions*/)
         {
-            this.employeeDBContext = employeeDBContext;
-            this.dbOptions = dbOptions;
+            this.dbPath = dbPath;
+            //this.employeeDBContext = employeeDBContext;
+            //this.dbOptions = dbOptions;
+            this.namingService = namingService;
         }
 
         [HttpGet]
@@ -53,27 +57,28 @@ namespace EmployeeManagementApi.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertEmployee(EmployeeDto employeeDto)
         {
-            if(string.IsNullOrEmpty(employeeDto.FirstName) || string.IsNullOrEmpty(employeeDto.LastName))
-            {
-                throw new InvalidOperationException();
-            }
-
-            if (string.IsNullOrEmpty(employeeDto.Email) || !employeeDto.Email.Contains("@"))
-            {
-                throw new InvalidOperationException();
-            }
-
-            var result = false;
-            using (var connection = new SqlConnection(this.dbOptions.Value.PathToDB))
-            {
-                connection.Open();
-                var employeeQuery = "Insert into Employees (FirstName,LastName,Email,BasicPay,HRA,Bonus,IsFullTimeEmployee, EmpType) VALUES (@1,@2,@3,@4,@5,@6, @7, @8)";
-
-                result = ExecuteQueryWithNoResult(connection, employeeQuery, employeeDto.FirstName, employeeDto.LastName, employeeDto.Email,1,1,1,false,1);
-            }
-
-            // send mail to finance / insurance team
             var mailService = new SMTPMailService();
+
+            if (!namingService.IsValid(employeeDto.FirstName) || !namingService.IsValid(employeeDto.LastName))
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (!mailService.IsValid(employeeDto.Email))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var result = employeeDBContext.Add(new EmployeeDto()); //true/*false*/;
+            //using (var connection = new SqlConnection(dbPath/*this.dbOptions.Value.PathToDB*/))
+            //{
+            //    connection.Open();
+            //    var employeeQuery = "Insert into Employees (FirstName,LastName,Email,BasicPay,HRA,Bonus,IsFullTimeEmployee, EmpType) VALUES (@1,@2,@3,@4,@5,@6, @7, @8)";
+
+            //    result = ExecuteQueryWithNoResult(connection, employeeQuery, employeeDto.FirstName, employeeDto.LastName, employeeDto.Email, 1, 1, 1, false, 1);
+            //}
+
+            //// send mail to finance / insurance team
             await mailService.SendMail("finance@danaher.com", "Welcome", "Welcome To Danaher");
 
             return Ok(result);

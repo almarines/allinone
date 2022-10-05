@@ -44,12 +44,12 @@ namespace Core
                 serviceImports = container.GetExports<Lazy<IService, ServiceAttribute>>();
             }
 
-            foreach (var item in serviceImports)
+            foreach (var item in serviceImports.OrderBy(x => x.Order))
             {
                 var contract = item.Metadata.Contract;
                 var instance = item.Value;
 
-                Container.AddSingelten(contract, instance, instance.GetType().Name);
+                Container.AddSingelten(contract, instance);
             }
         }
     }

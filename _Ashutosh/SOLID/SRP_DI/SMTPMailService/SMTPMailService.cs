@@ -5,9 +5,9 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace EmployeeManagementApi.Managers
+namespace MailService
 {
-    public class SMTPMailService
+    public class SMTPMailService : IMailService
     {
         public async Task<bool> SendMail(string to, string subject, string body)
         {

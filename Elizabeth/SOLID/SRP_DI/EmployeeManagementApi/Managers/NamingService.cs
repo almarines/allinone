@@ -1,15 +1,20 @@
-﻿namespace EmployeeManagementApi.Managers
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace EmployeeManagementApi.Managers
 {
     public class NamingService
     {
         public bool IsValid(string value)
         {
-            return string.IsNullOrEmpty(value);
-        }
-    }
+            if (string.IsNullOrEmpty(value))
+            {
+                return false;
+            }
 
-    public interface INamingService
-    {
-        public bool IsValid(string value);
+            return true;
+        }
     }
 }

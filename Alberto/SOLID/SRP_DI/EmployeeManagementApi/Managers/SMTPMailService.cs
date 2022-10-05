@@ -39,5 +39,20 @@ namespace EmployeeManagementApi.Managers
             mailMessage.Subject = subject;
             return mailMessage;
         }
+
+        public bool IsValid(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return false;
+            }
+
+            if (!value.Contains("@"))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

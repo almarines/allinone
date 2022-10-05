@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace EmployeeManagementApi.Models
 {
     public class EmployeeDBContext : DbContext
-	{
+    {
         private readonly IOptions<DbConfig> _dbOptions;
 
         //public EmployeeDBContext(DbContextOptions options) : base(options)
@@ -31,7 +31,7 @@ namespace EmployeeManagementApi.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionstring = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\_Ashutosh\Trainings\SOLID\Ashutosh\SRP_DI\EmployeeManagementApi\oldEmployee.mdf;Integrated Security=True"; 
+                var connectionstring = _dbOptions.Value.PathToDB;
                 optionsBuilder.UseSqlServer(connectionstring);
             }
         }

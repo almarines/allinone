@@ -1,9 +1,11 @@
-﻿using EmployeeManagementApi.Dto;
+﻿using Core.Contracts;
+using EmployeeManagementApi.Dto;
 using EmployeeManagementApi.Managers;
 using EmployeeManagementApi.Models;
 using EmployeeManagementApi.Options;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -16,36 +18,43 @@ namespace EmployeeManagementApi.Controllers
     [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
-        private readonly EmployeeDBContext employeeDBContext;
-        private readonly IOptions<DbConfig> dbOptions;
+        private readonly ILogger<EmployeeController> _logger;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IMailService _mailService;
+        private readonly INamingService _namingService;
 
-        public EmployeeController(EmployeeDBContext employeeDBContext, IOptions<DbConfig> dbOptions)
+        public EmployeeController(ILogger<EmployeeController> logger,
+            IEmployeeRepository employeeRepository,
+            IMailService mailService, INamingService namingService)
         {
-            this.employeeDBContext = employeeDBContext;
-            this.dbOptions = dbOptions;
+            _logger = logger;
+            _employeeRepository = employeeRepository;
+            _mailService = mailService;
+            _namingService = namingService;
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var result = new List<Employee>();
-            using (var connection = new SqlConnection(this.dbOptions.Value.PathToDB))
-            {
-                connection.Open();
-                var employeeQuery = "Select * from Employees";
-                var cmd = new SqlCommand(employeeQuery, connection);
+            //using (var connection = new SqlConnection(this.dbOptions.Value.PathToDB))
+            //{
+            //    connection.Open();
+            //    var employeeQuery = "Select * from Employees";
+            //    var cmd = new SqlCommand(employeeQuery, connection);
 
-                var read = cmd.ExecuteReader();
-                while (read.Read())
-                {
-                    var e = new FullTimeEmployee();
-                    e.Id = (int)read["id"];
-                    e.FirstName = (string)read["FirstName"];
-                    e.LastName = (string)read["LastName"];
-                    e.Email = (string)read["Email"];
-                    result.Add(e);
-                }               
-            }
+            //    var read = cmd.ExecuteReader();
+            //    while (read.Read())
+            //    {
+            //        var e = new FullTimeEmployee();
+            //        e.Id = (int)read["id"];
+            //        e.FirstName = (string)read["FirstName"];
+            //        e.LastName = (string)read["LastName"];
+            //        e.Email = (string)read["Email"];
+            //        result.Add(e);
+            //    }               
+            //}
 
             return Ok(result);
         }
@@ -53,28 +62,21 @@ namespace EmployeeManagementApi.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertEmployee(EmployeeDto employeeDto)
         {
-            if(string.IsNullOrEmpty(employeeDto.FirstName) || string.IsNullOrEmpty(employeeDto.LastName))
+            if (!_namingService.IsValid(employeeDto.FirstName) || !_namingService.IsValid(employeeDto.LastName))
             {
                 throw new InvalidOperationException();
             }
 
-            if (string.IsNullOrEmpty(employeeDto.Email) || !employeeDto.Email.Contains("@"))
+            if (!_mailService.IsValid(employeeDto.Email))
             {
                 throw new InvalidOperationException();
             }
 
-            var result = false;
-            using (var connection = new SqlConnection(this.dbOptions.Value.PathToDB))
-            {
-                connection.Open();
-                var employeeQuery = "Insert into Employees (FirstName,LastName,Email,BasicPay,HRA,Bonus,IsFullTimeEmployee, EmpType) VALUES (@1,@2,@3,@4,@5,@6, @7, @8)";
+            var e = new FullTimeEmployee() { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName, Email = employeeDto.Email };
+            var result = ""; // await _employeeRepository.InsertEmployee(e);
 
-                result = ExecuteQueryWithNoResult(connection, employeeQuery, employeeDto.FirstName, employeeDto.LastName, employeeDto.Email,1,1,1,false,1);
-            }
-
-            // send mail to finance / insurance team
-            var mailService = new SMTPMailService();
-            await mailService.SendMail("finance@danaher.com", "Welcome", "Welcome To Danaher");
+            // send mail to employee
+            await _mailService.SendMail(e.Email, "Welcome Mail", "Welcome to Danaher");
 
             return Ok(result);
         }

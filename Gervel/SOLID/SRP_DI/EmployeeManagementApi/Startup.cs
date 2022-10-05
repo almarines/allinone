@@ -1,3 +1,4 @@
+using EmployeeManagementApi.Managers;
 using EmployeeManagementApi.Models;
 using EmployeeManagementApi.Options;
 using FluentValidation;
@@ -40,6 +41,7 @@ namespace EmployeeManagementApi
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
 
             services.AddDbContext<EmployeeDBContext>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

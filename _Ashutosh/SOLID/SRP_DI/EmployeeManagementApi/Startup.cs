@@ -2,6 +2,7 @@ using EmployeeManagementApi.Managers;
 using EmployeeManagementApi.Models;
 using EmployeeManagementApi.Options;
 using FluentValidation;
+using MailService;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +41,8 @@ namespace EmployeeManagementApi
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
 
+            services.AddSingleton<INamingService, NamingService>();
+            services.AddScoped<IMailService, SMTPMailService>();
             services.AddDbContext<EmployeeDBContext>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         }

@@ -16,12 +16,15 @@ namespace EmployeeManagementApi.Controllers
     [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
-        private readonly NamingService namingService;
+        private readonly INamingService _namingService;
         private readonly IEmployeeRepository employeeRepository;
 
-        public EmployeeController(IEmployeeRepository employeeRepo)
+        public EmployeeController(
+            IEmployeeRepository employeeRepo,
+			INamingService namingService)
         {
-            namingService = new NamingService();
+
+            _namingService = namingService;
             employeeRepository = employeeRepo;
         }
 
@@ -36,7 +39,7 @@ namespace EmployeeManagementApi.Controllers
         {
             var mailService = new SMTPMailService();
 
-            if (!namingService.IsValid(employeeDto.FirstName) || !namingService.IsValid(employeeDto.LastName))
+            if (!_namingService.IsValid(employeeDto.FirstName) || !_namingService.IsValid(employeeDto.LastName))
             {
                 throw new InvalidOperationException();
             }

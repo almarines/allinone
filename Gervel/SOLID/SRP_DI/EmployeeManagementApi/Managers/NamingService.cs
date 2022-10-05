@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagementApi.Managers
 {
-    public class NamingService
-    {
-        public bool IsValid(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
+    public class NamingService : INamingService {
+        public bool IsValid(string value) {
+            if (string.IsNullOrEmpty(value)) {
                 return false;
             }
 

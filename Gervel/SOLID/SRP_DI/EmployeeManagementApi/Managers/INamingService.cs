@@ -1,0 +1,8 @@
+﻿using System;
+using System.Linq;
+
+namespace EmployeeManagementApi.Managers {
+    public interface INamingService {
+        bool IsValid(string value);
+    }
+}

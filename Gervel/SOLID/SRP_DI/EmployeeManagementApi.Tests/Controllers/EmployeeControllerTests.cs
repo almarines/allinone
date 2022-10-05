@@ -25,9 +25,15 @@ namespace EmployeeManagementApi.Tests
 		{
 			// Arrange
 			var employeeRepository = Substitute.For<IEmployeeRepository>();
-			var controller = new EmployeeController(employeeRepository);
+			var namingService = new NamingService();
 
-			EmployeeDto mockEmployee = new EmployeeDto { FirstName = firstName, LastName = lastName, Email = email };
+			var controller = new EmployeeController(employeeRepository, namingService);
+
+			EmployeeDto mockEmployee = new EmployeeDto { 
+				FirstName = firstName, 
+				LastName = lastName, 
+				Email = email 
+			};
 
 			// Act
 			Func<Task> insertOperation = async () => await controller.InsertEmployee(mockEmployee);
@@ -41,8 +47,12 @@ namespace EmployeeManagementApi.Tests
 		{
 			// Arrange
 			var employeeRepository = Substitute.For<IEmployeeRepository>();
+			var namingService = Substitute.For<INamingService>();
+
 			employeeRepository.InsertEmployee(Arg.Any<FullTimeEmployee>()).Returns(1);
-			var controller = new EmployeeController(employeeRepository);
+			namingService.IsValid(Arg.Any<string>()).Returns(true);
+
+			var controller = new EmployeeController(employeeRepository, namingService);
 
 			EmployeeDto mockEmployee = new EmployeeDto
 			{
@@ -75,8 +85,10 @@ namespace EmployeeManagementApi.Tests
 			};
 
 			var employeeRepository = Substitute.For<IEmployeeRepository>();
+			var namingService = Substitute.For<INamingService>();
 			employeeRepository.GetAll().Returns(mockList);
-			var controller = new EmployeeController(employeeRepository);
+
+			var controller = new EmployeeController(employeeRepository, namingService);
 
 			var getAllOperationResult = await controller.GetAll();
 			var okResult = getAllOperationResult as OkObjectResult;

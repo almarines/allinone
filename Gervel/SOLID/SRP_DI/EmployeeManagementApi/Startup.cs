@@ -42,7 +42,8 @@ namespace EmployeeManagementApi
 
             services.AddDbContext<EmployeeDBContext>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-        }
+			services.AddSingleton<INamingService, NamingService>();
+		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

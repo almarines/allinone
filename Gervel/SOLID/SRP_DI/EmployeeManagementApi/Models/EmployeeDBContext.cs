@@ -31,7 +31,7 @@ namespace EmployeeManagementApi.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionstring = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\_Ashutosh\Trainings\SOLID\Ashutosh\SRP_DI\EmployeeManagementApi\oldEmployee.mdf;Integrated Security=True"; 
+                var connectionstring = _dbOptions.Value.PathToDB;
                 optionsBuilder.UseSqlServer(connectionstring);
             }
         }

@@ -16,85 +16,43 @@ namespace EmployeeManagementApi.Controllers
     [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
-        private readonly EmployeeDBContext employeeDBContext;
-        private readonly IOptions<DbConfig> dbOptions;
+        private readonly NamingService namingService;
+        private readonly IEmployeeRepository employeeRepository;
 
-        public EmployeeController(EmployeeDBContext employeeDBContext, IOptions<DbConfig> dbOptions)
+        public EmployeeController(IEmployeeRepository employeeRepo)
         {
-            this.employeeDBContext = employeeDBContext;
-            this.dbOptions = dbOptions;
+            namingService = new NamingService();
+            employeeRepository = employeeRepo;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var result = new List<Employee>();
-            using (var connection = new SqlConnection(this.dbOptions.Value.PathToDB))
-            {
-                connection.Open();
-                var employeeQuery = "Select * from Employees";
-                var cmd = new SqlCommand(employeeQuery, connection);
-
-                var read = cmd.ExecuteReader();
-                while (read.Read())
-                {
-                    var e = new FullTimeEmployee();
-                    e.Id = (int)read["id"];
-                    e.FirstName = (string)read["FirstName"];
-                    e.LastName = (string)read["LastName"];
-                    e.Email = (string)read["Email"];
-                    result.Add(e);
-                }               
-            }
-
-            return Ok(result);
+        public async Task<IActionResult> GetAll() {
+            var result = await employeeRepository.GetAll();
+			return Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> InsertEmployee(EmployeeDto employeeDto)
         {
-            if(string.IsNullOrEmpty(employeeDto.FirstName) || string.IsNullOrEmpty(employeeDto.LastName))
+            var mailService = new SMTPMailService();
+
+            if (!namingService.IsValid(employeeDto.FirstName) || !namingService.IsValid(employeeDto.LastName))
             {
                 throw new InvalidOperationException();
             }
 
-            if (string.IsNullOrEmpty(employeeDto.Email) || !employeeDto.Email.Contains("@"))
+            if (!mailService.IsValid(employeeDto.Email))
             {
                 throw new InvalidOperationException();
             }
 
-            var result = false;
-            using (var connection = new SqlConnection(this.dbOptions.Value.PathToDB))
-            {
-                connection.Open();
-                var employeeQuery = "Insert into Employees (FirstName,LastName,Email,BasicPay,HRA,Bonus,IsFullTimeEmployee, EmpType) VALUES (@1,@2,@3,@4,@5,@6, @7, @8)";
-
-                result = ExecuteQueryWithNoResult(connection, employeeQuery, employeeDto.FirstName, employeeDto.LastName, employeeDto.Email,1,1,1,false,1);
-            }
+            var result = await employeeRepository.InsertEmployee(new FullTimeEmployee() { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName, Email = employeeDto.Email });
 
             // send mail to finance / insurance team
-            var mailService = new SMTPMailService();
-            await mailService.SendMail("finance@danaher.com", "Welcome", "Welcome To Danaher");
+            // TODO: Uncomment code
+            // await mailService.SendMail("finance@xyz.com", "Welcome", "Welcome To xyz");
 
             return Ok(result);
-        }
-
-        private bool ExecuteQueryWithNoResult(SqlConnection connection, string query, params object[] paramList)
-        {
-            var cmd = new SqlCommand(query, connection);
-
-            var paramCount = 0;
-            foreach (var param in paramList)
-            {
-                var myParam = new SqlParameter(string.Format("@{0}", ++paramCount), SqlDbType.VarChar)
-                {
-                    Value = param
-                };
-                cmd.Parameters.Add(myParam);
-            }
-
-            // return a Sql data reader that returns number of impacted lines
-            return cmd.ExecuteNonQuery() > 0;
         }
     }
 

@@ -6,7 +6,25 @@ using System.Threading.Tasks;
 
 namespace Examples.OCP
 {
-    public abstract class Course
+    public interface ICourse
+    {
+        string CourseName { get; }
+        IEnumerable<string> Modules { get; }      
+    }
+
+    public interface ICourseCost
+    {
+        long BasicCost { get; }
+        long Tax { get; }
+        long TotalCost();
+    }
+
+    public interface ICourseCertification
+    {
+        IEnumerable<string> Certifications { get; }
+    }
+
+    public abstract class Course : ICourse, ICourseCost
     {
         public Course(string name, long cost, long tax)
         {
@@ -15,11 +33,11 @@ namespace Examples.OCP
             Tax = tax;
         }
 
-        protected internal string CourseName { get; }
+        public string CourseName { get; }
 
-        protected long BasicCost { get;}
+        public long BasicCost { get; }
 
-        protected long Tax { get; }
+        public long Tax { get; }
 
         public abstract long TotalCost();
 
@@ -41,7 +59,7 @@ namespace Examples.OCP
         }
     }
 
-    public class AdvanceDotNet : Course
+    public class AdvanceDotNet : Course, ICourseCertification
     {
         public AdvanceDotNet(string name, long cost, long tax) : base(name, cost, tax)
         {
@@ -49,6 +67,8 @@ namespace Examples.OCP
         }
 
         public override IEnumerable<string> Modules => new List<string> { "Garbage Collector" };
+
+        public IEnumerable<string> Certifications => new List<string> { "Microsoft .Net Certified" };
 
         public override long TotalCost()
         {

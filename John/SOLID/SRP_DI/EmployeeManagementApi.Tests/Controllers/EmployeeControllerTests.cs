@@ -4,6 +4,7 @@ using EmployeeManagementApi.Managers;
 using EmployeeManagementApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using SMTPMailService;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,7 +14,6 @@ namespace EmployeeManagementApi.Tests
 {
     public class EmployeeControllerTests
     {
-
         //[Theory]
         //[InlineData("", "", "")]
         //[InlineData("FirstName", "LastName", "")]
@@ -41,34 +41,50 @@ namespace EmployeeManagementApi.Tests
         //}
 
 
-        //[Fact]
-        //public async Task InsertEmployee_Test()
-        //{
-        //    // Arrange
-        //    var mockEmployeeRepository = Substitute.For<IEmployeeRepository>();
-        //    mockEmployeeRepository.InsertEmployee(Arg.Any<Employee>()).Returns(1);
-        //    var controller = new EmployeeController(mockEmployeeRepository);
+        [Fact]
+        public async Task InsertEmployee_Test()
+        {
+            // Arrange
+            var mockEmployeeRepository = Substitute.For<IEmployeeRepository>();
+            mockEmployeeRepository.InsertEmployee(Arg.Any<Employee>()).Returns(1);
 
-        //    // Act
-        //    var result = await controller.InsertEmployee(
-        //        new EmployeeDto { 
-        //            FirstName = "John", 
-        //            LastName = "Mayordo", 
-        //            Email = "john.mayordo@kyocera.com" 
-        //        });
+            var namingservice = Substitute.For<INamingService>();
+            namingservice.IsValid(Arg.Any<string>()).Returns(true);
 
-        //    var okResult = result as OkObjectResult;
+            var mailService = Substitute.For<IMailService>();
+            mailService.IsValid(Arg.Any<string>()).Returns(true);
 
-        //    // Assert
-        //    Assert.NotNull(result);
-        //    Assert.NotNull(okResult.Value);
-        //    await mockEmployeeRepository.Received().InsertEmployee(Arg.Any<Employee>());
-        //}
+            var controller = new EmployeeController(mockEmployeeRepository, mailService, namingservice);
+
+            // Act
+            var result = await controller.InsertEmployee(
+                new EmployeeDto
+                {
+                    FirstName = "John",
+                    LastName = "Mayordo",
+                    Email = "john.mayordo@kyocera.com"
+                });
+
+            var okResult = result as OkObjectResult;
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotNull(okResult.Value);
+            await mockEmployeeRepository.Received().InsertEmployee(Arg.Any<Employee>());
+            namingservice.Received().IsValid(Arg.Any<string>());
+            mailService.Received().IsValid(Arg.Any<string>());
+        }
 
         [Fact]
         public async Task GetAllEmployee_Test()
         {
             // Arrange
+            var namingservice = Substitute.For<INamingService>();
+            namingservice.IsValid(Arg.Any<string>()).Returns(true);
+
+            var mailService = Substitute.For<IMailService>();
+            mailService.IsValid(Arg.Any<string>()).Returns(true);
+
             var mockEmployeeRepository = Substitute.For<IEmployeeRepository>();
             var employeeList = new List<Employee>()
             {
@@ -85,7 +101,7 @@ namespace EmployeeManagementApi.Tests
                 return employeeList;
             });
 
-            var controller = new EmployeeController(mockEmployeeRepository);
+            var controller = new EmployeeController(mockEmployeeRepository, mailService, namingservice);
 
             // Act
             var result = await controller.GetAll();
@@ -98,6 +114,8 @@ namespace EmployeeManagementApi.Tests
             Assert.NotNull(result);
             Assert.NotNull(okResult.Value);
             await mockEmployeeRepository.Received().GetAll();
+            namingservice.Received().IsValid(Arg.Any<string>());
+            mailService.Received().IsValid(Arg.Any<string>());
         }
     }
 }

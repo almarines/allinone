@@ -2,6 +2,7 @@ using EmployeeManagementApi.Controllers;
 using EmployeeManagementApi.Dto;
 using EmployeeManagementApi.Managers;
 using EmployeeManagementApi.Models;
+using MailService;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using System;

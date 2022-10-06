@@ -1,4 +1,5 @@
 ﻿using EmployeeManagementApi.Models;
+using MailService;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,26 +11,15 @@ namespace EmployeeManagementApi.Managers
     public interface IEmployeeRepository
     {
         Task<int> InsertEmployee(Employee employee);
-		Task<IEnumerable<Employee>> GetAll();
-    }
 
-    public class EmployeeRepository : IEmployeeRepository
-    {
-        private readonly EmployeeDBContext employeeDBContext;
+        Task<IEnumerable<Employee>> GetAll();
 
-        public EmployeeRepository(EmployeeDBContext employeeDBContext)
-        {
-            this.employeeDBContext = employeeDBContext;
-        }
+        Task<Employee> GetByName(string name);
 
-        public async Task<int> InsertEmployee(Employee employee)
-        {
-           employeeDBContext.Employees.Add(employee);
-           return await employeeDBContext.SaveChangesAsync();
-        }
+        Task<Employee> GetById(int id);
 
-        public async Task<IEnumerable<Employee>> GetAll() {
-            return await employeeDBContext.Employees.ToListAsync();
-		}
+        Task<int> GetSalary(int id);
+
+        Task<string> GetInsurance(int id);
     }
 }

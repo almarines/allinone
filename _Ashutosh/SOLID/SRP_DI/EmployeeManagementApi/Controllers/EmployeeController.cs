@@ -5,6 +5,7 @@ using EmployeeManagementApi.Options;
 using MailService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -22,12 +23,15 @@ namespace EmployeeManagementApi.Controllers
         private readonly INamingService _namingService;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMailService _mailService;
+        private readonly ILogger<EmployeeController> logger;
 
-        public EmployeeController(IEmployeeRepository employeeRepo, INamingService namingService, IMailService mailService)
+        public EmployeeController(IEmployeeRepository employeeRepo, INamingService namingService,
+                                            IMailService mailService, ILogger<EmployeeController> logger)
         {
             _namingService = namingService;
             _employeeRepository = employeeRepo;
             _mailService = mailService;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -89,7 +93,6 @@ namespace EmployeeManagementApi.Controllers
                 throw new InvalidOperationException();
             }
 
-            //await mediator.Send(InsertEmployeeCommand() { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName, Email = employeeDto.Email } )
             var result = await _employeeRepository.InsertEmployee(new FullTimeEmployee() { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName, Email = employeeDto.Email });
 
             // send mail to finance / insurance team           

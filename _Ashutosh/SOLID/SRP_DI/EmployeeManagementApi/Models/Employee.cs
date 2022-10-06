@@ -31,6 +31,11 @@ namespace EmployeeManagementApi.Models
         public bool IsFullTimeEmployee { get; set; }
 
         public abstract int GetSalary();
+
+        public virtual string GetInsurance()
+        {
+            return "Max +";
+        }
     }
 
     public class FullTimeEmployee : Employee
@@ -46,6 +51,11 @@ namespace EmployeeManagementApi.Models
         public override int GetSalary()
         {
             return BasicPay + HRA;
+        }
+
+        public override string GetInsurance()
+        {
+            return "Max";
         }
     }
 }

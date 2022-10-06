@@ -7,6 +7,7 @@ namespace Examples.OCP {
 	}
 
 	public class Rectangle : Shape {
+
 		public double Height { get; set; }
 		public double Width { get; set; }
 

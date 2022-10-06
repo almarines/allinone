@@ -6,26 +6,9 @@ namespace Examples.OCP {
 	public class CourseCalculator {
 		public static IEnumerable<Course> GetAll() {
 			var list = new List<Course>();
-			list.Add(new Python() {
-				CourseName = "Basics of Python",
-				BasicCost = 1000,
-				Tax = 20,
-				Modules = new() {
-					"Basic Fundamentals",
-					"DataType in Python",
-					"Loops for, while etc in Python"
-				}
-			});
-			list.Add(new AdvanceDotNet() {
-				CourseName = "Advance .Net",
-				BasicCost = 2000,
-				Tax = 40,
-				Modules = new() {
-					"Garbage Collector",
-					"Memory Management",
-					"Multi Threads"
-				}
-			});
+
+			list.Add(new Python("Basics of Python", 1000, 20));
+			list.Add(new AdvanceDotNet("Advance .Net", 2000, 40));
 			return list;
 		}
 

@@ -17,43 +17,43 @@ namespace EmployeeManagementApi.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly INamingService _namingService;
-        private readonly IEmployeeRepository employeeRepository;
+		private readonly IMailService _mailService;
+		private readonly IEmployeeRepository _employeeRepository;
 
         public EmployeeController(
             IEmployeeRepository employeeRepo,
-			INamingService namingService)
+			INamingService namingService, 
+            IMailService mailService)
         {
 
             _namingService = namingService;
-            employeeRepository = employeeRepo;
-        }
+            _employeeRepository = employeeRepo;
+            _mailService = mailService;
+		}
 
         [HttpGet]
         public async Task<IActionResult> GetAll() {
-            var result = await employeeRepository.GetAll();
+            var result = await _employeeRepository.GetAll();
 			return Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> InsertEmployee(EmployeeDto employeeDto)
         {
-            var mailService = new SMTPMailService();
-
             if (!_namingService.IsValid(employeeDto.FirstName) || !_namingService.IsValid(employeeDto.LastName))
             {
                 throw new InvalidOperationException();
             }
 
-            if (!mailService.IsValid(employeeDto.Email))
+            if (!_mailService.IsValid(employeeDto.Email))
             {
                 throw new InvalidOperationException();
             }
 
-            var result = await employeeRepository.InsertEmployee(new FullTimeEmployee() { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName, Email = employeeDto.Email });
+            var result = await _employeeRepository.InsertEmployee(new FullTimeEmployee() { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName, Email = employeeDto.Email });
 
-            // send mail to finance / insurance team
-            // TODO: Uncomment code
-            // await mailService.SendMail("finance@xyz.com", "Welcome", "Welcome To xyz");
+            
+            await _mailService.SendMail("finance@xyz.com", "Welcome", "Welcome To xyz");
 
             return Ok(result);
         }

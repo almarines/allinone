@@ -9,10 +9,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace EmployeeManagementApi.Tests
-{
-	public class EmployeeControllerTests
-	{
+namespace EmployeeManagementApi.Tests {
+	public class EmployeeControllerTests {
 		[Theory]
 		[InlineData("", "", "")]
 		[InlineData("", "", "email@kyocera.com")]
@@ -21,18 +19,18 @@ namespace EmployeeManagementApi.Tests
 		[InlineData("First Name", "", "email@kyocera.com")]
 		[InlineData("First Name", "Last Name", "")]
 		[InlineData("First Name", "Last Name", "email.com")]
-		public void InsertEmployee_Test_InvalidValidations(string firstName, string lastName, string email)
-		{
+		public void InsertEmployee_Test_InvalidValidations(string firstName, string lastName, string email) {
 			// Arrange
 			var employeeRepository = Substitute.For<IEmployeeRepository>();
 			var namingService = new NamingService();
+			var mailingService = Substitute.For<IMailService>();
 
-			var controller = new EmployeeController(employeeRepository, namingService);
+			var controller = new EmployeeController(employeeRepository, namingService, mailingService);
 
-			EmployeeDto mockEmployee = new EmployeeDto { 
-				FirstName = firstName, 
-				LastName = lastName, 
-				Email = email 
+			EmployeeDto mockEmployee = new EmployeeDto {
+				FirstName = firstName,
+				LastName = lastName,
+				Email = email
 			};
 
 			// Act
@@ -43,19 +41,19 @@ namespace EmployeeManagementApi.Tests
 		}
 
 		[Fact]
-		public async Task InsertEmployee_Test_ValidCase()
-		{
+		public async Task InsertEmployee_Test_ValidCase() {
 			// Arrange
 			var employeeRepository = Substitute.For<IEmployeeRepository>();
 			var namingService = Substitute.For<INamingService>();
+			var mailingService = Substitute.For<IMailService>();
 
 			employeeRepository.InsertEmployee(Arg.Any<FullTimeEmployee>()).Returns(1);
 			namingService.IsValid(Arg.Any<string>()).Returns(true);
+			mailingService.IsValid(Arg.Any<string>()).Returns(true);
 
-			var controller = new EmployeeController(employeeRepository, namingService);
+			var controller = new EmployeeController(employeeRepository, namingService, mailingService);
 
-			EmployeeDto mockEmployee = new EmployeeDto
-			{
+			EmployeeDto mockEmployee = new EmployeeDto {
 				FirstName = "First",
 				LastName = "Last",
 				Email = "tester@kyoceraa.com"
@@ -73,11 +71,11 @@ namespace EmployeeManagementApi.Tests
 
 			Assert.Equal(expectedResult, actualResult);
 			await employeeRepository.Received().InsertEmployee(Arg.Any<FullTimeEmployee>());
+			await mailingService.Received().SendMail(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
 		}
 
 		[Fact]
-		public async Task GetAllEmployee_Test_ValidCase()
-		{
+		public async Task GetAllEmployee_Test_ValidCase() {
 			// Arrange
 			var mockList = new List<Employee>
 			{
@@ -86,9 +84,11 @@ namespace EmployeeManagementApi.Tests
 
 			var employeeRepository = Substitute.For<IEmployeeRepository>();
 			var namingService = Substitute.For<INamingService>();
+			var mailingService = Substitute.For<IMailService>();
+
 			employeeRepository.GetAll().Returns(mockList);
 
-			var controller = new EmployeeController(employeeRepository, namingService);
+			var controller = new EmployeeController(employeeRepository, namingService, mailingService);
 
 			var getAllOperationResult = await controller.GetAll();
 			var okResult = getAllOperationResult as OkObjectResult;

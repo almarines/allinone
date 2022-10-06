@@ -13,5 +13,7 @@ namespace EmployeeManagementApi.Managers
 
             return true;
         }
+
+        public bool IsValid(int value) => value > 0;
     }
 }

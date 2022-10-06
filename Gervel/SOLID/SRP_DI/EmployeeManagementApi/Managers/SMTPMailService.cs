@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace EmployeeManagementApi.Managers {
-	public class SMTPMailService {
+	public class SMTPMailService : IMailService {
 		public async Task<bool> SendMail(string to, string subject, string body) {
 			try {
 				SmtpClient client = new SmtpClient();
@@ -41,7 +39,5 @@ namespace EmployeeManagementApi.Managers {
 
 			return true;
 		}
-
-
 	}
 }

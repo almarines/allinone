@@ -43,6 +43,7 @@ namespace EmployeeManagementApi
             services.AddDbContext<EmployeeDBContext>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 			services.AddSingleton<INamingService, NamingService>();
+			services.AddSingleton<IMailService, SMTPMailService>();
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

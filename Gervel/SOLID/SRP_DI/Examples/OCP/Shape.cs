@@ -2,7 +2,11 @@
 using System.Linq;
 
 namespace Examples.OCP {
-	public abstract class Shape {
+	public interface IShape {
+		double GetArea();
+	}
+
+	public abstract class Shape : IShape {
 		public abstract double GetArea();
 	}
 
@@ -25,7 +29,7 @@ namespace Examples.OCP {
 	}
 
 	public class AreaCalculator {
-		public static double TotalArea(params Shape[] shapes) {
+		public static double TotalArea(params IShape[] shapes) {
 			#region Option 1
 			return shapes.Sum(c => c.GetArea());
 			#endregion

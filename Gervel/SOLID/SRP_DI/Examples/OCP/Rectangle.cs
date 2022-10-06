@@ -1,42 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Examples.OCP
-{
-    public class Rectangle
-    {
-        public double Height { get; set; }
-        public double Width { get; set; }
-    }
+namespace Examples.OCP {
+	public abstract class Shape {
+		public abstract double GetArea();
+	}
 
-    public class Circle
-    {
-        public double Radius { get; set; }
-    }
+	public class Rectangle : Shape {
 
-    public class AreaCalculator
-    {
-        public static double TotalArea(params object[] arrObjects)
-        {
-            double area = 0;
-            Circle objCircle;
-            foreach (var obj in arrObjects)
-            {
-                if (obj is Rectangle objRectangle)
-                {
-                    area += objRectangle.Height * objRectangle.Width;
-                }
-                else
-                {
-                    objCircle = (Circle)obj;
-                    area += objCircle.Radius * objCircle.Radius * Math.PI;
-                }
-            }
+		public double Height { get; set; }
+		public double Width { get; set; }
 
-            return area;
-        }
-    }
+		public override double GetArea() {
+			return Height * Width;
+		}
+	}
+
+	public class Circle : Shape {
+		public double Radius { get; set; }
+
+		public override double GetArea() {
+			return Radius * Radius * Math.PI;
+		}
+	}
+
+	public class AreaCalculator {
+		public static double TotalArea(params Shape[] shapes) {
+			#region Option 1
+			return shapes.Sum(c => c.GetArea());
+			#endregion
+
+			#region Option 2
+			//double area = 0;
+			//foreach (Shape shape in shapes) {
+			//	area += shape.GetArea();
+			//}
+
+			//return area;
+			#endregion
+		}
+	}
 }

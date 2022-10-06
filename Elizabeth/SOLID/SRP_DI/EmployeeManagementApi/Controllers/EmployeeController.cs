@@ -5,6 +5,7 @@ using EmployeeManagementApi.Options;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
+using SMTPMailServiceLib;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,13 +17,15 @@ namespace EmployeeManagementApi.Controllers
     [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
-        private readonly NamingService namingService;
+        private readonly INamingService namingService;
         private readonly IEmployeeRepository employeeRepository;
+        private readonly IMailService mailService;
 
-        public EmployeeController(IEmployeeRepository employeeRepo)
+        public EmployeeController(IEmployeeRepository employeeRepo, IMailService mailService, INamingService namingService)
         {
-            namingService = new NamingService();
+            this.namingService = namingService;
             employeeRepository = employeeRepo;
+            this.mailService = mailService;
         }
 
         [HttpGet]
@@ -35,8 +38,6 @@ namespace EmployeeManagementApi.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertEmployee(EmployeeDto employeeDto)
         {
-            var mailService = new SMTPMailService();
-
             if (!namingService.IsValid(employeeDto.FirstName) || !namingService.IsValid(employeeDto.LastName))
             {
                 throw new InvalidOperationException();

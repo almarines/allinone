@@ -1,6 +1,8 @@
-﻿using Core;
+﻿using ConsoleLogger;
+using Core;
 using Core.Contracts;
 using System;
+using System.Diagnostics.Contracts;
 
 namespace main
 {
@@ -8,10 +10,11 @@ namespace main
     {
         static void Main(string[] args)
         {
+            _ = args;
             var resolver = new Resolver();
             resolver.Resolve();
 
-            var logService = Container.Resolve<ILoggingService>();
+			var logService = Container.Resolve<ILoggingService>();
             logService.Log("before sending mail");
 
             // How to access SMTPMail / AWS Service

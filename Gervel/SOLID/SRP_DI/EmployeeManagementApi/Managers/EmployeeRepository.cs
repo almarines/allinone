@@ -35,16 +35,8 @@ namespace EmployeeManagementApi.Managers {
 
         public async Task<string> GetInsurance(int id) {
             var emp = await GetById(id);
-            if (emp is FullTimeEmployee) {
-                return "Max +";
-            }
-
-            if (emp is PartTimeEmployee) {
-                return "Max";
-            }
-
-            return null;
-        }
+			return emp.GetInsurance();
+		}
 
         public async Task<int> InsertEmployee(Employee employee) {
             employeeDBContext.Employees.Add(employee);

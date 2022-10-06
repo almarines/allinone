@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagementApi.Managers
 {
-    public class NamingService
+    public class NamingService : INamingService
     {
         public bool IsValid(string value)
         {
@@ -14,7 +14,14 @@ namespace EmployeeManagementApi.Managers
                 return false;
             }
 
+            if (value.Length > 10)
+            {
+                return false;
+            }
+
             return true;
         }
+
+        public bool IsValid(int value) => value > 0;
     }
 }

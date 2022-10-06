@@ -1,82 +1,40 @@
 using EmployeeManagementApi.Controllers;
-using EmployeeManagementApi.Dto;
 using EmployeeManagementApi.Managers;
 using EmployeeManagementApi.Models;
-using EmployeeManagementApi.Repositories;
+using MailService;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace EmployeeManagementApi.Tests
 {
     public class EmployeeControllerTests
     {
-
-        //[Theory]
-        //[InlineData("","","")]
-        //[InlineData("Bong", "Moambing", "Alberto.Moambing")]
         [Fact]
-
-        public async Task InsertEmployee_Tests()
+        public async void InsertEmployee_Tests()
         {
-
             // Arrange
             var mockRepo = Substitute.For<IEmployeeRepository>();
             mockRepo.InsertEmployee(Arg.Any<Employee>()).Returns(1);
 
-            var controller = new EmployeeController(mockRepo);
+            var namingService = Substitute.For<INamingService>();
+            namingService.IsValid(Arg.Any<string>()).Returns(true);
 
-            EmployeeDto mockEmployee = new EmployeeDto
-            {
-                FirstName = "firtname",
-                LastName = "lastname",
-                Email = "@email.com"
-            };
+            var mailService = Substitute.For<IMailService>();
+            mailService.IsValid(Arg.Any<string>()).Returns(true);
 
-            // Act            
-            var result = await controller.InsertEmployee(mockEmployee);
+
+            var controller = new EmployeeController(mockRepo, namingService, mailService);
+
+            // Act
+            var result = await controller.InsertEmployee(new Dto.EmployeeDto() { FirstName = "fist", LastName = "last", Email = "a@gmail.com" });
             var okResult = result as OkObjectResult;
-            
-            //Assert
+
+            // Assert
             Assert.NotNull(result);
             Assert.NotNull(okResult.Value);
-            //await mockRepo.Received().InsertEmployee(Arg.Any<Employee>());
-           // Assert.ThrowsAnyAsync<InvalidOperationException>(result);
+            await mockRepo.Received().InsertEmployee(Arg.Any<Employee>());
         }
-
-        [Fact]
-        public async Task EmployeeList_Tests()
-        {
-            var mockRepo = Substitute.For<IEmployeeRepository>();
-            
-            var mockEmployees = new List<Employee>()
-            {
-                new FullTimeEmployee()
-                {
-                   FirstName = "firtname",
-                   LastName = "lastname",
-                     Email = "@email.com"
-                }
-                
-            };
-            mockRepo.GetAll().Returns(s => { return mockEmployees; });
-
-            var controller = new EmployeeController(mockRepo);
-            // Act            
-            var result = await controller.GetAll();
-            var okResult = result as OkObjectResult;
-            var resultValue = okResult.Value as IEnumerable<Employee>;
-
-
-            //Assert
-            Assert.NotNull(resultValue);
-            Assert.Single(resultValue);
-            
-
-        }
-
     }
 }

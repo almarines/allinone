@@ -30,24 +30,22 @@ namespace EmployeeManagementApi.Models
 
         public bool IsFullTimeEmployee { get; set; }
 
-        public int GetSalary()
-        {
-            if (IsFullTimeEmployee)
-            {
-                return BasicPay + HRA + Bonus;
-            }
-            else
-            {
-                return BasicPay + HRA;
-            }
-        }
+        public abstract int GetSalary();
     }
 
     public class FullTimeEmployee : Employee
     {
+        public override int GetSalary()
+        {
+            return BasicPay + HRA + Bonus;
+        }
     }
 
     public class PartTimeEmployee : Employee
     {
+        public override int GetSalary()
+        {
+            return BasicPay + HRA;
+        }
     }
 }

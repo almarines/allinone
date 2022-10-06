@@ -7,7 +7,31 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagementApi.Models
 {
-    public abstract class Employee
+    public interface IEmployee
+    {
+        string Email { get; set; }
+        string FirstName { get; set; }
+        int Id { get; set; }
+        string LastName { get; set; }
+    }
+
+    public interface IEmployeePayment
+    {
+        int BasicPay { get; set; }
+        int Bonus { get; set; }
+     
+        int HRA { get; set; }
+    
+        int GetSalary();
+    }
+
+    public interface IInsurance
+    {
+        string GetInsurance();
+    }
+
+
+    public abstract class Employee : IEmployee, IEmployeePayment, IInsurance
     {
         /// <value>The id.</value>
         [Key]
@@ -25,10 +49,6 @@ namespace EmployeeManagementApi.Models
         public int HRA { get; set; }
 
         public int Bonus { get; set; }
-
-        public string InsuranceType { get; set; }
-
-        public bool IsFullTimeEmployee { get; set; }
 
         public abstract int GetSalary();
 

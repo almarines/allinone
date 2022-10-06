@@ -26,12 +26,10 @@ namespace EmployeeManagementApi.Managers
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly EmployeeDBContext employeeDBContext;
-        private readonly IMailService mailService;
 
-        public EmployeeRepository(EmployeeDBContext employeeDBContext, IMailService mailService)
+        public EmployeeRepository(EmployeeDBContext employeeDBContext)
         {
             this.employeeDBContext = employeeDBContext;
-            this.mailService = mailService;
         }
 
         public async Task<IEnumerable<Employee>> GetAll()

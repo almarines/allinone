@@ -1,6 +1,7 @@
 using EmployeeManagementApi.Managers;
 using EmployeeManagementApi.Models;
 using EmployeeManagementApi.Options;
+
 using FluentValidation;
 using MailService;
 using MediatR;
@@ -42,9 +43,13 @@ namespace EmployeeManagementApi
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
 
             services.AddSingleton<INamingService, NamingService>();
-            services.AddScoped<IMailService, SMTPMailService>();
+            //services.AddScoped<IMailService, SMTPMailService>();
             services.AddDbContext<EmployeeDBContext>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

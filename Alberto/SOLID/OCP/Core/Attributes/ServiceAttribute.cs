@@ -25,5 +25,8 @@ namespace Core.Attributes
 
         /// <inheritdoc/>
         public Type Contract { get; set; }
+
+        /// <inheritdoc/>
+        public int Order { get; set; }
     }
 }

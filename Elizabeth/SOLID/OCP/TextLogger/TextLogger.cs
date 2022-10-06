@@ -11,9 +11,14 @@ using System.Threading.Tasks;
 [assembly: AutoGenerate]
 namespace TextLogger
 {
-    [Service(Contract = typeof(ILoggingService))]
+    [Service(Contract = typeof(ILoggingService), Order = 0)]
     public class TextLogger : ILoggingService
     {
+        public TextLogger()
+        {
+            
+        }
+
         public string Name => "TextLogger";
 
         public void Log(string message)

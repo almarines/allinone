@@ -5,6 +5,7 @@ using EmployeeManagementApi.Options;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
+using SMTPMailService;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,40 +17,81 @@ namespace EmployeeManagementApi.Controllers
     [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
-        private readonly NamingService namingService;
-        private readonly IEmployeeRepository employeeRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IMailService _mailService;
+        private readonly INamingService _namingService;
 
-        public EmployeeController(IEmployeeRepository employeeRepo)
+        public EmployeeController(IEmployeeRepository employeeRepo, IMailService mailService, INamingService namingService)
         {
-            namingService = new NamingService();
-            employeeRepository = employeeRepo;
+            _namingService = namingService;
+            _employeeRepository = employeeRepo;
+            _mailService = mailService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await employeeRepository.GetAll();
+            var result = await _employeeRepository.GetAll();
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("firstname")]
+        public async Task<IActionResult> GetByName(string firstName)
+        {
+            if (!_namingService.IsValid(firstName))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var result = await _employeeRepository.GetByName(firstName);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("fullsalary")]
+        public async Task<IActionResult> GetSalary(int id)
+        {
+            if (!_namingService.IsValid(id))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var result = await _employeeRepository.GetSalary(id);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("insurance")]
+        public async Task<IActionResult> GetInsurance(int id)
+        {
+            if (!_namingService.IsValid(id))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var result = await _employeeRepository.GetInsurance(id);
+            return Ok(result);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> InsertEmployee(EmployeeDto employeeDto)
         {
-            var mailService = new SMTPMailService();
-            if (!namingService.IsValid(employeeDto.FirstName) || !namingService.IsValid(employeeDto.LastName))
+            if (!_namingService.IsValid(employeeDto.FirstName) || !_namingService.IsValid(employeeDto.LastName))
             {
                 throw new InvalidOperationException();
             }
 
-            if (!mailService.IsValid(employeeDto.Email))
+            if (!_mailService.IsValid(employeeDto.Email))
             {
                 throw new InvalidOperationException();
             }
 
-            var result = employeeRepository.InsertEmployee(new FullTimeEmployee() { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName, Email = employeeDto.Email });
+            var result = _employeeRepository.InsertEmployee(new FullTimeEmployee() { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName, Email = employeeDto.Email });
 
             // send mail to finance / insurance team
-            await mailService.SendMail("finance@danaher.com", "Welcome", "Welcome To Danaher");
+            await _mailService.SendMail("finance@danaher.com", "Welcome", "Welcome To Danaher");
 
             return Ok(result);
         }

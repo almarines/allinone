@@ -3,7 +3,7 @@ using System;
 
 namespace Examples
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -32,5 +32,6 @@ namespace Examples
             Console.WriteLine($"*** Total Training Cost : {totalCost} ****");
             Console.ReadLine();
         }
+
     }
 }

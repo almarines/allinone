@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Examples.OCP {
@@ -29,13 +30,19 @@ namespace Examples.OCP {
 		}
 
 		public static double TotalCost(params Course[] courses) {
-			double cost = 0;
+			#region Option 1
+			return courses.Sum(c => c.TotalCost());
+			#endregion
 
-			foreach (Course course in courses) {
-				cost += course.TotalCost();
-			}
+			#region Option 2
+			//double cost = 0;
 
-			return cost;
+			//foreach (Course course in courses) {
+			//	cost += course.TotalCost();
+			//}
+
+			//return cost;
+			#endregion
 		}
 
 		public static IEnumerable<string> GetModules(Course course) {

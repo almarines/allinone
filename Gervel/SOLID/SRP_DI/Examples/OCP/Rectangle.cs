@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Examples.OCP {
 	public abstract class Shape {
@@ -24,12 +25,18 @@ namespace Examples.OCP {
 
 	public class AreaCalculator {
 		public static double TotalArea(params Shape[] shapes) {
-			double area = 0;
-			foreach (Shape shape in shapes) {
-				area += shape.GetArea();
-			}
+			#region Option 1
+			return shapes.Sum(c => c.GetArea());
+			#endregion
 
-			return area;
+			#region Option 2
+			//double area = 0;
+			//foreach (Shape shape in shapes) {
+			//	area += shape.GetArea();
+			//}
+
+			//return area;
+			#endregion
 		}
 	}
 }

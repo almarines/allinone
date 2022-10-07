@@ -1,4 +1,5 @@
-﻿using EmployeeManagementApi.Managers;
+﻿using Core;
+using EmployeeManagementApi.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

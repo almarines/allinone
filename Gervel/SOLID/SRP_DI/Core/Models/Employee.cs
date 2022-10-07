@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EmployeeManagementApi.Models {
+namespace Core {
 	public abstract class Employee : IEmployee, ISalary, IBenefits {
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]

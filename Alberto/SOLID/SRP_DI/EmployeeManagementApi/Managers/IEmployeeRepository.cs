@@ -26,12 +26,10 @@ namespace EmployeeManagementApi.Managers
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly EmployeeDBContext employeeDBContext;
-        private readonly IMailService mailService;
 
-        public EmployeeRepository(EmployeeDBContext employeeDBContext, IMailService mailService)
+        public EmployeeRepository(EmployeeDBContext employeeDBContext)
         {
             this.employeeDBContext = employeeDBContext;
-            this.mailService = mailService;
         }
 
         public async Task<IEnumerable<Employee>> GetAll()
@@ -43,7 +41,6 @@ namespace EmployeeManagementApi.Managers
         {
             return await employeeDBContext.Employees.FirstOrDefaultAsync(s => s.Id == id);
         }
-              
 
         public async Task<Employee> GetByName(string name)
         {
@@ -56,12 +53,10 @@ namespace EmployeeManagementApi.Managers
             return emp.GetSalary();
         }
 
-
         public async Task<string> GetInsurance(int id)
         {
             var emp = await GetById(id);
             return emp.GetInsurance();
-            
         }
 
         public async Task<int> InsertEmployee(Employee employee)

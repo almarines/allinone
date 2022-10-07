@@ -1,4 +1,5 @@
-﻿using EmployeeManagementApi.Managers;
+﻿using Core;
+using Core.Contracts;
 using Xunit;
 
 namespace EmployeeManagementApi.Tests.Managers

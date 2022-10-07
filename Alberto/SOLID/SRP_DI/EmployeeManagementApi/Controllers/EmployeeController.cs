@@ -1,17 +1,10 @@
-﻿using EmployeeManagementApi.Dto;
-using EmployeeManagementApi.Managers;
-using EmployeeManagementApi.Models;
-using EmployeeManagementApi.Options;
-using MailService;
+﻿using Core;
+using Core.Contracts;
+using Core.Models;
+using EmployeeManagementApi.Dto;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Net;
-using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace EmployeeManagementApi.Controllers
@@ -26,12 +19,12 @@ namespace EmployeeManagementApi.Controllers
         private readonly ILogger<EmployeeController> logger;
 
         public EmployeeController(IEmployeeRepository employeeRepo, INamingService namingService,
-                                            IMailService mailService, ILogger<EmployeeController> logger)
+                                            IMailService mailService)
         {
             _namingService = namingService;
             _employeeRepository = employeeRepo;
             _mailService = mailService;
-            this.logger = logger;
+            //this.logger = logger;
         }
 
         [HttpGet]
@@ -58,7 +51,7 @@ namespace EmployeeManagementApi.Controllers
         [Route("fullsalary")]
         public async Task<IActionResult> GetSalary(int id)
         {
-            if (!_namingService.IsValid(id))
+            if (!_namingService.IsValid(id.ToString()))
             {
                 throw new InvalidOperationException();
             }
@@ -71,7 +64,7 @@ namespace EmployeeManagementApi.Controllers
         [Route("insurance")]
         public async Task<IActionResult> GetInsurance(int id)
         {
-            if (!_namingService.IsValid(id))
+            if (!_namingService.IsValidNumber(id))
             {
                 throw new InvalidOperationException();
             }

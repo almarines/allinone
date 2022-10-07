@@ -1,59 +1,78 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Examples.OCP
 {
-    public abstract class Course
+    public interface ICourse
     {
-        public Course(string courseName, long basicCost, long tax)
+        string CourseName { get; }
+        IEnumerable<string> Modules { get; }
+    }
+
+    public interface ICourseCost
+    {
+        long BasicCost { get; }
+        long Tax { get; }
+        long TotalCost();
+    }
+
+    public interface ICourseCertification
+    {
+        IEnumerable<string> Certifications { get; }
+    }
+
+    public abstract class Course : ICourse, ICourseCost
+    {
+        public Course(string name, long cost, long tax)
         {
-            CourseName = courseName;
-            BasicCost = basicCost;
+            CourseName = name;
+            BasicCost = cost;
             Tax = tax;
         }
 
-        protected internal string CourseName { get; }
+        public string CourseName { get; }
 
-        protected internal long BasicCost { get; }
+        public long BasicCost { get; }
 
-        protected internal long Tax { get; }
+        public long Tax { get; }
 
-        public abstract double TotalCost();
+        public abstract long TotalCost();
+
         public abstract IEnumerable<string> Modules { get; }
     }
 
-
     public class Python : Course
     {
-        public Python(string courseName, long basicCost, long tax) : base(courseName, basicCost, tax)
+        public Python(string name, long cost, long tax) : base(name, cost, tax)
         {
 
         }
-        public override IEnumerable<string> Modules => new List<string>() { "Basic Fundamentals", "DataType in Python", "Loops for, while etc in Python" };
 
-        public override double TotalCost()
+        public override IEnumerable<string> Modules => new List<string> { "Basic Fundamentals" };
+
+        public override long TotalCost()
         {
-            return (BasicCost * Tax) + 100;
+            return BasicCost + Tax + 100;
         }
     }
 
-    public class AdvanceDotNet : Course
+    public class AdvanceDotNet : Course, ICourseCertification
     {
-        public AdvanceDotNet(string courseName, long basicCost, long tax) : base(courseName, basicCost, tax)
+        public AdvanceDotNet(string name, long cost, long tax) : base(name, cost, tax)
         {
 
         }
 
-        public override IEnumerable<string> Modules => new List<string>() { "Garbage Collector", "Memory Management", "Multi Threads" };
+        public override IEnumerable<string> Modules => new List<string> { "Garbage Collector" };
 
-        public override double TotalCost()
+        public IEnumerable<string> Certifications => new List<string> { "Microsoft .Net Certified" };
+
+        public override long TotalCost()
         {
-            return (BasicCost * Tax) + 50;
+            return BasicCost + Tax + 50;
         }
     }
 }

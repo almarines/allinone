@@ -6,7 +6,6 @@ using SMTPMailServiceLib;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
-using SMTPMailServiceLib;
 using System;
 using System.Collections.Generic;
 using System.Data;

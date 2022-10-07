@@ -1,4 +1,4 @@
-﻿namespace EmployeeManagementApi.Managers
+﻿namespace Core
 {
     public interface INamingService
     {

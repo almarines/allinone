@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConsoleLogger\ConsoleLogger.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\TextLogger\TextLogger.csproj" />
   </ItemGroup>
 
 </Project>

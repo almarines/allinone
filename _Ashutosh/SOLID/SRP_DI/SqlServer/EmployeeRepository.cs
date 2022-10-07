@@ -1,28 +1,14 @@
-﻿using EmployeeManagementApi.Models;
-using MailService;
+﻿using Core;
+using Core.Models;
+using DataBaseCore.DBContext;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmployeeManagementApi.Managers
+namespace DataBaseCore
 {
-    public interface IEmployeeRepository
-    {
-        Task<int> InsertEmployee(Employee employee);
-
-        Task<IEnumerable<Employee>> GetAll();
-
-        Task<Employee> GetByName(string name);
-
-        Task<Employee> GetById(int id);
-
-        Task<int> GetSalary(int id);
-
-        Task<string> GetInsurance(int id);
-    }
-
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly EmployeeDBContext employeeDBContext;

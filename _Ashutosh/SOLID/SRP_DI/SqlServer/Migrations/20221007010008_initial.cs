@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace EmployeeManagementApi.Migrations
+namespace SqlServer.Migrations
 {
     public partial class initial : Migration
     {
@@ -18,8 +18,6 @@ namespace EmployeeManagementApi.Migrations
                     BasicPay = table.Column<int>(type: "int", nullable: false),
                     HRA = table.Column<int>(type: "int", nullable: false),
                     Bonus = table.Column<int>(type: "int", nullable: false),
-                    InsuranceType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsFullTimeEmployee = table.Column<bool>(type: "bit", nullable: false),
                     EmpType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

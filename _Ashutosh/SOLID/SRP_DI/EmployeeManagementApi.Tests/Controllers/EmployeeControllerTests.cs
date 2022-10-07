@@ -1,10 +1,8 @@
+using Core;
+using Core.Models;
 using EmployeeManagementApi.Controllers;
-using EmployeeManagementApi.Managers;
-using EmployeeManagementApi.Models;
-using MailService;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using System;
 using Xunit;
 
 namespace EmployeeManagementApi.Tests

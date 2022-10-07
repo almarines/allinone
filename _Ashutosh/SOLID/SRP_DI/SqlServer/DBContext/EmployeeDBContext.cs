@@ -1,4 +1,5 @@
-﻿using EmployeeManagementApi.Options;
+﻿using Core.Models;
+using Core.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmployeeManagementApi.Models
+namespace DataBaseCore.DBContext
 {
     public class EmployeeDBContext : DbContext
 	{

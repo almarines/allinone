@@ -1,23 +1,16 @@
-using EmployeeManagementApi.Managers;
-using EmployeeManagementApi.Models;
+using Core;
+using Core.Contracts;
+using DataBaseCore.Extensions;
 using EmployeeManagementApi.Options;
 using FluentValidation;
-using MailService;
+using MailService.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace EmployeeManagementApi
 {
@@ -42,9 +35,9 @@ namespace EmployeeManagementApi
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
 
             services.AddSingleton<INamingService, NamingService>();
-            //services.AddScoped<IMailService, SMTPMailService>();
-            services.AddDbContext<EmployeeDBContext>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.RegisterMailService();
+
+            services.RegisterDatabase();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

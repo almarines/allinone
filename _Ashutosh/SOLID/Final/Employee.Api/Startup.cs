@@ -11,6 +11,8 @@ using Core.Options;
 using DataBaseCore.Extensions;
 using DataBaseCore;
 using MailService.Extensions;
+using Core.Behaviors;
+using Core.Middlewares;
 
 namespace EmployeeWebApi
 {
@@ -28,10 +30,13 @@ namespace EmployeeWebApi
         {
             services.AddControllers();
             services.Configure<DbConfig>(Configuration);
-
+            //services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-                    
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
+
             services.RegisterDatabase();
             services.RegisterMailService();
             services.AddSingleton<INamingService, NamingService>();
@@ -46,6 +51,7 @@ namespace EmployeeWebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
             app.UseHttpsRedirection();
 
             app.UseRouting();

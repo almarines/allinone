@@ -44,7 +44,7 @@ namespace Core
                 serviceImports = container.GetExports<Lazy<IService, ServiceAttribute>>();
             }
 
-            foreach (var item in serviceImports.OrderBy(x => x.Order))
+            foreach (var item in serviceImports)
             {
                 var contract = item.Metadata.Contract;
                 var instance = item.Value;

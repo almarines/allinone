@@ -1,6 +1,8 @@
 ﻿using Core.Contracts;
 using Core.Models;
 using EmployeeManagementApi.Dto;
+using EmployeeWebApi.Application.Query;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,21 +18,23 @@ namespace EmployeeWebApi.Controllers
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMailService _mailService;
         private readonly INamingService _namingService;
+        private readonly IMediator _mediator;
 
         public EmployeeController(ILogger<EmployeeController> logger,
             IEmployeeRepository employeeRepository,
-            IMailService mailService, INamingService namingService)
+            IMailService mailService, INamingService namingService, IMediator mediator)
         {
             _logger = logger;
             _employeeRepository = employeeRepository;
             _mailService = mailService;
             _namingService = namingService;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _employeeRepository.GetAll());
+            return Ok(await _mediator.Send(new GetEmployee()));
         }
 
         [HttpGet("{id}")]
@@ -91,7 +95,7 @@ namespace EmployeeWebApi.Controllers
             var result = await _employeeRepository.InsertEmployee(e);
 
             // send mail to employee
-            await _mailService.SendMail(e.Email, "Welcome Mail", "Welcome to Danaher");
+            await _mailService.SendMail(e.Email, "Welcome", "Welcome To xyz");
 
             return Ok(result);
         }

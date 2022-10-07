@@ -14,7 +14,7 @@ namespace DatabaseCore {
 			InitializeDatabase();
 		}
 
-		public IMongoCollection<Employee> Employees { get; private set; }
+		public IMongoCollection<FullTimeEmployee> Employees { get; private set; }
 
 		private void InitializeDatabase() {
 			try {
@@ -24,7 +24,7 @@ namespace DatabaseCore {
 				var dbClient = new MongoClient(mongoDBConfig);
 				var db = dbClient.GetDatabase(databaseName);
 
-				Employees = db.GetCollection<Employee>(nameof(Employee));
+				Employees = db.GetCollection<FullTimeEmployee>(nameof(Employee));
 
 			} catch {
 				throw new Exception("Invalid mongo configuration or Connection string");

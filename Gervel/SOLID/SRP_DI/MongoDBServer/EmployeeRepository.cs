@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using System;
 
 namespace DatabaseCore {
 	public class EmployeeRepository : IEmployeeRepository {
@@ -21,14 +22,14 @@ namespace DatabaseCore {
 		}
 
 		public async Task<Employee> GetById(int id) {
-			FilterDefinition<Employee> filter = Builders<Employee>.Filter.Eq(m => m.Id, id);
-			IAsyncCursor<Employee> results = await employeeDBContext.Employees.FindAsync(filter);
+			FilterDefinition<FullTimeEmployee> filter = Builders<FullTimeEmployee>.Filter.Eq(m => m.Id, id);
+			IAsyncCursor<FullTimeEmployee> results = await employeeDBContext.Employees.FindAsync(filter);
 			return await results.FirstOrDefaultAsync();
 		}
 
 		public async Task<Employee> GetByName(string name) {
-			FilterDefinition<Employee> filter = Builders<Employee>.Filter.Eq(m => m.FirstName, name);
-			IAsyncCursor<Employee> results = await employeeDBContext.Employees.FindAsync(filter);
+			FilterDefinition<FullTimeEmployee> filter = Builders<FullTimeEmployee>.Filter.Eq(m => m.FirstName, name);
+			IAsyncCursor<FullTimeEmployee> results = await employeeDBContext.Employees.FindAsync(filter);
 			return await results.FirstOrDefaultAsync();
 		}
 
@@ -44,9 +45,15 @@ namespace DatabaseCore {
 
 		public async Task<int> InsertEmployee(Employee employee) {
 			try {
-				await employeeDBContext.Employees.InsertOneAsync(employee);
+				var allEmployees = await employeeDBContext.Employees.FindAsync(_ => true);
+				var count = allEmployees.ToList().Count;
+
+				employee.Id = count + 1;
+
+				await employeeDBContext.Employees.InsertOneAsync(employee as FullTimeEmployee);
 				return 1;
-			} catch {
+			} catch (Exception ex) {
+				Console.WriteLine($"[ERROR] InsertEmployee() {ex.Message}");
 				return 0;
 			}
 		}

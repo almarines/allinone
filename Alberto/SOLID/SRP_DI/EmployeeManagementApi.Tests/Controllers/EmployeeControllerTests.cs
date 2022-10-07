@@ -1,40 +1,39 @@
+using Core;
+using Core.Contracts;
+using Core.Models;
 using EmployeeManagementApi.Controllers;
-using EmployeeManagementApi.Managers;
-using EmployeeManagementApi.Models;
-using MailService;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using System;
 using Xunit;
 
 namespace EmployeeManagementApi.Tests
 {
     public class EmployeeControllerTests
     {
-        //[Fact]
-        //public async void InsertEmployee_Tests()
-        //{
-        //    // Arrange
-        //    var mockRepo = Substitute.For<IEmployeeRepository>();
-        //    mockRepo.InsertEmployee(Arg.Any<Employee>()).Returns(1);
+        [Fact]
+        public async void InsertEmployee_Tests()
+        {
+            // Arrange
+            var mockRepo = Substitute.For<IEmployeeRepository>();
+            mockRepo.InsertEmployee(Arg.Any<Employee>()).Returns(1);
 
-        //    var namingService = Substitute.For<INamingService>();
-        //    namingService.IsValid(Arg.Any<string>()).Returns(true);
+            var namingService = Substitute.For<INamingService>();
+            namingService.IsValid(Arg.Any<string>()).Returns(true);
 
-        //    var mailService = Substitute.For<IMailService>();
-        //    mailService.IsValid(Arg.Any<string>()).Returns(true);
+            var mailService = Substitute.For<IMailService>();
+            mailService.IsValid(Arg.Any<string>()).Returns(true);
 
 
-        //    var controller = new EmployeeController(mockRepo, namingService, mailService);
+            var controller = new EmployeeController(mockRepo, namingService, mailService);
 
-        //    // Act
-        //    var result = await controller.InsertEmployee(new Dto.EmployeeDto() { FirstName = "fist", LastName = "last", Email = "a@gmail.com" });
-        //    var okResult = result as OkObjectResult;
+            // Act
+            var result = await controller.InsertEmployee(new Dto.EmployeeDto() { FirstName = "fist", LastName = "last", Email = "a@gmail.com" });
+            var okResult = result as OkObjectResult;
 
-        //    // Assert
-        //    Assert.NotNull(result);
-        //    Assert.NotNull(okResult.Value);
-        //    await mockRepo.Received().InsertEmployee(Arg.Any<Employee>());
-        //}
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotNull(okResult.Value);
+            await mockRepo.Received().InsertEmployee(Arg.Any<Employee>());
+        }
     }
 }

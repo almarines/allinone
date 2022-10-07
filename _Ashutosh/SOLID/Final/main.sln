@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{74D5F8D9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Employee.Api.Tests", "Employee.Api.Tests\Employee.Api.Tests.csproj", "{743F951B-739E-4DEF-9C42-952E8B217654}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mongo", "Mongo\Mongo.csproj", "{4CCD221D-7E46-46CE-8F05-C49213BBBE9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{743F951B-739E-4DEF-9C42-952E8B217654}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{743F951B-739E-4DEF-9C42-952E8B217654}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{743F951B-739E-4DEF-9C42-952E8B217654}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CCD221D-7E46-46CE-8F05-C49213BBBE9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CCD221D-7E46-46CE-8F05-C49213BBBE9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CCD221D-7E46-46CE-8F05-C49213BBBE9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CCD221D-7E46-46CE-8F05-C49213BBBE9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +85,7 @@ Global
 		{EF7817B2-E29C-4DB4-AE61-FAB94999C026} = {037D8730-8952-4DBA-AE0E-EAF0B8568E28}
 		{6F3ADFC1-90E6-4072-8792-48CAF5E240F0} = {EF7817B2-E29C-4DB4-AE61-FAB94999C026}
 		{743F951B-739E-4DEF-9C42-952E8B217654} = {74D5F8D9-3BD3-474B-A9E4-44FB5662022A}
+		{4CCD221D-7E46-46CE-8F05-C49213BBBE9D} = {EF7817B2-E29C-4DB4-AE61-FAB94999C026}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6225707D-DC36-4A24-B08E-57391025B5B0}

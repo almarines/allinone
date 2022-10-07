@@ -13,13 +13,12 @@ namespace SMTPMailService
     [Service(Contract = typeof(IMailService), Order = 100)]
     public class SMTPMailService : IMailService
     {
-        private readonly ILoggingService logger;
+        private ILoggingService logger => Container.Resolve<ILoggingService>();
 
         public string Name => throw new NotImplementedException();
 
         public SMTPMailService()
         {
-            this.logger = Container.Resolve<ILoggingService>();
         }
 
         public async Task<bool> SendMail(string to, string subject, string body)

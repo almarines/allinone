@@ -30,7 +30,6 @@ namespace Core.Models
         string GetInsurance();
     }
 
-
     public abstract class Employee : IEmployee, IEmployeePayment, IInsurance
     {
         /// <value>The id.</value>

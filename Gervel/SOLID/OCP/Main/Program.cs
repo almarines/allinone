@@ -1,8 +1,6 @@
-﻿using ConsoleLogger;
-using Core;
+﻿using Core;
 using Core.Contracts;
 using System;
-using System.Diagnostics.Contracts;
 
 namespace main
 {
@@ -10,19 +8,24 @@ namespace main
     {
         static void Main(string[] args)
         {
-            _ = args;
             var resolver = new Resolver();
             resolver.Resolve();
 
-			var logService = Container.Resolve<ILoggingService>();
-            logService.Log("before sending mail");
+            //Container.AddSingelten(typeof(ILoggingService), new TextLogger.TextLogger());
+            //Container.AddSingelten(typeof(IMailService), new SMTPMailService.SMTPMailService());
+
+            var mailService = Container.Resolve<IMailService>();
+            mailService.SendMail("finance@xyz.com", "Welcome", "Welcome To xyz");
+
+            //var logService = Container.Resolve<ILoggingService>();
+            //logService.Log("before sending mail");
 
             // How to access SMTPMail / AWS Service
             // IMailServce: Register Email Service [SMTP/AWS/ Azure]
             // var mailService = Container.Resolve<IMailService>();
             // mailService.SendMail("welcome@danaher.com", "Welcome", "Welcome to danaher");
 
-            logService.Log("after sending mail");
+            //logService.Log("after sending mail");
 
             Console.ReadLine();
         }

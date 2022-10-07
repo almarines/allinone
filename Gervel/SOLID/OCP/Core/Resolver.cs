@@ -13,8 +13,10 @@ namespace Core
 {
     public class Resolver
     {
-        public IEnumerable<Assembly> Assemblies {
-            get {
+        public IEnumerable<Assembly> Assemblies
+        {
+            get
+            {
                 var executableLocation = Assembly.GetEntryAssembly().Location;
                 var path = Path.GetDirectoryName(executableLocation);
                 var assemblies = Directory
@@ -32,21 +34,23 @@ namespace Core
         [ImportMany]
         public IEnumerable<Lazy<IService, ServiceAttribute>> serviceImports { get; set; }
 
-        public void Resolve() {
+        public void Resolve()
+        {
             var myAssemblies = Assemblies.Where(asm => asm.IsDefined(typeof(AutoGenerateAttribute), true));
 
             var configuration = new ContainerConfiguration().WithAssemblies(myAssemblies);
-            using (var container = configuration.CreateContainer()) {
+            using (var container = configuration.CreateContainer())
+            {
                 serviceImports = container.GetExports<Lazy<IService, ServiceAttribute>>();
             }
 
-            foreach (var item in serviceImports) {
+            foreach (var item in serviceImports)
+            {
                 var contract = item.Metadata.Contract;
                 var instance = item.Value;
 
-                // Container.AddSingelten(contract, instance, instance.GetType().Name);
                 Container.AddSingelten(contract, instance);
-			}
+            }
         }
     }
 }

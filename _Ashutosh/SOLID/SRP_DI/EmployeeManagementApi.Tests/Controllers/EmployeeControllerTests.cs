@@ -1,6 +1,8 @@
 using Core;
 using Core.Models;
+using EmployeeManagementApi.Application.Commands;
 using EmployeeManagementApi.Controllers;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Xunit;
@@ -22,8 +24,10 @@ namespace EmployeeManagementApi.Tests
             var mailService = Substitute.For<IMailService>();
             mailService.IsValid(Arg.Any<string>()).Returns(true);
 
+            var mediator = Substitute.For<IMediator>();
+            mediator.Send(Arg.Any<InsertEmployeCommand>()).Returns(1);
 
-            var controller = new EmployeeController(mockRepo, namingService, mailService);
+            var controller = new EmployeeController(mockRepo, namingService, mailService, mediator);
 
             // Act
             var result = await controller.InsertEmployee(new Dto.EmployeeDto() { FirstName = "fist", LastName = "last", Email = "a@gmail.com" });

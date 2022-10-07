@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using MediatR;
+using EmployeeManagementApi.Application.Commands;
+using EmployeeManagementApi.Application.Query;
 
 namespace EmployeeManagementApi.Controllers
 {
@@ -15,21 +18,23 @@ namespace EmployeeManagementApi.Controllers
         private readonly INamingService _namingService;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMailService _mailService;
+        private readonly IMediator _mediator;
         private readonly ILogger<EmployeeController> logger;
 
         public EmployeeController(IEmployeeRepository employeeRepo, INamingService namingService,
-                                            IMailService mailService)
+                                            IMailService mailService, IMediator mediator)
         {
             _namingService = namingService;
             _employeeRepository = employeeRepo;
             _mailService = mailService;
+            _mediator = mediator;
             //this.logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _employeeRepository.GetAll();
+            var result = await _mediator.Send(new GetAllEmployeeQuery());
             return Ok(result);
         }
 
@@ -75,17 +80,7 @@ namespace EmployeeManagementApi.Controllers
         [HttpPost]
         public async Task<ActionResult> InsertEmployee(EmployeeDto employeeDto)
         {
-            if (!_namingService.IsValid(employeeDto.FirstName) || !_namingService.IsValid(employeeDto.LastName))
-            {
-                throw new InvalidOperationException();
-            }
-
-            if (!_mailService.IsValid(employeeDto.Email))
-            {
-                throw new InvalidOperationException();
-            }
-
-            var result = await _employeeRepository.InsertEmployee(new FullTimeEmployee() { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName, Email = employeeDto.Email });
+            var result = await _mediator.Send(new InsertEmployeCommand { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName, Email = employeeDto.Email });
 
             // send mail to finance / insurance team           
             await _mailService.SendMail("finance@xyz.com", "Welcome", "Welcome To xyz");

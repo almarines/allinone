@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using LiteDB;
 using Microsoft.Extensions.Options;
-using EmployeeManagementApi.Options;
+using Core.Models;
+using Core.Options;
+using LiteDB;
 
-namespace EmployeeManagementApi.Models
+namespace LiteDbServer.DBContext
 {
     public class LiteDBContext : IDisposable
     {
@@ -27,7 +28,7 @@ namespace EmployeeManagementApi.Models
                 throw new Exception("Can find or create LiteDb database.", ex);
             }
         }
-       
+
         public BsonValue InsertEmployee(Employee employee)
         {
             collection = _context.GetCollection<Employee>(nameOfCollection);

@@ -1,14 +1,4 @@
-﻿using EmployeeManagementApi.Controllers;
-using EmployeeManagementApi.Dto;
-using EmployeeManagementApi.Managers;
-using EmployeeManagementApi.Models;
-using NSubstitute;
-using SMTPMailServiceLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Core;
 using Xunit;
 
 namespace EmployeeManagementApi.Tests.Managers

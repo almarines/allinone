@@ -5,42 +5,38 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmployeeManagementApi.Models
+namespace Core.Models
 {
     public interface IEmployee
     {
-        int Id { get; set;  }
-
-        string FirstName { get; set; }
-
-        string LastName { get; set; }
-
         string Email { get; set; }
+        string FirstName { get; set; }
+        int Id { get; set; }
+        string LastName { get; set; }
     }
 
-    public interface IEmployeeSalary
+    public interface IEmployeePayment
     {
         int BasicPay { get; set; }
-
-        int HRA { get; set; }
-
         int Bonus { get; set; }
-
+     
+        int HRA { get; set; }
+    
         int GetSalary();
     }
 
-    public interface IEmployeeBenefits
+    public interface IInsurance
     {
         string GetInsurance();
     }
 
-    public abstract class Employee : IEmployee, IEmployeeSalary, IEmployeeBenefits
-    {
 
+    public abstract class Employee : IEmployee, IEmployeePayment, IInsurance
+    {
         /// <value>The id.</value>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set;  }
+        public int Id { get; set; }
 
         public string FirstName { get; set; }
 
@@ -64,7 +60,6 @@ namespace EmployeeManagementApi.Models
 
     public class FullTimeEmployee : Employee
     {
-
         public override int GetSalary()
         {
             return BasicPay + HRA + Bonus;
@@ -73,11 +68,11 @@ namespace EmployeeManagementApi.Models
 
     public class PartTimeEmployee : Employee
     {
-
         public override int GetSalary()
         {
             return BasicPay + HRA;
         }
+
         public override string GetInsurance()
         {
             return "Max";

@@ -1,5 +1,5 @@
 ﻿using Core.Models;
-using EmployeeManagementApi.Options;
+using Core.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;

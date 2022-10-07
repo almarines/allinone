@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Models;
-using EmployeeManagementApi.Options;
+using Core.Options;
 using LiteDB;
 using Microsoft.Extensions.Options;
 

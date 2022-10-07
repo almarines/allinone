@@ -1,7 +1,7 @@
 using Core;
 using Core.Contracts;
 using DataBaseCore.Extensions;
-using EmployeeManagementApi.Options;
+using Core.Options;
 using FluentValidation;
 using MailService.Extensions;
 using MediatR;

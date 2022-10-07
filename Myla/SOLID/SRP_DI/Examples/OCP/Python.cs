@@ -1,26 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Examples.OCP
 {
-    public class Python
+    public abstract class Course
     {
         public string CourseName { get; set; }
-
         public long BasicCost { get; set; }
-
         public long Tax { get; set; }
+        public List<string> Modules { get; set; }
 
+        public abstract double TotalCost();
     }
 
-    public class AdvanceDotNet
+    public class Python : Course
     {
-        public string CourseName { get; set; }
+        public override double TotalCost()
+        {
+            return (BasicCost * Tax) + 100;
+        }
+    }
 
-        public long BasicCost { get; set; }
+    public class AdvanceDotNet : Course
+    {
 
-        public long Tax { get; set; }
+        public override double TotalCost()
+        {
+            return (BasicCost * Tax) + 50;
+        }
     }
 }

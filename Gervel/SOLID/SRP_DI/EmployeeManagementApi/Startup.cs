@@ -1,7 +1,5 @@
 using Core;
 using DatabaseCore.Extensions;
-using EmployeeManagementApi.Managers;
-using EmployeeManagementApi.Models;
 using FluentValidation;
 using MailService;
 using MailService.Extensions;

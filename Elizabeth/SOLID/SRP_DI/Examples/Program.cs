@@ -22,14 +22,15 @@ namespace Examples
 
             Console.WriteLine($"*** Total Area : {totalArea}****");
 
-            double totalCost = 0;
-            foreach (var training in CourseCalculator.GetAll())
-            {
-                totalCost += CourseCalculator.TotalCost(training);
-                Console.WriteLine($"*** Modules : {string.Join("->", CourseCalculator.GetModules(training))} ****");
-            }
+            //double totalCost = 0;
+            //foreach (var training in CourseCalculator.GetAll())
+            //{
+            //    CourseCalculator.GetCertifications(training);
+            //    totalCost += CourseCalculator.TotalCost(training);
+            //    Console.WriteLine($"*** Modules : {string.Join("->", CourseCalculator.GetModules(training))} ****");
+            //}
 
-            Console.WriteLine($"*** Total Training Cost : {totalCost} ****");
+            //Console.WriteLine($"*** Total Training Cost : {totalCost} ****");
             Console.ReadLine();
         }
     }

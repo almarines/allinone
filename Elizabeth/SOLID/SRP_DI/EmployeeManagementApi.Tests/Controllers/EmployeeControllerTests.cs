@@ -1,18 +1,13 @@
+using Core;
+using Core.Models;
 using EmployeeManagementApi.Controllers;
 using EmployeeManagementApi.Dto;
-using EmployeeManagementApi.Managers;
-using EmployeeManagementApi.Models;
-using EmployeeManagementApi.Options;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using NSubstitute;
-using SMTPMailServiceLib;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using Xunit;
-using static System.Collections.Specialized.BitVector32;
 
 namespace EmployeeManagementApi.Tests
 {

@@ -3,6 +3,7 @@ using EmployeeManagementApi.Models;
 using EmployeeManagementApi.Options;
 using FluentValidation;
 using MailService;
+using MailService.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,7 +36,8 @@ namespace EmployeeManagementApi {
             services.AddDbContext<EmployeeDBContext>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 			services.AddSingleton<INamingService, NamingService>();
-			services.AddSingleton<IMailService, SMTPMailService>();
+
+            services.RegisterMailService();
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

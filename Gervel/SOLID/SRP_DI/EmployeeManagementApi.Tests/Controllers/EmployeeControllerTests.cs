@@ -1,3 +1,4 @@
+using Core;
 using EmployeeManagementApi.Controllers;
 using EmployeeManagementApi.Dto;
 using EmployeeManagementApi.Managers;

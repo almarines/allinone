@@ -1,9 +1,7 @@
-﻿using EmployeeManagementApi.Models;
-using MailService;
+﻿using Core;
+using EmployeeManagementApi.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmployeeManagementApi.Managers {
@@ -35,8 +33,8 @@ namespace EmployeeManagementApi.Managers {
 
         public async Task<string> GetInsurance(int id) {
             var emp = await GetById(id);
-			return emp.GetInsurance();
-		}
+            return emp.GetInsurance();
+        }
 
         public async Task<int> InsertEmployee(Employee employee) {
             employeeDBContext.Employees.Add(employee);

@@ -1,29 +1,30 @@
 ﻿using Core;
-using EmployeeManagementApi.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
-namespace EmployeeManagementApi.Managers {
+namespace DatabaseCore {
     public class EmployeeRepository : IEmployeeRepository {
-        private readonly EmployeeDBContext employeeDBContext;
+        private readonly LiteDBContext employeeDBContext;
         private readonly IMailService mailService;
 
-        public EmployeeRepository(EmployeeDBContext employeeDBContext, IMailService mailService) {
+        public EmployeeRepository(LiteDBContext employeeDBContext, IMailService mailService) {
             this.employeeDBContext = employeeDBContext;
             this.mailService = mailService;
         }
 
         public async Task<IEnumerable<Employee>> GetAll() {
-            return await employeeDBContext.Employees.ToListAsync();
+            return await Task.FromResult(employeeDBContext.GetAllEmployees());
         }
 
         public async Task<Employee> GetById(int id) {
-            return await employeeDBContext.Employees.FirstOrDefaultAsync(s => s.Id == id);
+			return await Task.FromResult(employeeDBContext.GetEmployeeById(id));
         }
 
         public async Task<Employee> GetByName(string name) {
-            return await employeeDBContext.Employees.FirstOrDefaultAsync(s => s.FirstName == name);
+            var employees = employeeDBContext.GetAllEmployees();
+			return await Task.FromResult(employees.FirstOrDefault(s => s.FirstName == name));
         }
 
         public async Task<int> GetSalary(int id) {
@@ -37,8 +38,7 @@ namespace EmployeeManagementApi.Managers {
         }
 
         public async Task<int> InsertEmployee(Employee employee) {
-            employeeDBContext.Employees.Add(employee);
-            return await employeeDBContext.SaveChangesAsync();
+			return await Task.FromResult(employeeDBContext.InsertEmployee(employee));
         }
     }
 }

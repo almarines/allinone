@@ -4,8 +4,7 @@ using LiteDB;
 using Microsoft.Extensions.Options;
 using Core;
 
-namespace EmployeeManagementApi.Models
-{
+namespace DatabaseCore {
     public class LiteDBContext : IDisposable
     {
         private static LiteDatabase _context;

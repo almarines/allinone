@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Examples.OCP
 {
-    public abstract class Shape
+    public interface IShape
+    {
+        double GetArea();
+    }
+
+    public abstract class Shape : IShape
     {
         public abstract double GetArea();
     }
@@ -18,8 +23,9 @@ namespace Examples.OCP
             Height = height;
             Width = width;
         }
-        private double Height { get; set; }
-        private double Width { get; set; }
+
+        public double Height { get; }
+        public double Width { get; }
 
         public override double GetArea()
         {
@@ -33,7 +39,8 @@ namespace Examples.OCP
         {
             Radius = radius;
         }
-        private double Radius { get; set; }
+
+        public double Radius { get; }
 
         public override double GetArea()
         {
@@ -43,7 +50,7 @@ namespace Examples.OCP
 
     public class AreaCalculator
     {
-        public static double TotalArea(params Shape[] arrObjects)
+        public static double TotalArea(params IShape[] arrObjects)
         {
             double area = 0;
             foreach (var obj in arrObjects)

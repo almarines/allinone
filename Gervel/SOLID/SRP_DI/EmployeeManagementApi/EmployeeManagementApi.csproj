@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SMTPMailService\SMTPMailService.csproj" />
+    <ProjectReference Include="..\SQLServer\SQLServer.csproj" />
   </ItemGroup>
 
 </Project>

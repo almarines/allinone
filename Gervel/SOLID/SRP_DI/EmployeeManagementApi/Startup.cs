@@ -1,7 +1,7 @@
 using Core;
+using DatabaseCore.Extensions;
 using EmployeeManagementApi.Managers;
 using EmployeeManagementApi.Models;
-using EmployeeManagementApi.Options;
 using FluentValidation;
 using MailService;
 using MailService.Extensions;
@@ -34,10 +34,9 @@ namespace EmployeeManagementApi {
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
 
-            services.AddDbContext<EmployeeDBContext>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 			services.AddSingleton<INamingService, NamingService>();
 
+            services.RegisterDatabase();
             services.RegisterMailService();
 		}
 

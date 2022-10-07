@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace EmployeeManagementApi.Models
+namespace DatabaseCore
 {
     public class EmployeeDBContext : DbContext
 	{

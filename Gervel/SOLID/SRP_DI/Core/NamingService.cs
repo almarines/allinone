@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmployeeManagementApi.Managers
+namespace Core
 {
     public class NamingService : INamingService {
         public bool IsValid(string value) {

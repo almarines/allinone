@@ -2,14 +2,23 @@
 using System.Linq;
 
 namespace Examples.OCP {
-	public abstract class Shape {
+	public interface IShape {
+		double GetArea();
+	}
+
+	public abstract class Shape : IShape {
 		public abstract double GetArea();
 	}
 
 	public class Rectangle : Shape {
 
-		public double Height { get; set; }
-		public double Width { get; set; }
+		public Rectangle(double height, double width) {
+			Width = width;
+			Height = height;
+		}
+
+		public double Height { get; }
+		public double Width { get; }
 
 		public override double GetArea() {
 			return Height * Width;
@@ -17,7 +26,10 @@ namespace Examples.OCP {
 	}
 
 	public class Circle : Shape {
-		public double Radius { get; set; }
+		public Circle(double radius) {
+			Radius = radius;
+		}
+		public double Radius { get; }
 
 		public override double GetArea() {
 			return Radius * Radius * Math.PI;
@@ -25,14 +37,14 @@ namespace Examples.OCP {
 	}
 
 	public class AreaCalculator {
-		public static double TotalArea(params Shape[] shapes) {
+		public static double TotalArea(params IShape[] shapes) {
 			#region Option 1
 			return shapes.Sum(c => c.GetArea());
 			#endregion
 
 			#region Option 2
 			//double area = 0;
-			//foreach (Shape shape in shapes) {
+			//foreach (IShape shape in shapes) {
 			//	area += shape.GetArea();
 			//}
 

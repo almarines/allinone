@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31624.102
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{B9C828E9-8C50-4ACB-854A-F4E0ACD6010F}"
 EndProject
@@ -13,7 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{2BAFDABC-7A37-4B42-8FC6-92EB923F7FEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "main", "Main\main.csproj", "{D5E99D1B-0DCF-4D5B-9380-A9C281C26557}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "main", "Main\main.csproj", "{D5E99D1B-0DCF-4D5B-9380-A9C281C26557}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMTPMailService", "SMTPMailService\SMTPMailService.csproj", "{308A7DF2-7C27-4616-9B62-0F42832E5E56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyMailService", "DummyMailService\DummyMailService.csproj", "{99F5CE85-A63F-4972-90FC-37B978D5F4DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +41,14 @@ Global
 		{D5E99D1B-0DCF-4D5B-9380-A9C281C26557}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5E99D1B-0DCF-4D5B-9380-A9C281C26557}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5E99D1B-0DCF-4D5B-9380-A9C281C26557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{308A7DF2-7C27-4616-9B62-0F42832E5E56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{308A7DF2-7C27-4616-9B62-0F42832E5E56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{308A7DF2-7C27-4616-9B62-0F42832E5E56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{308A7DF2-7C27-4616-9B62-0F42832E5E56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99F5CE85-A63F-4972-90FC-37B978D5F4DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99F5CE85-A63F-4972-90FC-37B978D5F4DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99F5CE85-A63F-4972-90FC-37B978D5F4DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99F5CE85-A63F-4972-90FC-37B978D5F4DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +57,8 @@ Global
 		{B9C828E9-8C50-4ACB-854A-F4E0ACD6010F} = {2BAFDABC-7A37-4B42-8FC6-92EB923F7FEE}
 		{DFF92651-437E-4283-A24D-DE3DB2EE9284} = {823B6423-CB0A-422C-8F39-33088232E99F}
 		{B2297C3A-BF0A-4046-A49E-20D47C8CC5FC} = {823B6423-CB0A-422C-8F39-33088232E99F}
+		{308A7DF2-7C27-4616-9B62-0F42832E5E56} = {823B6423-CB0A-422C-8F39-33088232E99F}
+		{99F5CE85-A63F-4972-90FC-37B978D5F4DD} = {823B6423-CB0A-422C-8F39-33088232E99F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BC340755-3D3F-4E7B-B22C-ED297C1B71A7}

@@ -10,13 +10,13 @@ namespace Examples {
 
 			Console.WriteLine("Enter Circle Radius : ");
 			var radius = Console.ReadLine();
-			var circle = new Circle() { Radius = double.Parse(radius) };
+			var circle = new Circle(double.Parse(radius));
 
 			Console.WriteLine("Enter Rectangle Height : ");
 			var height = Console.ReadLine();
 			Console.WriteLine("Enter Rectangle Width : ");
 			var width = Console.ReadLine();
-			var rectangle = new Rectangle { Height = double.Parse(height), Width = double.Parse(width) };
+			var rectangle = new Rectangle(double.Parse(height), double.Parse(width));
 			var totalArea = AreaCalculator.TotalArea(circle, rectangle);
 
 			Console.WriteLine($"*** Circle Area : {circle.GetArea()}****");

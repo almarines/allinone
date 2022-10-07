@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EmployeeManagementApi.Models {
-	public abstract class Employee {
-		/// <value>The id.</value>
+namespace Core {
+	public abstract class Employee : IEmployee, ISalary, IBenefits {
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
@@ -22,12 +21,30 @@ namespace EmployeeManagementApi.Models {
 
 		public string InsuranceType { get; set; }
 
-		public bool IsFullTimeEmployee { get; set; }
-
 		public abstract int GetSalary();
 
 		public abstract string GetInsurance();
 	}
+
+	public interface IEmployee {
+		int Id { get; set; }
+		string Email { get; set; }
+		string FirstName { get; set; }
+		string LastName { get; set; }
+	}
+
+	public interface ISalary {
+		int BasicPay { get; set; }
+		int Bonus { get; set; }
+		int HRA { get; set; }
+		int GetSalary();
+	}
+
+	public interface IBenefits {
+		string InsuranceType { get; set; }
+		string GetInsurance();
+	}
+
 
 	public class FullTimeEmployee : Employee {
 		public override int GetSalary() {
@@ -45,6 +62,5 @@ namespace EmployeeManagementApi.Models {
 		public override string GetInsurance() {
 			return "Max";
 		}
-
 	}
 }

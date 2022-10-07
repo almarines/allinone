@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using LiteDB;
 using Microsoft.Extensions.Options;
-using EmployeeManagementApi.Options;
+using Core;
 
 namespace EmployeeManagementApi.Models
 {

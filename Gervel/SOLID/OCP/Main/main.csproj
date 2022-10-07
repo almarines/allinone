@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleLogger\ConsoleLogger.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 

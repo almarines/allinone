@@ -7,8 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\SMTPMailService\SMTPMailService.csproj" />
-    <ProjectReference Include="..\TextLogger\TextLogger.csproj" />
   </ItemGroup>
 
 </Project>

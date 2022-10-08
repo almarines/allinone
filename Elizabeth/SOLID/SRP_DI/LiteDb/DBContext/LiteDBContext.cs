@@ -5,7 +5,7 @@ using Core.Models;
 using Core.Options;
 using LiteDB;
 
-namespace LiteDbServer.DBContext
+namespace DataBaseCore.DBContext
 {
     public class LiteDBContext : IDisposable
     {

@@ -1,7 +1,10 @@
 using Core;
 using Core.Models;
+using EmployeeManagementApi.Application.Commands;
+using EmployeeManagementApi.Application.Query;
 using EmployeeManagementApi.Controllers;
 using EmployeeManagementApi.Dto;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using System;
@@ -33,7 +36,11 @@ namespace EmployeeManagementApi.Tests
             //    return 1;
             //});
             mockRepo.InsertEmployee(Arg.Any<Employee>()).Returns(1);
-            var controller = new EmployeeController(mockRepo, mailService, namingService);
+
+            var mediator = Substitute.For<IMediator>();
+            mediator.Send(Arg.Any<InsertEmployeCommand>()).Returns(1);
+
+            var controller = new EmployeeController(mailService, mediator);
 
             // Act
             var result = await controller.InsertEmployee(new EmployeeDto { FirstName = firstname, LastName = lastname, Email = email  });
@@ -43,9 +50,9 @@ namespace EmployeeManagementApi.Tests
             //Assert.Single(list);
             Assert.NotNull(result);
             Assert.Equal(200, r.StatusCode);
-            await mockRepo.Received().InsertEmployee(Arg.Any<Employee>());
-            namingService.Received().IsValid(Arg.Any<string>());
-            mailService.Received().IsValid(Arg.Any<string>());
+            //await mockRepo.Received().InsertEmployee(Arg.Any<Employee>());
+            //namingService.Received().IsValid(Arg.Any<string>());
+            //mailService.Received().IsValid(Arg.Any<string>());
         }
 
         [Theory]
@@ -71,7 +78,10 @@ namespace EmployeeManagementApi.Tests
                 list.Add(s[0] as Employee);
                 return 1;
             });
-            var controller = new EmployeeController(mockRepo, mailService, namingService);
+
+            var mediator = Substitute.For<IMediator>();
+            mediator.Send(Arg.Any<InsertEmployeCommand>()).Returns(1);
+            var controller = new EmployeeController(mailService, mediator);
 
             // Act
             Func<Task> action = async () => await controller.InsertEmployee(new EmployeeDto { FirstName = firstname, LastName = lastname, Email = email });
@@ -92,7 +102,10 @@ namespace EmployeeManagementApi.Tests
                 return list;
             });
 
-            var controller = new EmployeeController(mockRepo, mailService, namingService);
+
+            var mediator = Substitute.For<IMediator>();
+            mediator.Send(Arg.Any<GetAllEmployeeQuery>()).Returns(list);
+            var controller = new EmployeeController(mailService, mediator);
 
             // Act
             var result = await controller.GetAll();
@@ -105,7 +118,7 @@ namespace EmployeeManagementApi.Tests
             Assert.NotNull(r);
             Assert.Equal(200, r.StatusCode);
             Assert.Equal(list, actualResult);
-            await mockRepo.Received().GetAll();
+            //await mockRepo.Received().GetAll();
         }
     }
 }

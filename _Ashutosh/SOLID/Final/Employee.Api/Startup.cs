@@ -13,9 +13,11 @@ using DataBaseCore;
 using MailService.Extensions;
 using Core.Behaviors;
 using Core.Middlewares;
+using System.Diagnostics.CodeAnalysis;
 
 namespace EmployeeWebApi
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public Startup(IConfiguration configuration)

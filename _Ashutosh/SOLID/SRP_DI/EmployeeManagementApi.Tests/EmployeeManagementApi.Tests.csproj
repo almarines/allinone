@@ -24,4 +24,9 @@
     <ProjectReference Include="..\EmployeeManagementApi\EmployeeManagementApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\Command\" />
+    <Folder Include="Application\CommandHandlers\" />
+  </ItemGroup>
+
 </Project>

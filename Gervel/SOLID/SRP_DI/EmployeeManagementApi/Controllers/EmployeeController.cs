@@ -1,5 +1,8 @@
 ﻿using Core;
+using EmployeeManagementApi.Application.Commands;
+using EmployeeManagementApi.Application.Query;
 using EmployeeManagementApi.Dto;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -10,21 +13,19 @@ namespace EmployeeManagementApi.Controllers
     [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
-        private readonly INamingService _namingService;
-        private readonly IEmployeeRepository _employeeRepository;
         private readonly IMailService _mailService;
+        private readonly IMediator _mediator;
 
-        public EmployeeController(IEmployeeRepository employeeRepo, INamingService namingService, IMailService mailService)
+        public EmployeeController(IMailService mailService, IMediator mediator)
         {
-            _namingService = namingService;
-            _employeeRepository = employeeRepo;
             _mailService = mailService;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _employeeRepository.GetAll();
+            var result = await _mediator.Send(new GetAllEmployeeQuery());
             return Ok(result);
         }
 
@@ -32,56 +33,30 @@ namespace EmployeeManagementApi.Controllers
         [Route("firstname")]
         public async Task<IActionResult> GetByName(string firstName)
         {
-            if (!_namingService.IsValid(firstName))
-            {
-                throw new InvalidOperationException();
-            }
-
-            var result = await _employeeRepository.GetByName(firstName);
-            return Ok(result);
+			var result = await _mediator.Send(new GetEmployeeByNameQuery() { FirstName = firstName});
+			return Ok(result);
         }
 
         [HttpGet]
         [Route("fullsalary")]
         public async Task<IActionResult> GetSalary(int id)
         {
-            if (!_namingService.IsValid(id))
-            {
-                throw new InvalidOperationException();
-            }
-
-            var result = await _employeeRepository.GetSalary(id);
-            return Ok(result);
+			var result = await _mediator.Send(new GetEmployeeSalaryQuery() { EmployeeId = id });
+			return Ok(result);
         }
 
         [HttpGet]
         [Route("insurance")]
         public async Task<IActionResult> GetInsurance(int id)
         {
-            if (!_namingService.IsValid(id))
-            {
-                throw new InvalidOperationException();
-            }
-
-            var result = await _employeeRepository.GetInsurance(id);
-            return Ok(result);
+			var result = await _mediator.Send(new GetEmployeeInsuranceQuery() { EmployeeId = id });
+			return Ok(result);
         }
 
         [HttpPost]
         public async Task<ActionResult> InsertEmployee(EmployeeDto employeeDto)
         {
-            if (!_namingService.IsValid(employeeDto.FirstName) || !_namingService.IsValid(employeeDto.LastName))
-            {
-                throw new InvalidOperationException();
-            }
-
-            if (!_mailService.IsValid(employeeDto.Email))
-            {
-                throw new InvalidOperationException();
-            }
-
-            //await mediator.Send(InsertEmployeeCommand() { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName, Email = employeeDto.Email } )
-            var result = await _employeeRepository.InsertEmployee(new FullTimeEmployee() { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName, Email = employeeDto.Email });
+            var result = await _mediator.Send(new InsertEmployeCommand { FirstName = employeeDto.FirstName, LastName = employeeDto.LastName, Email = employeeDto.Email });
 
             // send mail to finance / insurance team           
             await _mailService.SendMail("finance@xyz.com", "Welcome", "Welcome To xyz");

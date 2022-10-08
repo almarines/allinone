@@ -18,8 +18,8 @@ namespace EmployeeManagementApi.Tests
             var mockRepo = Substitute.For<IEmployeeRepository>();
             mockRepo.InsertEmployee(Arg.Any<Employee>()).Returns(1);
 
-            var namingService = Substitute.For<INamingService>();
-            namingService.IsValid(Arg.Any<string>()).Returns(true);
+            //var namingService = Substitute.For<INamingService>();
+            //namingService.IsValid(Arg.Any<string>()).Returns(true);
 
             var mailService = Substitute.For<IMailService>();
             mailService.IsValid(Arg.Any<string>()).Returns(true);
@@ -27,7 +27,7 @@ namespace EmployeeManagementApi.Tests
             var mediator = Substitute.For<IMediator>();
             mediator.Send(Arg.Any<InsertEmployeCommand>()).Returns(1);
 
-            var controller = new EmployeeController(mockRepo, namingService, mailService, mediator);
+            var controller = new EmployeeController(mediator);
 
             // Act
             var result = await controller.InsertEmployee(new Dto.EmployeeDto() { FirstName = "fist", LastName = "last", Email = "a@gmail.com" });
@@ -37,6 +37,9 @@ namespace EmployeeManagementApi.Tests
             Assert.NotNull(result);
             Assert.NotNull(okResult.Value);
             await mockRepo.Received().InsertEmployee(Arg.Any<Employee>());
+            await mediator.Received().Send(Arg.Any<InsertEmployeCommand>());
+            mailService.Received().IsValid(Arg.Any<string>());
+            //namingService.DidNotReceive().IsValid(Arg.Any<string>());
         }
     }
 }

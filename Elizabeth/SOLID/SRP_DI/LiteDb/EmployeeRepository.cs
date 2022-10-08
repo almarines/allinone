@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Core.Models;
-using LiteDbServer.DBContext;
+using DataBaseCore.DBContext;
 
-namespace LiteDbServer
+namespace DataBaseCore
 {
     public class EmployeeRepository : IEmployeeRepository
     {

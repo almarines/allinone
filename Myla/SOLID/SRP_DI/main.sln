@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySql", "..\Final\MySql\MyS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlServer", "..\Final\SqlServer\SqlServer.csproj", "{D5DE63FC-76F2-4BE4-BD22-B91CFAC42424}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDB", "MongoDB\MongoDB.csproj", "{90EEA358-4630-46DD-A19A-29716A860BCE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{D5DE63FC-76F2-4BE4-BD22-B91CFAC42424}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5DE63FC-76F2-4BE4-BD22-B91CFAC42424}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5DE63FC-76F2-4BE4-BD22-B91CFAC42424}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90EEA358-4630-46DD-A19A-29716A860BCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90EEA358-4630-46DD-A19A-29716A860BCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90EEA358-4630-46DD-A19A-29716A860BCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90EEA358-4630-46DD-A19A-29716A860BCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{B0FF18F9-D089-41CE-9A1B-27B33684E978} = {7AACC691-AE3E-495F-952D-C8FD80395702}
 		{B1746948-0B09-4E3F-8D21-371BD0B1FB7C} = {7AACC691-AE3E-495F-952D-C8FD80395702}
 		{D5DE63FC-76F2-4BE4-BD22-B91CFAC42424} = {7AACC691-AE3E-495F-952D-C8FD80395702}
+		{90EEA358-4630-46DD-A19A-29716A860BCE} = {7AACC691-AE3E-495F-952D-C8FD80395702}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A5C9C9BC-EAAA-4454-B5C4-71C00559537D}

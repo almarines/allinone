@@ -1,7 +1,8 @@
 using Core;
+using Core.Behaviors;
 using Core.Options;
+using DataBaseCore.Extensions;
 using FluentValidation;
-using LiteDbServer.Extensions;
 using MailService.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -31,7 +32,7 @@ namespace EmployeeManagementApi
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
 
             services.AddSingleton<INamingService, NamingService>();
             services.RegisterMailService();

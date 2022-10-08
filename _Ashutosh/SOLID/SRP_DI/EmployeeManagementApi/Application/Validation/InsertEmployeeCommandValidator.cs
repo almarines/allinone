@@ -10,7 +10,7 @@ namespace EmployeeManagementApi.Application.Validation
 {
     public class InsertEmployeeCommandValidator : AbstractValidator<InsertEmployeCommand>
     {
-        public InsertEmployeeCommandValidator(INamingService namingService)
+        public InsertEmployeeCommandValidator()
         {
             RuleFor(c => c.FirstName).NotEmpty().NotNull().WithMessage("First Name is Empty");
             RuleFor(c => c.LastName).NotEmpty().NotNull().WithMessage("Last Name is Empty");

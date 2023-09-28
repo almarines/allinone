@@ -5,3 +5,11 @@
 3. Depdedency Injection
 4. C# 8.0
 5. C# 9.0
+
+# DesignPatterns
+
+# SOILD
+
+# TDD
+
+# Microservices

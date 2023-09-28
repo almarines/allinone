@@ -1,8 +1,8 @@
 ﻿using Core;
-using LiteDbServer.DBContext;
+using DataBaseCore.DBContext;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LiteDbServer.Extensions
+namespace DataBaseCore.Extensions
 {
     public static class Extensions
     {

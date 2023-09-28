@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
+using Core.Models;
 
 namespace DatabaseCore {
 	public class EmployeeRepository : IEmployeeRepository {

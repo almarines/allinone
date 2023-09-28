@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LiteDB\LiteDBServer.csproj" />
+    <ProjectReference Include="..\MongoDBServer\MongoDBServer.csproj" />
     <ProjectReference Include="..\SMTPMailService\SMTPMailService.csproj" />
   </ItemGroup>
 

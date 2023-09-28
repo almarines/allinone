@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Core.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Core

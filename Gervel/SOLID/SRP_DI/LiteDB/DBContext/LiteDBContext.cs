@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LiteDB;
 using Microsoft.Extensions.Options;
 using Core;
+using Core.Models;
 
 namespace DatabaseCore {
     public class LiteDBContext : IDisposable
